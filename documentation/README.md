@@ -18,9 +18,11 @@
 
 
 ## User Stories
+### Backlog
+![](assets/Backlog.png)
 
 ## System Architecture
-![](./SoftwareArchitecture.png)
+![](assets/SoftwareArchitecture.png)
 
 ### Interface Layer
 UI/UX will be built on React.js along with CSS to style the frontend. Have not decided whether CSS frameworks like `Material UI` and `Booststrap` is needed, so for the time being vanilla CSS is what will be used.
