@@ -23,7 +23,7 @@
 ![](./SoftwareArchitecture.png)
 
 ### Interface Layer
-UI/UX will be built on React.js along with CSS to style the frontend. Have not planned if CSS frameworks will be used for the time being, vanilla CSS is the goto.
+UI/UX will be built on React.js along with CSS to style the frontend. Have not decided whether CSS frameworks like `Material UI` and `Booststrap` is needed, so for the time being vanilla CSS is what will be used.
 
 ### API Layer
 The APIs that will be used are Google Maps API for calculating the distance between users, Google and Facebook Sign-In API for allowing user to create an account with their existing Google or Facebook account.
