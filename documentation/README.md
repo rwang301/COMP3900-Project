@@ -19,5 +19,20 @@
 
 ## User Stories
 
-## System
+## System Architecture
 ![](./SoftwareArchitecture.png)
+
+### Interface Layer
+UI/UX will be built on React.js along with CSS to style the frontend. Have not planned if CSS frameworks will be used for the time being, vanilla CSS is the goto.
+
+### API Layer
+The APIs that will be used are Google Maps API for calculating the distance between users, Google and Facebook Sign-In API for allowing user to create an account with their existing Google or Facebook account.
+
+### Business Layer
+The backend system will be developed in python3 using the Flask library to receive requests from the frontend. The sqlite3 library will also be used to connect to the database which will be discussed below.
+
+### Database Layer
+Data will be managed in a relational database sqlite3 which does not require a server and data persistence is achieved by storing the data in a `.db` file on disk. This is managed internally by sqlite3.
+
+### Infrastructure Layer
+This software is Unix (MacOS, Linux and any Unix like Operating System) compatible because sqlite3 is inbuilt to Unix. React is managed by npm and initialised using `npx create-react-app` which can all be run on a terminal. For Windows to work, WSL(Windows Subsystem for Linux) is required because it is Linux compatible.
