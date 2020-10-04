@@ -17,23 +17,18 @@
 
 ## Table of Contents
 * Background
-
 * User Stories
   - Backlog & Sprint 1
   - Subtasks
-    - note
-
 * Storyboard
-
-* System Architecture
-  - Interface Layer
-  - API Layer
-  - Business Layer
-  - Database Layer
-  - Infrastructure Layer
-
-* User Types
-
+* System
+  - System Architecture
+    - Interface Layer
+    - API Layer
+    - Business Layer
+    - Database Layer
+    - Infrastructure Layer
+  - User Types
 * Reference
 
 ## Background
@@ -183,32 +178,33 @@ The novelty of both job seekers and employers only being able to see jobs/job ap
 <br />
 <br />
 
-## System Architecture
+## System
+### User Types
+The main users of the application are divided into two types. Those who are looking for a job and those who wish to recruit personnel. Besides the sign up/log in pages, the user interfaces differ between these two user types. The difference in user interfaces are articulated in the 'Storyboard' section. However, the functionality is similar for both those who are looking for jobs and recruiting as they undergo the same process of filtering through candidates, following up on applications and updating their respective profiles. Some differences include that a job seeker have options to upload their resume and cover letters whilst employers must upload job vacancies which job seekers filter through.
+
+### System Architecture
 
 ![](assets/software_architecture.png)
 
-### Interface Layer
+#### Interface Layer
 
 UI/UX will be built on React.js along with CSS to style the frontend. Have not decided whether CSS frameworks like `Material UI` and `Booststrap` is needed, so for the time being vanilla CSS is what will be used.
 
-### API Layer
+#### API Layer
 
 The APIs that will be used are Google Maps API for calculating the distance between users, Google and Facebook Sign-In API for allowing user to create an account with their existing Google or Facebook account.
 
-### Business Layer
+#### Business Layer
 
 The backend system will be developed in python3 using the Flask library to receive requests from the frontend. The sqlite3 library will also be used to connect to the database which will be discussed below.
 
-### Database Layer
+#### Database Layer
 
 Data will be managed in a relational database sqlite3 which does not require a server and data persistence is achieved by storing the data in a `.db` file on disk. This is managed internally by sqlite3.
 
-### Infrastructure Layer
+#### Infrastructure Layer
 
 This software is Unix (MacOS, Linux and any Unix like Operating System) compatible because sqlite3 is inbuilt to Unix. React is managed by npm and initialised using `npx create-react-app` which can all be run on a terminal. For Windows to work, WSL(Windows Subsystem for Linux) is required because it is Linux compatible.
-
-## User Types
-The main users of the application are divided into two types. Those who are looking for a job and those who wish to recruit personnel. Besides the sign up/log in pages, the user interfaces differ between these two user types. The difference in user interfaces are articulated in the 'Storyboard' section. However, the functionality is similar for both those who are looking for jobs and recruiting as they undergo the same process of filtering through candidates, following up on applications and updating their respective profiles. Some differences include that a job seeker have options to upload their resume and cover letters whilst employers must upload job vacancies which job seekers filter through.
 
 ## Reference
 * SEEK. n.d. [online] Available at: <https://www.seek.com.au/> [Accessed 4 October 2020].
