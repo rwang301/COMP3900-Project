@@ -16,9 +16,16 @@
 
 
 ## User Stories
-### Backlog
-![](assets/Backlog.png)
+### Backlog & Sprint 1
+![](assets/UserStories.png)
 
+### Subtasks
+|As a user, I would like to be able to register and login so that I can get authenticated and thus, access the website.|As an employer, I would like to be able to advertise available jobs whilst providing job details and prerequisites so that potential job candidates can apply for my jobs.|As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.|As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.|As an employer, I would like to be able to analyse job applications so that I obtain a greater understanding on how suitable a candidate is.|As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.|As a job seeker, I would like to be able to accept job interview invitations so that I have the opportunity to further demonstrate to employers why I should be employed.|As an employer, I would like to be able to send job offers so that job seekers can choose to commence work for my company.|As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.|
+|-|-|-|-|-|-|-|-|-|
+|Members of the public are able to signup for an account (but without administrative privileges) through a form.|Advertised jobs contain a job description including responsibilities, employment type, location and application closing date.|
+|Employees are able to signup for an account (with administrative privileges) through a form.|Advertised jobs contain required qualifications and experience.|
+All users are able to login successfully through a form and thus can access the website's functions.|Employers can list additional documents and files which they desire from an employee’s job application such as a resume and cover letter.|
+|All users are able to logoff successfully either by pressing a 'logoff button' or by closing the website.|
 ## System Architecture
 ![](assets/SoftwareArchitecture.png)
 
