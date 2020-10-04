@@ -123,6 +123,9 @@ An analysis of both Seek and Hatch proved fruitful in developing our team’s ow
   - If they do not desire to start a particular job, job seekers are also able to decline the job offer by pressing a 'decline button'.
   - Employers are able to see whether a job offer is accepted or declined.
 
+#### Note
+The novelty of both job seekers and employers only being able to see jobs/job applications one at a time is that it ensures that both users must respond to whether they are interested or not in what they see. By doing this, users will not see the same thing twice, eliminating duplicate visits.
+
 ## Storyboard
 
 ![](assets/storyboard1.png)
@@ -145,9 +148,6 @@ User Stories Covered:
 - As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.
 - As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.
 - As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.
-
-#### Note
-The novelty of both job seekers and employers only being able to see jobs/job applications one at a time is that it ensures that both users must respond to whether they are interested or not in what they see. By doing this, users will not see the same thing twice, eliminating duplicate visits.
 
 ## System
 ### User Types
