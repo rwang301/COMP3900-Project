@@ -153,6 +153,14 @@ User Stories Covered:
 ### User Types
 The main users of the application are divided into two types. Those who are looking for a job and those who wish to recruit personnel. Besides the sign up/log in pages, the user interfaces differ between these two user types. The difference in user interfaces are articulated in the 'Storyboard' section. However, the functionality is similar for both those who are looking for jobs and recruiting as they undergo the same process of filtering through candidates, following up on applications and updating their respective profiles. Some differences include that a job seeker have options to upload their resume and cover letters whilst employers must upload job vacancies which job seekers filter through.
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 ### System Architecture
 
 ![](assets/software_architecture.png)
