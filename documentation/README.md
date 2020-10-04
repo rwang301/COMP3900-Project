@@ -9,8 +9,6 @@
 |Tony Lu|z5204814@unsw.edu.au|z5204814|Backend Developer|
 |Richard Wang|z5166088@unsw.edu.au|z5166088|Frontend Developer|
 
-<div style="page-break-after: always;"></div>
-
 ## Background
 ### Background Statement
 
