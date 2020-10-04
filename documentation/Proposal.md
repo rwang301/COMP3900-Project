@@ -18,7 +18,8 @@
 ## Table of Contents
 * Background
 * User Stories
-  - Backlog & Sprint 1
+  - Sprints
+  - Backlog
   - Subtasks
 * Storyboard
 * System
@@ -56,12 +57,13 @@ A glaring disadvantage in the website interface is the overflowing job descripti
 An analysis of both Seek and Hatch proved fruitful in developing our team’s own website. However, Seek does not address the issue of both applicants and employers being bombarded with a large collection of applications at once and Hatch’s absence of a search bar limits its effectiveness to its current target audience of students looking for part-time roles. Our team proposes a solution to streamline this process: by only showing one result at a time and swiping left or right (or any equivalent implementation) to save a result ala Tinder, it forces both parties to address the current position and make a decision so that it can be saved for later or eliminated altogether, removing duplicate visits if not wanted. The process is kicked off with a search bar with filters to ensure that applicants can narrow down their set of “swiped” jobs, and employers can sort applicants by experience and qualifications.
 
 ## User Stories
-### Backlog & Sprint 1
+### Sprints
+We aim to have 3 sprints, with each sprint's timing corresponding to each demo. Thus, the first sprint starts right after the proposal has been finalised (5th October) to the first demo (14th October). The next sprint starts right after, from the 15th October to the second demo (5th November). Once again, the last sprint starts right after, from the 6th November to the final product demo on the 19th November. 
 
+### Backlog
 ![](assets/user_stories.png)
 
 ### Subtasks
-
 - As a user, I would like to be able to register and login so that I can get authenticated and thus, access the website.
 
   - Members of the public are able to signup for an account (but without administrative privileges) through a form.
