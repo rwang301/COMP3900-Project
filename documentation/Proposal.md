@@ -55,23 +55,7 @@ A glaring disadvantage in the website interface is the overflowing job descripti
 
 An analysis of both Seek and Hatch proved fruitful in developing our team’s own website. However, Seek does not address the issue of both applicants and employers being bombarded with a large collection of applications at once and Hatch’s absence of a search bar limits its effectiveness to its current target audience of students looking for part-time roles. Our team proposes a solution to streamline this process: by only showing one result at a time and swiping left or right (or any equivalent implementation) to save a result ala Tinder, it forces both parties to address the current position and make a decision so that it can be saved for later or eliminated altogether, removing duplicate visits if not wanted. The process is kicked off with a search bar with filters to ensure that applicants can narrow down their set of “swiped” jobs, and employers can sort applicants by experience and qualifications.
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
 ## User Stories
-
 ### Backlog & Sprint 1
 
 ![](assets/user_stories.png)
@@ -164,19 +148,6 @@ User Stories Covered:
 
 #### Note
 The novelty of both job seekers and employers only being able to see jobs/job applications one at a time is that it ensures that both users must respond to whether they are interested or not in what they see. By doing this, users will not see the same thing twice, eliminating duplicate visits.
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
 ## System
 ### User Types
