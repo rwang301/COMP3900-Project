@@ -35,7 +35,7 @@ For each job application in Hatch, there will be a number of tasks that each rol
 
 A glaring disadvantage in the website interface is the overflowing job description and (occasionally) title in each box, hardly making it past a single introductory sentence. An improvement to this would be a very short summary of the role in dot points, something that our team plans to implement in our recruitment website. Removing the picture in each box, which doesn’t serve any real functional purpose, would create extra space for text. There could also be a potential overload of jobs without the ability to search when the open roles span into the double digits, despite this not being a problem at the moment. Having a search bar to start with would mitigate this entirely.
 
-An analysis of both Seek and Hatch proved fruitful in developing our team’s own website. However, Seek does not address the issue of both applicants and employers being bombarded with a large collection of applications at once and Hatch’s absence of a search bar limits its effectiveness to its current target audience of students looking for part-time roles. Our team proposes a solution to streamline this process: by only showing one result at a time and swiping left or right to save a result ala Tinder, it forces both parties to address the current position and make a decision so that it can be saved for later or eliminated altogether, removing duplicate visits if not wanted. The process is kicked off with a search bar with filters to ensure that applicants can narrow down their set of “swiped” jobs, and employers can sort applicants by experience and qualifications.
+An analysis of both Seek and Hatch proved fruitful in developing our team’s own website. However, Seek does not address the issue of both applicants and employers being bombarded with a large collection of applications at once and Hatch’s absence of a search bar limits its effectiveness to its current target audience of students looking for part-time roles. Our team proposes a solution to streamline this process: by only showing one result at a time and swiping left or right (or any equivalent implementation) to save a result ala Tinder, it forces both parties to address the current position and make a decision so that it can be saved for later or eliminated altogether, removing duplicate visits if not wanted. The process is kicked off with a search bar with filters to ensure that applicants can narrow down their set of “swiped” jobs, and employers can sort applicants by experience and qualifications.
 
 ## User Stories
 
@@ -62,9 +62,9 @@ An analysis of both Seek and Hatch proved fruitful in developing our team’s ow
 - As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.
 
   - Job seekers can browse for jobs through a searchbar.
-  - Job seekers can search for specific jobs according to inputted criteria such as description, responsibilities, location, employment type and/or renumeration.
+  - Job seekers can search for specific jobs according to inputted criteria such as description, responsibilities, location, employment type and/or remuneration.
   - Job seekers can search by pressing the 'enter' key on their keyboard or pressing the 'find jobs' button.
-  - Jobs are displayed to job seekers one at a time.
+  - ***Jobs are displayed to job seekers one at a time.***
   - Jobs can be saved if job seekers are interested in them.
   - If a particular job is not interesting to a job seeker, job seekers can view the next job by using the ‘right arrow’ key or by pressing the ‘next button’.
   - If a job seeker wants to visit a previous job, they can press the ‘left arrow key’ or by pressing the ‘previous button’.
@@ -81,6 +81,7 @@ An analysis of both Seek and Hatch proved fruitful in developing our team’s ow
 
   - Employers are able to view the details of each job application.
   - Job applications should be arranged from most to least appropriate depending on how well they meet the employer’s requirements through a sorting algorithm.
+  - ***Employers view jobs one at a time.***
 
 - As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.
 
@@ -104,6 +105,9 @@ An analysis of both Seek and Hatch proved fruitful in developing our team’s ow
   - Job seekers can accept job offers if they desire to start a particular job by pressing an 'accept button'.
   - If they do not desire to start a particular job, job seekers are also able to decline the job offer by pressing a 'decline button'.
   - Employers are able to see whether a job offer is accepted or declined.
+
+#### Note
+The novelty of both job seekers and employers only being able to see jobs/job applications one at a time is that it ensures that both users must respond to whether they are interested or not in what they see. By doing this, users will not see the same thing twice, eliminating duplicate visits.
 
 ## System Architecture
 
