@@ -10,6 +10,27 @@
 | Tony Lu       | z5204814@unsw.edu.au    | z5204814   | Backend Developer  |
 | Richard Wang  | z5166088@unsw.edu.au    | z5166088   | Frontend Developer |
 
+## Table of Contents
+* Background
+
+* User Stories
+  - Backlog & Sprint 1
+  - Subtasks
+    - note
+
+* Storyboard
+
+* System Architecture
+  - Interface Layer
+  - API Layer
+  - Business Layer
+  - Database Layer
+  - Infrastructure Layer
+
+* User Types
+
+* Reference
+
 ## Background
 Our problem domain is to develop a recruitment website for students that allows a job seeker to search for internships, graduate and student roles through various filters as well as indicate their qualifications and experience relating to each job role before applying. The website allows an employer to sort applications by qualifications and experience, shortlist or reject any applications, and send interview and offer letters.
 
@@ -137,7 +158,6 @@ User Stories Covered:
 - As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.
 
 #### Note
-
 The novelty of both job seekers and employers only being able to see jobs/job applications one at a time is that it ensures that both users must respond to whether they are interested or not in what they see. By doing this, users will not see the same thing twice, eliminating duplicate visits.
 
 ## System Architecture
@@ -158,5 +178,10 @@ Data will be managed in a relational database sqlite3 which does not require a s
 ### Infrastructure Layer
 This software is Unix (MacOS, Linux and any Unix like Operating System) compatible because sqlite3 is inbuilt to Unix. React is managed by npm and initialised using `npx create-react-app` which can all be run on a terminal. For Windows to work, WSL(Windows Subsystem for Linux) is required because it is Linux compatible.
 
-### User Types
+## User Types
 The main users of the application are divided into two types. Those who are looking for a job and those who wish to recruit personnel. Besides the sign up/log in pages, the user interfaces differ between these two user types. The difference in user interfaces are articulated in the 'Storyboard' section. However, the functionality is similar for both those who are looking for jobs and recruiting as they undergo the same process of filtering through candidates, following up on applications and updating their respective profiles. Some differences include that a job seeker have options to upload their resume and cover letters whilst employers must upload job vacancies which job seekers filter through.
+
+## Reference
+* SEEK. n.d. [online] Available at: <https://www.seek.com.au/> [Accessed 4 October 2020].
+
+* Hatch. n.d. Hire Exceptional Talent | Hatch. [online] Available at: <https://www.hatch.team/explore> [Accessed 4 October 2020].
