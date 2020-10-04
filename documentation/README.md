@@ -79,7 +79,22 @@ This software is Unix (MacOS, Linux and any Unix like Operating System) compatib
 ## Storyboard
 
 ![](assets/storyboard1.png)
+User Stories Covered:
+
+- As a user, I would like to be able to register and login so that I can get authenticated and thus, access the website.
 
 ![](assets/storyboard2.png)
+User Stories Covered:
+
+- As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.
+- As an employer, I would like to be able to send job offers so that job seekers can choose to commence work for my company.
+- As an employer, I would like to be able to analyse job applications so that I obtain a greater understanding on how suitable a candidate is.
+- As an employer, I would like to be able to advertise available jobs whilst providing job details and prerequisites so that potential job candidates can apply for my jobs.
 
 ![](assets/storyboard3.png)
+User Stories Covered:
+
+- As a job seeker, I would like to be able to accept job interview invitations so that I have the opportunity to further demonstrate to employers why I should be employed.
+- As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.
+- As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.
+- As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.
