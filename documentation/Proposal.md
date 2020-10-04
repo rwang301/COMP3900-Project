@@ -21,6 +21,7 @@
   - Sprints
   - Backlog
   - Subtasks
+  - Objectives
 * Storyboard
 * System
   - System Architecture
@@ -128,6 +129,33 @@ We aim to have 3 sprints, with each sprint's timing corresponding to each demo. 
 #### Note
 The novelty of both job seekers and employers only being able to see jobs/job applications one at a time is that it ensures that both users must respond to whether they are interested or not in what they see. By doing this, users will not see the same thing twice, eliminating duplicate visits.
 
+### Objectives
+* As an employer, I would like to be able to advertise available jobs whilst providing job details and prerequisites so that potential job candidates can apply for my jobs.
+  - Employers must be able to advertise open positions, where an advertisement must allow inclusion of a job description, responsibilities, required qualifications, required experience, location, employment type (e.g casual/part-time/full-time), remuneration details, as well as the application closing date.
+  - Employers must also be able to specify additional inputs that each application should have for an advertised position including the requirement for a resume, cover letter, written references, and/or copies of required qualifications as pdf attachments.
+
+* As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.
+  - Jobs seekers must be able to search for roles that interest them, with the search criteria they enter being able to identify positions that match on description, responsibilities, location, employment type, and/or remuneration.
+
+* As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.
+  - Each job seeker must be able to submit an application for an open advertised position, and include all inputs required by employers, and an indication of which of the required qualifications and experience required by the position the job-seeker thinks they satisfy.
+
+* As an employer, I would like to be able to analyse job applications so that I obtain a greater understanding on how suitable a candidate is.
+  - Employers must be able to see all application details for any advertised position, with applications sorted from most suitable to least suitable, at least according to job-seeker indications of suitability based on qualifications/experience noted as satisfied.
+  - Once the closing date elapses for a job advertisement, employers must be able to re-order associated job application, and request that interview invitations be sent out to the top X number of applications (where X is defined by the employer) on selected interview dates.
+
+* As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.
+  - Employers must be able to make an offer to any applicants for a job advertisement, at which stage an offer letter is generated (which can include custom fields from the employer on details like remuneration), and sent to the relevant job seekers.
+
+* As a job seeker, I would like to be able to accept job interview invitations so that I have the opportunity to further demonstrate to employers why I should be employed.
+  - Job seekers must be able to accept or decline interview invitations or offers, and employers must be able to see such accept or decline outcomes.
+
+* As an employer, I would like to be able to send job offers so that job seekers can choose to commence work for my company.
+  - Employers must be able to make an offer to any applicants for a job advertisement, at which stage an offer letter is generated (which can include custom fields from the employer on details like remuneration), and sent to the relevant job seekers.
+
+* As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.
+  - Job seekers must be able to accept or decline interview invitations or offers, and employers must be able to see such accept or decline outcomes.
+
 ## Storyboard
 
 ![](assets/storyboard1.png)
@@ -154,14 +182,6 @@ User Stories Covered:
 ## System
 ### User Types
 The main users of the application are divided into two types. Those who are looking for a job and those who wish to recruit personnel. Besides the sign up/log in pages, the user interfaces differ between these two user types. The difference in user interfaces are articulated in the 'Storyboard' section. However, the functionality is similar for both those who are looking for jobs and recruiting as they undergo the same process of filtering through candidates, following up on applications and updating their respective profiles. Some differences include that a job seeker have options to upload their resume and cover letters whilst employers must upload job vacancies which job seekers filter through.
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
 ### System Architecture
 
