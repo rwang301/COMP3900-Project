@@ -105,6 +105,29 @@ An analysis of both Seek and Hatch proved fruitful in developing our team’s ow
   - If they do not desire to start a particular job, job seekers are also able to decline the job offer by pressing a 'decline button'.
   - Employers are able to see whether a job offer is accepted or declined.
 
+## Storyboard
+
+![](assets/storyboard1.png)
+User Stories Covered:
+
+- As a user, I would like to be able to register and login so that I can get authenticated and thus, access the website.
+
+![](assets/storyboard2.png)
+User Stories Covered:
+
+- As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.
+- As an employer, I would like to be able to send job offers so that job seekers can choose to commence work for my company.
+- As an employer, I would like to be able to analyse job applications so that I obtain a greater understanding on how suitable a candidate is.
+- As an employer, I would like to be able to advertise available jobs whilst providing job details and prerequisites so that potential job candidates can apply for my jobs.
+
+![](assets/storyboard3.png)
+User Stories Covered:
+
+- As a job seeker, I would like to be able to accept job interview invitations so that I have the opportunity to further demonstrate to employers why I should be employed.
+- As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.
+- As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.
+- As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.
+
 ## System Architecture
 
 ![](assets/software_architecture.png)
@@ -129,25 +152,6 @@ Data will be managed in a relational database sqlite3 which does not require a s
 
 This software is Unix (MacOS, Linux and any Unix like Operating System) compatible because sqlite3 is inbuilt to Unix. React is managed by npm and initialised using `npx create-react-app` which can all be run on a terminal. For Windows to work, WSL(Windows Subsystem for Linux) is required because it is Linux compatible.
 
-## Storyboard
+### User Types
 
-![](assets/storyboard1.png)
-User Stories Covered:
-
-- As a user, I would like to be able to register and login so that I can get authenticated and thus, access the website.
-
-![](assets/storyboard2.png)
-User Stories Covered:
-
-- As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.
-- As an employer, I would like to be able to send job offers so that job seekers can choose to commence work for my company.
-- As an employer, I would like to be able to analyse job applications so that I obtain a greater understanding on how suitable a candidate is.
-- As an employer, I would like to be able to advertise available jobs whilst providing job details and prerequisites so that potential job candidates can apply for my jobs.
-
-![](assets/storyboard3.png)
-User Stories Covered:
-
-- As a job seeker, I would like to be able to accept job interview invitations so that I have the opportunity to further demonstrate to employers why I should be employed.
-- As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.
-- As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.
-- As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.
+The main users of the application are divided into two types. Those who are looking for a job and those who wish to recruit personnel. Besides the sign up/log in pages, the user interfaces differ between these two user types. The difference in user interfaces are articulated in the 'Storyboard' section. However, the functionality is similar for both those who are looking for jobs and recruiting as they undergo the same process of filtering through candidates, following up on applications and updating their respective profiles. Some differences include that a job seeker have options to upload their resume and cover letters whilst employers must upload job vacancies which job seekers filter through.
