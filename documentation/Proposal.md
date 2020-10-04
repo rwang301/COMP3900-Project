@@ -156,6 +156,15 @@ The novelty of both job seekers and employers only being able to see jobs/job ap
 * As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.
   - Job seekers must be able to accept or decline interview invitations or offers, and employers must be able to see accepted and declined outcomes.
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 ## Storyboard
 
 ![](assets/storyboard1.png)
@@ -206,6 +215,11 @@ Data will be managed in a relational database sqlite3 which does not require a s
 #### Infrastructure Layer
 
 This software is Unix (MacOS, Linux and any Unix like Operating System) compatible because sqlite3 is inbuilt to Unix. React is managed by npm and initialised using `npx create-react-app` which can all be run on a terminal. For Windows to work, WSL(Windows Subsystem for Linux) is required because it is Linux compatible.
+
+<br />
+<br />
+<br />
+
 
 ## Reference
 * SEEK. n.d. [online] Available at: <https://www.seek.com.au/> [Accessed 4 October 2020].
