@@ -37,12 +37,69 @@ An analysis of both Seek and Hatch proved fruitful in developing our team’s ow
 ![](assets/user_stories.png)
 
 ### Subtasks
-|As a user, I would like to be able to register and login so that I can get authenticated and thus, access the website.|As an employer, I would like to be able to advertise available jobs whilst providing job details and prerequisites so that potential job candidates can apply for my jobs.|As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.|As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.|As an employer, I would like to be able to analyse job applications so that I obtain a greater understanding on how suitable a candidate is.|As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.|As a job seeker, I would like to be able to accept job interview invitations so that I have the opportunity to further demonstrate to employers why I should be employed.|As an employer, I would like to be able to send job offers so that job seekers can choose to commence work for my company.|As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.|
-|-|-|-|-|-|-|-|-|-|
-|Members of the public are able to signup for an account (but without administrative privileges) through a form.|Advertised jobs contain a job description including responsibilities, employment type, location and application closing date.|
-|Employees are able to signup for an account (with administrative privileges) through a form.|Advertised jobs contain required qualifications and experience.|
-All users are able to login successfully through a form and thus can access the website's functions.|Employers can list additional documents and files which they desire from an employee’s job application such as a resume and cover letter.|
-|All users are able to logoff successfully either by pressing a 'logoff button' or by closing the website.|
+* As a user, I would like to be able to register and login so that I can get authenticated and thus, access the website.
+
+    - Members of the public are able to signup for an account (but without administrative privileges) through a form.
+    - Employees are able to signup for an account (with administrative privileges) through a form.
+    - All users are able to login successfully through a form and thus can access the website's functions.
+    - All users are able to logoff successfully either by pressing a 'logoff button' or by closing the website.
+
+* As an employer, I would like to be able to advertise available jobs whilst providing job details and prerequisites so that potential job candidates can apply for my jobs.
+
+    - Advertised jobs contain a job description including responsibilities, employment type, location and application closing date.
+    - Advertised jobs contain required qualifications and experience.
+    - Employers can list additional documents and files which they desire from an employee’s job application such as a resume and cover letter.
+    - Employers can finalise their advertisement by pressing a 'post advertisement' button.
+
+* As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.
+
+    - Job seekers can browse for jobs through a searchbar.
+    - Job seekers can search for specific jobs according to inputted criteria such as description, responsibilities, location, employment type and/or renumeration.
+    - Job seekers can search by pressing the 'enter' key on their keyboard or pressing the 'find jobs' button.
+    - Jobs are displayed to job seekers one at a time.
+    - Jobs can be saved if job seekers are interested in them.
+    - If a particular job is not interesting to a job seeker, job seekers can view the next job by using the ‘right arrow’ key or by pressing the ‘next button’.
+    - If a job seeker wants to visit a previous job, they can press the ‘left arrow key’ or by pressing the ‘previous button’.
+
+* As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.
+
+    - Job seekers are able to submit an application for their desired job by pressing a 'submit button'.
+    - A job application must fulfil all the employer’s required inputs before submission is allowed.
+    - Job seekers should provide evidence on why they think they are suitable for a particular job.
+    - Job seekers are not able to apply for a particular job after its advertisement has closed. 
+    - Job seekers can attach additional documents through an 'upload button'.
+
+* As an employer, I would like to be able to analyse job applications so that I obtain a greater understanding on how suitable a candidate is.
+
+    - Employers are able to view the details of each job application.
+    - Job applications should be arranged from most to least appropriate depending on how well they meet the employer’s requirements through a sorting algorithm.
+
+* As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.
+
+    - After analysing all job applications, the most appropriate candidates receive interview invitations.
+    - The number of interview invitations sent is determined by the employer through a form.
+    - An employer can send job interview invitations through a 'send interview' button.
+
+
+* As a job seeker, I would like to be able to accept job interview invitations so that I have the opportunity to further demonstrate to employers why I should be employed.
+
+    - Job seekers can accept interview invitations if they are still interested in the job through an 'accept button'.
+    - If job seekers are not interested anymore, they can also choose to decline the interview invitation through a 'decline button'.
+    - Employers are able to see whether an interview invitation is accepted or declined.
+
+* As an employer, I would like to be able to send job offers so that job seekers can choose to commence work for my company.
+
+    - Employers send job offers to the most suitable candidate(s) after the interview stage though a 'send offer' button.
+    - Job seekers must have received a job interview from an employer for that particular job first before they can receive a job offer.
+
+
+* As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.
+
+    - Job seekers can accept job offers if they desire to start a particular job by pressing an 'accept button'.
+    - If they do not desire to start a particular job, job seekers are also able to decline the job offer by pressing a 'decline button'.
+    - Employers are able to see whether a job offer is accepted or declined.
+
+
 ## System Architecture
 ![](assets/software_architecture.png)
 
