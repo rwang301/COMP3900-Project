@@ -135,26 +135,26 @@ The novelty of both job seekers and employers only being able to see jobs/job ap
   - Employers must also be able to specify additional inputs that each application should have for an advertised position including the requirement for a resume, cover letter, written references, and/or copies of required qualifications as pdf attachments.
 
 * As a job seeker, I would like to be able to search for all available jobs so that I know everything which employers are currently offering.
-  - Jobs seekers must be able to search for roles that interest them, with the search criteria they enter being able to identify positions that match on description, responsibilities, location, employment type, and/or remuneration.
+  - Job seekers must be able to search for roles that interest them, with the search criteria they enter being able to identify positions that match on description, responsibilities, location, employment type, and/or remuneration.
 
 * As a job seeker, I would like to be able to apply for jobs so that I have the opportunity to be employed in the future.
-  - Each job seeker must be able to submit an application for an open advertised position, and include all inputs required by employers, and an indication of which of the required qualifications and experience required by the position the job-seeker thinks they satisfy.
+  - Each job seeker must be able to submit an application for an open advertised position, and include all inputs required by employers, and an indication of which of the required qualifications and experience required by the position the job seeker thinks they satisfy.
 
 * As an employer, I would like to be able to analyse job applications so that I obtain a greater understanding on how suitable a candidate is.
-  - Employers must be able to see all application details for any advertised position, with applications sorted from most suitable to least suitable, at least according to job-seeker indications of suitability based on qualifications/experience noted as satisfied.
+  - Employers must be able to see all application details for any advertised position, with applications sorted from most suitable to least suitable, at least according to job seeker indications of suitability based on qualifications/experience noted as satisfied.
   - Once the closing date elapses for a job advertisement, employers must be able to re-order associated job application, and request that interview invitations be sent out to the top X number of applications (where X is defined by the employer) on selected interview dates.
 
 * As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.
   - Employers must be able to make an offer to any applicants for a job advertisement, at which stage an offer letter is generated (which can include custom fields from the employer on details like remuneration), and sent to the relevant job seekers.
 
 * As a job seeker, I would like to be able to accept job interview invitations so that I have the opportunity to further demonstrate to employers why I should be employed.
-  - Job seekers must be able to accept or decline interview invitations or offers, and employers must be able to see such accept or decline outcomes.
+  - Job seekers must be able to accept or decline interview invitations or offers, and employers must be able to see accepted and declined outcomes.
 
 * As an employer, I would like to be able to send job offers so that job seekers can choose to commence work for my company.
   - Employers must be able to make an offer to any applicants for a job advertisement, at which stage an offer letter is generated (which can include custom fields from the employer on details like remuneration), and sent to the relevant job seekers.
 
 * As a job seeker, I would like to be able to accept job offers so that I can commence work for a particular company.
-  - Job seekers must be able to accept or decline interview invitations or offers, and employers must be able to see such accept or decline outcomes.
+  - Job seekers must be able to accept or decline interview invitations or offers, and employers must be able to see accepted and declined outcomes.
 
 ## Storyboard
 
