@@ -19,12 +19,16 @@ function App() {
         <h1>Recruit Assistant</h1>
         <h2>Find your dream job today. Without the hassle.</h2>
         <section id="button-container">
-          <button>Sign Up</button>
-          <button>Login</button>
+          <Button>Sign Up</Button>
+          <Button>Login</Button>
         </section>
       </main>
     </div>
   );
+}
+
+function Button(props) {
+  return <button className="primary-button">{props.children}</button>
 }
 
 export default App;

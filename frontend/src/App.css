@@ -1,6 +1,6 @@
 .App {
   background-color: #282c34;
-  color: white;
+  color: whitesmoke;
   min-height: 100vh;
   padding: 0 10%;
 }
@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: whitesmoke;
 }
 
 .App-logo {
@@ -79,16 +79,20 @@
   justify-content: space-between;
 }
 
-#button-container > button {
+.primary-button {
   max-width: 20vmin;
   width: 20vmin;
   height: 8vmin;
   font-size: 3vmin;
   border-radius: 5px;
+  background: whitesmoke;
+  color: black;
+  border: 3px solid darkcyan;
 }
 
-#button-container > button:hover {
+.primary-button:hover {
   font-weight: bold;
   background: black;
-  color: white;
+  color: whitesmoke;
+  border: 1px solid whitesmoke;
 }
