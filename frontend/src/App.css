@@ -1,9 +1,22 @@
 .App {
-  text-align: center;
+  background-color: #282c34;
+  color: white;
+  min-height: 100vh;
+  padding: 0 10%;
+}
+
+.App-header {
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 20vmin;
+  width: 20vmin;
   pointer-events: none;
 }
 
@@ -13,21 +26,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +33,62 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#profile, #button-container > button {
+  cursor: pointer;
+}
+
+#profile {
+  display: flex;
+  align-items: center;
+}
+
+#profile > p {
+  color: goldenrod;
+  font-weight: bold;
+  font-size: 3vmin;
+}
+
+#profile > img {
+  height: 5vmin;
+}
+
+#main {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#main > h1, h2 {
+  margin: 0;
+}
+
+#main > h1 {
+  font-size: 10vmin;
+}
+
+#main > h2 {
+  font-size: 4vmin;
+}
+
+#button-container {
+  width: 45vmin;
+  display: flex;
+  justify-content: space-between;
+}
+
+#button-container > button {
+  max-width: 20vmin;
+  width: 20vmin;
+  height: 8vmin;
+  font-size: 3vmin;
+  border-radius: 5px;
+}
+
+#button-container > button:hover {
+  font-weight: bold;
+  background: black;
+  color: white;
 }

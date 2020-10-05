@@ -84,7 +84,7 @@ We aim to have 3 sprints, with each sprint's timing corresponding to each demo. 
   - Job seekers can browse for jobs through a searchbar.
   - Job seekers can search for specific jobs according to inputted criteria such as description, responsibilities, location, employment type and/or remuneration.
   - Job seekers can search by pressing the 'enter' key on their keyboard or pressing the 'find jobs' button.
-  - **_Jobs are displayed to job seekers one at a time._**
+  - **Jobs are displayed to job seekers one at a time.**
   - Jobs can be saved if job seekers are interested in them.
   - If a particular job is not interesting to a job seeker, job seekers can view the next job by using the ‘right arrow’ key or by pressing the ‘next button’.
   - If a job seeker wants to visit a previous job, they can press the ‘left arrow key’ or by pressing the ‘previous button’.
@@ -101,7 +101,7 @@ We aim to have 3 sprints, with each sprint's timing corresponding to each demo. 
 
   - Employers are able to view the details of each job application.
   - Job applications should be arranged from most to least appropriate depending on how well they meet the employer’s requirements through a sorting algorithm.
-  - **_Employers view jobs one at a time._**
+  - **Employers view jobs one at a time.**
 
 - As an employer, I would like to be able to send job interview invitations so that I have the opportunity to learn more about suitable candidates.
 
@@ -219,7 +219,6 @@ This software is Unix (MacOS, Linux and any Unix like Operating System) compatib
 <br />
 <br />
 <br />
-
 
 ## Reference
 * SEEK. n.d. [online] Available at: <https://www.seek.com.au/> [Accessed 4 October 2020].
