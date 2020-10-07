@@ -4,7 +4,7 @@ const sqlite = require('sqlite3');
 const port = 8000;
 const app = express();
 app.use(require('cors')());
-const db = new sqlite.Database('./db/test.sqlite3', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
+const db = new sqlite.Database('./db/example.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
 app.get('/', (req, res) => {
     console.log('root');
