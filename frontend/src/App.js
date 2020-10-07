@@ -1,8 +1,20 @@
 import React from 'react';
 import Nav from "./components/Nav";
+import Main from "./components/Main";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import './App.css';
 
 function App() {
+  const [state, setState] = React.useState('main');
+  const setMain = () => setState('main');
+  const setRegister = () => setState('register');
+  const setLogin = () => setState('login');
+  const states = {
+    main: <Main setRegister={setRegister} setLogin={setLogin} />,
+    login: <Login setRegister={setRegister} setMain={setMain} />,
+    register: <Register setLogin={setLogin} setMain={setMain} />
+  };
   React.useEffect(() => {
     async function post(params) {
       const options = {
@@ -15,23 +27,13 @@ function App() {
     post();
     fetch("http://localhost:8000").then(res => res.json()).then(data => console.log(data));
   }, []);
+
   return (
     <div className="App">
       <Nav />
-      <main id="main">
-        <h1>Recruit Assistant</h1>
-        <h2>Find your dream job today. Without the hassle.</h2>
-        <section id="button-container">
-          <Button>Sign Up</Button>
-          <Button>Login</Button>
-        </section>
-      </main>
+      {states[state]}
     </div>
   );
-}
-
-function Button(props) {
-  return <button className="primary-button">{props.children}</button>
 }
 
 export default App;

@@ -35,10 +35,6 @@
   }
 }
 
-#profile, #button-container > button {
-  cursor: pointer;
-}
-
 #profile {
   display: flex;
   align-items: center;
