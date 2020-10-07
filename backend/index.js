@@ -1,27 +1,25 @@
 const express = require('express');
 const sqlite = require('sqlite3')
+
+const port = 5000;
+const app = express();
+app.use(require('cors')());
 const db = new sqlite.Database('./database.db');
 
-const app = express();
-const port = 3000;
-
-app.get('/', () => {
+app.get('/', (req, res) => {
     console.log("homepage");
-    return {};
+    res.send({});
 });
 
-app.get('/users', () => {
+app.get('/users', (req, res) => {
     console.log("users");
-    return {};
+    res.send({});
 });
 
 app.post('/user/update', (req, res) => {
     console.log('update');
-    return {};
+    res.send({});
 });
 
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
-
+app.listen(port);
 db.close();
