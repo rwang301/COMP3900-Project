@@ -6,9 +6,13 @@ function App() {
   React.useEffect(() => {
     async function post(params) {
       const options = {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({name: 'kaiqi'})
       }
-      const response = await fetch('http://localhost:8000/user/update', options);
+      const response = await fetch('http://localhost:8000/user/add', options);
       const json = await response.json();
       console.log(json);
     }

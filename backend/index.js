@@ -12,18 +12,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-    console.log('users');
-    res.send({status: 200, data: getUsers(db)});
+    const sql = 'select * from users';
+    db.all(sql, [], (err, row) => {
+        if (err) {
+            console.log(err.message);
+        } else {
+            res.send({status: 200, data: row});
+        }
+    });
 });
 
-app.post('/user/update', (req, res) => {
-    console.log('update');
+app.post('/user/add', (req, res) => {
+    console.log(req.query);
     res.send({status: 200});
 });
 
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
-
-function getUsers(db) {
-    const sql = 'select * from users';
-    db.all(sql, [], (err, row) => err ? console.log(err.message) : row);
-}
