@@ -1,0 +1,8 @@
+Week 1
+Group formed with my other 3 teammates. We discussed which project we would like to do. Ultimately it came down to the investment project and the Recruit Assistant. We decided in a span of 10 weeks and realistically only 7 weeks of development an investment platform would be too difficult. We also produced a good idea for Recruit Assistant which we aim to take advantage of. 
+
+Week 2
+This week we were fleshing out ideas for Recruit Assistant. We decided on our novelty which was to make a Job matching platform for Employers and Job Seekers in the mould of a Tinder-type matching process. After research, we found there our app was quite distinct from what we found on the internet. We also begun discussing user stories and delegated roles for the upcoming proposal.
+
+Week 3
+I was assigned to do the Storyboarding for the proposal. I picked up skills such as Figma and balsamiq to create the wireframes. We also delegated who will be responsible for front end and back end, kaiqi and I will be doing front end. Our technology stack will be Reactjs, ExpressJs with SQLite.
