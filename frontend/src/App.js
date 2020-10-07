@@ -4,7 +4,16 @@ import './App.css';
 
 function App() {
   React.useEffect(() => {
-    fetch("http://localhost:5000").then(res => res.json()).then(data => console.log(data));
+    async function post(params) {
+      const options = {
+        method: 'POST'
+      }
+      const response = await fetch('http://localhost:8000/user/update', options);
+      const json = await response.json();
+      console.log(json);
+    }
+    post();
+    fetch("http://localhost:8000").then(res => res.json()).then(data => console.log(data));
   }, []);
   return (
     <div className="App">
