@@ -8,8 +8,8 @@ export default function Login(props) {
     <main>
       <h1>Welcome Back!</h1>
       <Form id="login">
-        <Input id="Email" type="email" />
-        <Input id="Password" type="password" />
+        <Input type="email" id="Email" />
+        <Input type="password" id="Password" />
       </Form>
       <p onClick={props.setRegister}>New around here? No worries, come sign up here</p>
       <Button>Login</Button>

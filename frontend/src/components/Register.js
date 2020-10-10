@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from './Button';
+import Form from './Form';
+import Input from './Input';
 
 export default function Register(props) {
   React.useEffect(() => {
@@ -23,17 +25,17 @@ export default function Register(props) {
   return (
     <main>
       <h1>Sign Up</h1>
-      <form id="register">
-        <input type="text" placeholder="First Name"></input>
-        <input type="text" placeholder="First Name"></input>
-        <input type="email" placeholder="Email Address"></input>
-        <input type="password" placeholder="Password"></input>
-        <input type="password" placeholder="Confirm Password"></input>
+      <Form id="register">
+        <Input type="text" id="First Name" />
+        <Input type="text" id="First Name" />
+        <Input type="email" id="Email Address" />
+        <Input type="password" id="Password" />
+        <Input type="password" id="Confirm Password" />
         <input type="radio" id="seeker" name="role"></input>
         <label for="seeker">I'm looking for a job</label>
         <input type="radio" id="employer" name="role"></input>
         <label for="employer">I'm an Employer</label>
-      </form>
+      </Form>
       <p onClick={props.setLogin}>Already had an account? No worries, come login here</p>
       <Button>Register</Button>
       <Button onClick={props.setMain}>Back</Button>
