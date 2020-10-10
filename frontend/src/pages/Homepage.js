@@ -1,9 +1,17 @@
 import React from 'react';
+import styled from "styled-components";
 import Nav from '../components/Nav';
 import Main from '../components/Main';
 import Login from '../components/Login';
 import Register from '../components/Register';
-import '../App.css';
+
+const Div = styled.div`
+  background-color: #282c34;
+  color: whitesmoke;
+  min-height: 100vh;
+  padding: 5% 10%;
+  box-sizing: border-box;
+`;
 
 export default function Homepage() {
   const [state, setState] = React.useState('main');
@@ -15,27 +23,10 @@ export default function Homepage() {
     login: <Login setRegister={setRegister} setMain={setMain} />,
     register: <Register setLogin={setLogin} setMain={setMain} />
   };
-  React.useEffect(() => {
-    async function post(params) {
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({name: 'kaiqi'})
-      }
-      const response = await fetch('http://localhost:8000/user/add', options);
-      const json = await response.json();
-      console.log(json);
-    }
-    post();
-    fetch("http://localhost:8000").then(res => res.json()).then(data => console.log(data));
-  }, []);
-
   return (
-    <div className="App">
+    <Div>
       <Nav />
       {states[state]}
-    </div>
+    </Div>
   );
 }
