@@ -6,3 +6,6 @@ This week we were fleshing out ideas for Recruit Assistant. We decided on our no
 
 Week 3
 I was assigned to do the Storyboarding for the proposal. I picked up skills such as Figma and balsamiq to create the wireframes. We also delegated who will be responsible for front end and back end, kaiqi and I will be doing front end. Our technology stack will be Reactjs, ExpressJs with SQLite.
+
+Week 4
+Begun coding the front end for Sprint 1, have organised a stand up meeting on Saturday to check progress of everyone. Have organised the GitHub repository and divided tickets to do. 
