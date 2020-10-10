@@ -17,10 +17,12 @@ export default function Login(props) {
   }
 
   async function login() {
-    if (!email || !password) {
-      alert('Please enter all the fields');
-    } else if (!isEmailValid(email)) {
+    if (!isEmailValid(email)) {
       alert('Please enter a valid email');
+    } else if (!password) {
+      alert('Please enter your password');
+    } else if (password.length < 3) {
+      alert('Password must be at least 3 characters long');
     } else {
       const data = {email: email, password: password};
       const options = {

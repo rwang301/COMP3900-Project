@@ -36,10 +36,14 @@ export default function Register(props) {
   }
 
 	async function register() {
-    if (!name || !email || !password || !confirmPassword) {
-      alert('Please enter all the fields');
+    if (!/^([A-Z][a-z]{1,} ){1,}[A-Z][a-z]{1,}$/.test(name)) {
+      alert('Please enter a valid name');
     } else if (!isEmailValid(email)) {
       alert('Please enter a valid email');
+    } else if (!password) {
+      alert('Please enter your password');
+    } else if (password.length < 3) {
+      alert('Password must be at least 3 characters long');
     } else if (password !== confirmPassword) {
       alert('Password does not match');
     } else {
