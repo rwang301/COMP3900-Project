@@ -21,7 +21,7 @@ app.post('/auth/login', (req, res) => {
         if (err) {
             console.log(err.message);
         } else {
-            const [email, password] = req.body;
+            const {email, password} = req.body;
             if (users.length === 0) res.send({status: 403});
             users.forEach(user => {
                 if (user.email === email && user.password === password) {
