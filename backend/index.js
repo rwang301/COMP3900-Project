@@ -8,7 +8,7 @@ app.use(require('cors')());
 app.use(bodyParser.json());
 
 const port = 8000;
-const db = new sqlite.Database('./db/example.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
+const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
 app.get('/', (req, res) => {
     console.log('root');
@@ -20,23 +20,42 @@ app.post('/auth/login', (req, res) => {
     db.all(sql, [], (err, users) => {
         if (err) {
             console.log(err.message);
+            res.send({status: 500});
+            return;
         } else {
             const {email, password} = req.body;
-            if (users.length === 0) res.send({status: 403});
-            users.forEach(user => {
+            if (users.length === 0) {
+                res.send({status: 403});
+                return;
+            }
+            for (const user of users) {
                 if (user.email === email && user.password === password) {
                     res.send({status: 200});
+                    return;
                 }
-            })
+            }
             res.send({status: 403});
         }
     });
 });
 
 app.post('/auth/register', (req, res) => {
-    const {name, email, password} = req.body;
-    db.run(`insert into Users values (${name}, ${email}, ${password})`);
-    res.send({status: 200});
+    const {name, email, password, employer} = req.body;
+    const sql = `select email from users where email = '${email}'`;
+    db.get(sql, [], (err, user) => {
+        if (err) {
+            console.log(err.message);
+            res.send({status: 500});
+            return;
+        } else {
+            if (user) {// if user already exists
+                res.send({status: 403});
+            } else {
+                db.run(`insert into Users values ('${name}', '${email}', '${password}', '${employer}')`);
+                res.send({status: 200});
+            }
+        }
+    });
 });
 
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
