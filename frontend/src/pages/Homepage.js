@@ -6,7 +6,7 @@ import Register from '../components/Register';
 import '../App.css';
 
 export default function Homepage() {
-  const [state, setState] = React.useState('main');
+  const [state, setState] = React.useState('login');
   const setMain = () => setState('main');
   const setRegister = () => setState('register');
   const setLogin = () => setState('login');
