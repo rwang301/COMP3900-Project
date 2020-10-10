@@ -1,9 +1,12 @@
 const express = require('express');
 const sqlite = require('sqlite3');
+const bodyParser = require('body-parser');
 
-const port = 8000;
 const app = express();
 app.use(require('cors')());
+app.use(bodyParser.json());
+
+const port = 8000;
 const db = new sqlite.Database('./db/example.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
 app.get('/', (req, res) => {
@@ -23,7 +26,7 @@ app.get('/users', (req, res) => {
 });
 
 app.post('/user/add', (req, res) => {
-    console.log(req.query);
+    console.log(req.body);
     res.send({status: 200});
 });
 
