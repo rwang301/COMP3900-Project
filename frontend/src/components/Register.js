@@ -83,11 +83,4 @@ export default function Register(props) {
       />
     </Main>
   )
-
-  /*
-  React.useEffect(() => {
-    post();
-    fetch("http://localhost:8000").then(res => res.json()).then(data => console.log(data));
-  }, []);
-  */
 }

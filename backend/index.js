@@ -10,31 +10,23 @@ app.use(bodyParser.json());
 const port = 8000;
 const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
-app.get('/', (req, res) => {
-    console.log('root');
-    res.send({status: 200});
-});
-
 app.post('/auth/login', (req, res) => {
     const sql = 'select * from users';
     db.all(sql, [], (err, users) => {
         if (err) {
             console.log(err.message);
             res.send({status: 500});
-            return;
         } else {
             const {email, password} = req.body;
-            if (users.length === 0) {
-                res.send({status: 403});
-                return;
-            }
-            for (const user of users) {
-                if (user.email === email && user.password === password) {
-                    res.send({status: 200});
-                    return;
+            if (users.length) {// if there are users in the database
+                for (const user of users) {
+                    if (user.email === email && user.password === password) {
+                        res.send({status: 200});
+                        return;
+                    }
                 }
-            }
-            res.send({status: 403});
+                res.send({status: 403});
+            } else res.send({status: 403});
         }
     });
 });
@@ -46,7 +38,6 @@ app.post('/auth/register', (req, res) => {
         if (err) {
             console.log(err.message);
             res.send({status: 500});
-            return;
         } else {
             if (user) {// if user already exists
                 res.send({status: 403});
