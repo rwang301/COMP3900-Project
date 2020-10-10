@@ -34,8 +34,8 @@ export default function Login(props) {
     <Main>
       <Header>Welcome Back!</Header>
       <Form id="login">
-        <Input type="email" id="Email" value={email} onChange={handleEmailChange} />
-        <Input type="password" id="Password" value={password} onChange={handlePasswordChange} />
+        <Input type="email" id="Email" value={email} handleChange={handleEmailChange} />
+        <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
       </Form>
       <Link onClick={props.setRegister}>New around here? No worries, come sign up here</Link>
       <Buttons
