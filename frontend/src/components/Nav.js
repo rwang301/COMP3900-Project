@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../assets/logo.svg';
-import lock from "../assets/lock.svg";
+import lock from '../assets/lock.svg';
 
 export default function Nav() {
   return (
