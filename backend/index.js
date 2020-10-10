@@ -15,28 +15,25 @@ app.get('/', (req, res) => {
     res.send({status: 200});
 });
 
-app.get('/users', (req, res) => {
+app.post('/auth/login', (req, res) => {
     const sql = 'select * from users';
-    db.all(sql, [], (err, row) => {
+    db.all(sql, [], (err, users) => {
         if (err) {
             console.log(err.message);
         } else {
-            res.send({status: 200, data: row});
+            res.send({status: 200, data: users});
         }
     });
-});
-
-app.post('/auth/login', (req, res) => {
     console.log(req.body);
     res.send({status: 200});
 });
 
 app.post('/auth/register', (req, res) => {
-    console.log(req.body);
+    const {name, email, password} = req.body;
+    db.run(`insert into Users values (${name}, ${email}, ${password})`);
     res.send({status: 200});
 });
 
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
 
-const dataSql = fs.readFileSync("./db/users.sql").toString();
-db.run(dataSql);
+db.run(fs.readFileSync("./db/users.sql").toString());
