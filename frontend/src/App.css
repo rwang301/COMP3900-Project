@@ -74,21 +74,3 @@
   display: flex;
   justify-content: space-between;
 }
-
-.primary-button {
-  max-width: 20vmin;
-  width: 20vmin;
-  height: 8vmin;
-  font-size: 3vmin;
-  border-radius: 5px;
-  background: whitesmoke;
-  color: black;
-  border: 3px solid darkcyan;
-}
-
-.primary-button:hover {
-  font-weight: bold;
-  background: black;
-  color: whitesmoke;
-  border: 1px solid whitesmoke;
-}

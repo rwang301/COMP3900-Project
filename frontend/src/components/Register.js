@@ -2,6 +2,24 @@ import React from 'react';
 import Button from './Button';
 
 export default function Register(props) {
+  React.useEffect(() => {
+    async function post(params) {
+      const data = {name: 'kaiqi'};
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      }
+      const response = await fetch('http://localhost:8000/user/add', options);
+      const json = await response.json();
+      console.log(json);
+    }
+    post();
+    fetch("http://localhost:8000").then(res => res.json()).then(data => console.log(data));
+  }, []);
+
   return (
     <main>
       <h1>Sign Up</h1>
@@ -16,7 +34,7 @@ export default function Register(props) {
         <input type="radio" id="employer" name="role"></input>
         <label for="employer">I'm an Employer</label>
       </form>
-      <p onClick={props.setLogin}>Already had an account? No worries, come login up here</p>
+      <p onClick={props.setLogin}>Already had an account? No worries, come login here</p>
       <Button>Register</Button>
       <Button onClick={props.setMain}>Back</Button>
     </main>

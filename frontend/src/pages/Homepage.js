@@ -15,22 +15,6 @@ export default function Homepage() {
     login: <Login setRegister={setRegister} setMain={setMain} />,
     register: <Register setLogin={setLogin} setMain={setMain} />
   };
-  React.useEffect(() => {
-    async function post(params) {
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({name: 'kaiqi'})
-      }
-      const response = await fetch('http://localhost:8000/user/add', options);
-      const json = await response.json();
-      console.log(json);
-    }
-    post();
-    fetch("http://localhost:8000").then(res => res.json()).then(data => console.log(data));
-  }, []);
 
   return (
     <div className="App">
