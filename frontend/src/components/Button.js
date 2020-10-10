@@ -18,6 +18,6 @@ export default function Button(props) {
       color: whitesmoke;
       border: 1px solid whitesmoke;
     }
-  `
+  `;
   return <PrimaryButton onClick={props.onClick}>{props.children}</PrimaryButton>
 }
