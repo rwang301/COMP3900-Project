@@ -1,13 +1,14 @@
 const express = require('express');
 const sqlite = require('sqlite3');
 const bodyParser = require('body-parser');
+const fs = require("fs");
 
 const app = express();
 app.use(require('cors')());
 app.use(bodyParser.json());
 
 const port = 8000;
-const db = new sqlite.Database('./db/example.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
+const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
 app.get('/', (req, res) => {
     console.log('root');
@@ -31,3 +32,6 @@ app.post('/user/add', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
+
+const dataSql = fs.readFileSync("./db/users.sql").toString();
+db.run(dataSql);
