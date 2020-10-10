@@ -25,7 +25,12 @@ app.get('/users', (req, res) => {
     });
 });
 
-app.post('/user/add', (req, res) => {
+app.post('/auth/login', (req, res) => {
+    console.log(req.body);
+    res.send({status: 200});
+});
+
+app.post('/auth/register', (req, res) => {
     console.log(req.body);
     res.send({status: 200});
 });

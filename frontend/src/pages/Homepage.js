@@ -5,8 +5,16 @@ import Main from '../components/Main';
 import Login from '../components/Login';
 import Register from '../components/Register';
 
+const Div = styled.div`
+  background-color: #282c34;
+  color: whitesmoke;
+  min-height: 100vh;
+  padding: 5% 10%;
+  box-sizing: border-box;
+`;
+
 export default function Homepage() {
-  const [state, setState] = React.useState('login');
+  const [state, setState] = React.useState('main');
   const setMain = () => setState('main');
   const setRegister = () => setState('register');
   const setLogin = () => setState('login');
@@ -15,14 +23,6 @@ export default function Homepage() {
     login: <Login setRegister={setRegister} setMain={setMain} />,
     register: <Register setLogin={setLogin} setMain={setMain} />
   };
-
-  const Div = styled.div`
-    background-color: #282c34;
-    color: whitesmoke;
-    min-height: 100vh;
-    padding: 0 10%;
-  `;
-
   return (
     <Div>
       <Nav />
