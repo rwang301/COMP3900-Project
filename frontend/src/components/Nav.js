@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import logo from '../assets/logo.svg';
 import lock from '../assets/lock.svg';
 import profile from '../assets/profile.svg';
+import { useLocation } from 'react-router-dom';
 
 const Header = styled.header`
   height: 20vh;
@@ -23,6 +24,7 @@ const spin = keyframes`
 `;
 
 const Img = styled.img`
+  flex: 1;
   height: 20vmin;
   width: 20vmin;
   pointer-events: none;
@@ -32,15 +34,30 @@ const Img = styled.img`
   }
 `;
 
+const Section = styled.section`
+  display: flex;
+  justify-content: space-evenly;
+  flex: 3;
+`;
+
+const Paragraph = styled.p`
+  font-size: 2vw;
+`;
+
+const Active = styled(Paragraph)`
+  border: 2px solid aqua;
+  border-radius: 5px;
+  padding: 0 10px 3px 10px;
+`;
+
 export default function Nav(props) {
-  const Section = styled.section`
+  const Div = styled.div`
     display: flex;
     align-items: center;
 
     & > p {
       color: ${props.login ? 'skyblue' : 'red'};
       font-weight: bold;
-      font-size: 3vmin;
     }
 
     & > img {
@@ -48,13 +65,25 @@ export default function Nav(props) {
     }
   `;
 
+  const location = useLocation().pathname.slice(1);
+  const tabs = (location === 'employer' || location === 'jobSeek') && (
+    <>
+      <Active>Home</Active>
+      <Paragraph>My Matches</Paragraph>
+      {location === 'employer' ? <Paragraph>Recruit Now</Paragraph> : <Paragraph>Apply Now</Paragraph>}
+    </>
+  );
+
   return (
     <Header>
       <Img src={logo} alt="logo" />
-      <Section id="profile">
-        <p>My Profile</p>
-        &nbsp;
-        <img src={props.login ? profile : lock} alt="Lock"></img>
+      <Section>
+        {tabs}
+        <Div>
+          <Paragraph>My Profile</Paragraph>
+          &nbsp;
+          <img src={props.login ? profile : lock} alt="Lock"></img>
+        </Div>
       </Section>
     </Header>
   )
