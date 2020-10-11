@@ -1,4 +1,6 @@
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Main = styled.main`
   display: flex;
@@ -10,12 +12,17 @@ const Form = styled.form`
   width: 50vmin;
 `;
 
-const Link = styled.a`
-  cursor: pointer;
+const Anchor = styled(Link)`
   font-size: 2vmin;
-  margin: 3vmin 0 5vmin 0;
-  text-decoration: underline;
+  margin-bottom: 2vmin;
+  color: white;
 `;
+
+function Href(props) {
+  return (
+    <Anchor to={props.route}>{props.children}</Anchor>
+  )
+}
 
 const Header = styled.h1`
   font-size: 3em;
@@ -26,4 +33,4 @@ const isEmailValid = (email) => {// eslint-disable-next-line
   return pattern.test(email);
 }
 
-export { Main, Header, Form, Link, isEmailValid };
+export { Main, Header, Form, Href, isEmailValid };

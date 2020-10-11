@@ -21,16 +21,16 @@ const Main = styled.main`
   }
 `;
 
-export default function Home(props) {
+export default function Home() {
   return (
     <Main>
       <h1>Recruit Assistant</h1>
       <h2>Find your dream job today. Without the hassle.</h2>
       <Buttons
-        onClickHandler1={props.setRegister}
-        onClickHandler2={props.setLogin}
-        innerText1="Register"
-        innerText2="Login"
+        primaryRoute='register'
+        secondaryRoute='login'
+        primaryInnerText='Register'
+        secondaryInnerText='Login'
       />
     </Main>
   )

@@ -4,6 +4,7 @@ import styled from "styled-components";
 const OuterContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 2vmin;
 `;
 
 const InnerContainer = styled.div`

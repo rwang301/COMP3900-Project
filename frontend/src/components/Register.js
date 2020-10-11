@@ -1,5 +1,5 @@
 import React from 'react';
-import { Main, Header, Form, Link, isEmailValid } from './Form';
+import { Main, Header, Form, Href, isEmailValid } from './Form';
 import API_URL from '../index';
 import Buttons from './Buttons';
 import Input from './Input';
@@ -54,10 +54,14 @@ export default function Register(props) {
       }
       const response = await fetch(`${API_URL}/auth/register`, options);
       const json = await response.json();
-      if (json.status === 200) props.login() && employer ? props.setEmployer() : props.setJobSeeker();
+      if (json.status === 200) {
+        props.login() //&& employer ? props.setEmployer() : props.setJobSeeker();
+        return 'register';
+      }
       else if (json.status === 400) alert('Email already exists');
       else alert('Oops something went wrong');
     }
+    return '';
 	}
 
   return (
@@ -73,12 +77,12 @@ export default function Register(props) {
           onChangeHandler={handleEmployerChange}
         />
       </Form>
-      <Link onClick={props.setLogin}>Already had an account? No worries, come login here</Link>
+      <Href route='login'>Already had an account? No worries, come login here</Href>
       <Buttons
-        onClickHandler1={register}
-        onClickHandler2={props.setMain}
-        innerText1="Register"
-        innerText2="Back"
+        primaryRoute={register}
+        secondaryRoute='/'
+        primaryInnerText='Register'
+        secondaryInnerText='Back'
       />
     </Main>
   )

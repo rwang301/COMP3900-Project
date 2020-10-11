@@ -1,5 +1,5 @@
 import React from 'react';
-import { Main, Header, Form, Link, isEmailValid } from './Form';
+import { Main, Header, Form, Href, isEmailValid } from './Form';
 import API_URL from '../index';
 import Buttons from './Buttons';
 import Input from './Input';
@@ -35,10 +35,14 @@ export default function Login(props) {
       }
       const response = await fetch(`${API_URL}/auth/login`, options);
       const json = await response.json();
-      if (json.status === 200) props.login() && json.employer ? props.setEmployer() : props.setJobSeeker();
+      if (json.status === 200) {
+        props.login()// && json.employer ? props.setEmployer() : props.setJobSeeker();
+        return 'login';
+      }
       else if (json.status === 403) alert('Incorrect email or password');
       else alert('Oops something went wrong');
     }
+    return '';
   }
 
   return (
@@ -48,12 +52,12 @@ export default function Login(props) {
         <Input type="email" id="Email" value={email} handleChange={handleEmailChange} />
         <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
 	    </Form>
-      <Link onClick={props.setRegister}>New around here? No worries, come sign up here</Link>
+      <Href route='register'>New around here? No worries, come sign up here</Href>
       <Buttons
-        onClickHandler1={login}
-        onClickHandler2={props.setMain}
-        innerText1="Login"
-        innerText2="Back"
+        primaryRoute={login}
+        secondaryRoute="/"
+        primaryInnerText="Login"
+        secondaryInnerText="Back"
       />
     </Main>
   )
