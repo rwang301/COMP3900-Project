@@ -36,8 +36,8 @@ export default function Login(props) {
       const response = await fetch(`${API_URL}/auth/login`, options);
       const json = await response.json();
       if (json.status === 200) {
-        props.login()// && json.employer ? props.setEmployer() : props.setJobSeeker();
-        return 'login';
+        props.login()
+        return json.data ? 'employer' : 'jobSeeker';
       }
       else if (json.status === 403) alert('Incorrect email or password');
       else alert('Oops something went wrong');

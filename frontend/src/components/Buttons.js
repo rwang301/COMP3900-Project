@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 const Section = styled.section`
   width: 50vmin;
@@ -29,14 +29,13 @@ const Button = styled.button`
 export default function Buttons({primaryRoute, secondaryRoute, primaryInnerText, secondaryInnerText}) {
   const [success, setSuccess] = React.useState('');
   async function onClickHandler() {
-    console.log(success);
     setSuccess(await primaryRoute());
-    console.log(success);
   }
 
   let button;
   if (typeof primaryRoute === 'function') {
-    button = success ? <Link to={success}><Button>{primaryInnerText}</Button></Link> : <Button onClick={onClickHandler}>{primaryInnerText}</Button>;
+    if (success) button = <Redirect to={success} />
+    else button = <Button onClick={onClickHandler}>{primaryInnerText}</Button>;
   } else {
     button = (
       <Link to={primaryRoute}>
