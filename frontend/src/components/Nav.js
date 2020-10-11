@@ -40,16 +40,6 @@ const Section = styled.section`
   flex: 3;
 `;
 
-const Paragraph = styled.p`
-  font-size: 2vw;
-`;
-
-const Active = styled(Paragraph)`
-  border: 2px solid aqua;
-  border-radius: 5px;
-  padding: 0 10px 3px 10px;
-`;
-
 export default function Nav(props) {
   const Div = styled.div`
     display: flex;
@@ -65,12 +55,23 @@ export default function Nav(props) {
     }
   `;
 
-  const location = useLocation().pathname.slice(1);
-  const tabs = (location === 'employer' || location === 'jobSeek') && (
+  const Paragraph = styled.p`
+    font-size: 2vw;
+    visibility: ${props.login ? 'unset' : 'hidden'};
+  `;
+
+  const Active = styled(Paragraph)`
+    border: 2px solid aqua;
+    border-radius: 5px;
+    padding: 0 10px 3px 10px;
+  `;
+
+  const location = useLocation();
+  const tabs = (
     <>
       <Active>Home</Active>
       <Paragraph>My Matches</Paragraph>
-      {location === 'employer' ? <Paragraph>Recruit Now</Paragraph> : <Paragraph>Apply Now</Paragraph>}
+      {location.pathname.slice(1) === 'employer' ? <Paragraph>Recruit Now</Paragraph> : <Paragraph>Apply Now</Paragraph>}
     </>
   );
 
@@ -80,7 +81,7 @@ export default function Nav(props) {
       <Section>
         {tabs}
         <Div>
-          <Paragraph>My Profile</Paragraph>
+          <Paragraph style={{visibility: 'visible'}}>My Profile</Paragraph>
           &nbsp;
           <img src={props.login ? profile : lock} alt="Lock"></img>
         </Div>
