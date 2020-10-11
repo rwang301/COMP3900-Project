@@ -35,7 +35,7 @@ export default function Login(props) {
       }
       const response = await fetch(`${API_URL}/auth/login`, options);
       const json = await response.json();
-      if (json.status === 200) alert('Login successful'); // TODO event handler to switch to homepage
+      if (json.status === 200) props.login() && json.employer ? props.setEmployer() : props.setJobSeeker();
       else if (json.status === 403) alert('Incorrect email or password');
       else alert('Oops something went wrong');
     }

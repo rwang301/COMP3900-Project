@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 const port = 8000;
 const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
-const sendResponse = (response, status, message) => {
-    response.send({status: status});
+const sendResponse = (response, status, message, data) => {
+    response.send({status: status, data: data});
     console.log(message);
 }
 
@@ -25,7 +25,7 @@ app.post('/auth/login', (req, res) => {
             if (users.length) {// if there are users in the database
                 for (const user of users) {
                     if (user.email === email && user.password === password) {
-                        sendResponse(res, 200, 'Successful login');
+                        sendResponse(res, 200, 'Successful login', user.employer);
                         return;
                     }
                 }

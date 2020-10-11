@@ -4,6 +4,8 @@ import Nav from '../components/Nav';
 import Main from '../components/Main';
 import Login from '../components/Login';
 import Register from '../components/Register';
+import Employer from './Employer';
+import JobSeeker from './JobSeeker';
 
 const Div = styled.div`
   background-color: #282c34;
@@ -18,14 +20,23 @@ export default function Homepage() {
   const setMain = () => setState('main');
   const setRegister = () => setState('register');
   const setLogin = () => setState('login');
+  const setEmployer = () => setState('employer');
+  const setJobSeeker = () => setState('jobSeeker');
+
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const login = () => setIsLoggedIn(!isLoggedIn);
+
   const states = {
     main: <Main setRegister={setRegister} setLogin={setLogin} />,
-    login: <Login setRegister={setRegister} setMain={setMain} />,
-    register: <Register setLogin={setLogin} setMain={setMain} />
+    login: <Login setRegister={setRegister} setMain={setMain} setEmployer={setEmployer} setJobSeeker={setJobSeeker} login={login} />,
+    register: <Register setLogin={setLogin} setMain={setMain} setEmployer={setEmployer} setJobSeeker={setJobSeeker} login={login} />,
+    employer: <Employer />,
+    jobSeeker: <JobSeeker />
   };
+
   return (
     <Div>
-      <Nav />
+      <Nav login={isLoggedIn}/>
       {states[state]}
     </Div>
   );

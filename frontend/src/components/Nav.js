@@ -46,14 +46,14 @@ const Section = styled.section`
   }
 `;
 
-export default function Nav() {
+export default function Nav(props) {
   return (
     <Header>
       <Img src={logo} alt="logo" />
       <Section id="profile">
         <p>My Profile</p>
         &nbsp;
-        <img src={lock} alt="Lock"></img>
+        {props.login || <img src={lock} alt="Lock"></img>}
       </Section>
     </Header>
   )

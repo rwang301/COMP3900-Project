@@ -30,16 +30,16 @@ const Label = styled.label`
   }
 `;
 
-export default function Radios({employer, handleEmployerChange, jobSeeker, handleJobSeekerChange}) {
+export default function Radios({value, onChangeHandler}) {
   return (
     <OuterContainer>
       <InnerContainerEmployer>
-        <input type="radio" id="employer" name="role" checked={employer} onChange={handleEmployerChange} />
+        <input type="radio" id="employer" name="role" checked={value} onChange={onChangeHandler} />
         &nbsp;
         <Label htmlFor="employer">I'm an Employer</Label>
       </InnerContainerEmployer>
       <InnerContainerJobSeeker>
-        <input type="radio" id="seeker" name="role" checked={jobSeeker} onChange={handleJobSeekerChange} />
+        <input type="radio" id="seeker" name="role" checked={!value} onChange={onChangeHandler} />
         &nbsp;
         <Label htmlFor="seeker">I'm looking for a job</Label>
       </InnerContainerJobSeeker>

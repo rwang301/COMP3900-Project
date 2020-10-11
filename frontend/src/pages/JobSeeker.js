@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Employer() {
+export default function JobSeeker() {
   return (
     <>
     </>

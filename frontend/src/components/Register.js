@@ -11,7 +11,6 @@ export default function Register(props) {
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [employer, setEmployer] = React.useState(true);
-  const [jobSeeker, setJobSeeker] = React.useState(false);
 	
 	const handleNameChange = (event) => {
     setName(event.target.value);
@@ -31,10 +30,6 @@ export default function Register(props) {
 
 	const handleEmployerChange = () => {
     setEmployer(!employer);
-  }
-
-	const handleJobSeekerChange = () => {
-    setJobSeeker(!jobSeeker);
   }
 
 	async function register() {
@@ -59,7 +54,7 @@ export default function Register(props) {
       }
       const response = await fetch(`${API_URL}/auth/register`, options);
       const json = await response.json();
-      if (json.status === 200) alert('Register successful');// TODO event handler to switch to homepage
+      if (json.status === 200) props.login() && employer ? props.setEmployer() : props.setJobSeeker();
       else if (json.status === 400) alert('Email already exists');
       else alert('Oops something went wrong');
     }
@@ -74,10 +69,8 @@ export default function Register(props) {
         <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
         <Input type="password" id="Confirm Password" value={confirmPassword} handleChange={handleConfirmPasswordChange} />
         <Radios
-          employer={employer}
-          jobSeeker={jobSeeker}
-          handleEmployerChange={handleEmployerChange}
-          handleJobSeekerChange={handleJobSeekerChange}
+          value={employer}
+          onChangeHandler={handleEmployerChange}
         />
       </Form>
       <Link onClick={props.setLogin}>Already had an account? No worries, come login here</Link>
