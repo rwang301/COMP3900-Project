@@ -51,7 +51,7 @@ export default function Nav(props) {
     }
 
     & > img {
-      height: 5vmin;
+      height: 3vw;
     }
   `;
 

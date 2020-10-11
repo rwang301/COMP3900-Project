@@ -1,8 +1,8 @@
 import React from 'react';
-import { Main, Header, Form, Href, isEmailValid } from './Form';
+import { Main, Header, Form, Href, isEmailValid } from '../components/Form';
 import API_URL from '../index';
-import Buttons from './Buttons';
-import Input from './Input';
+import Buttons from '../components/Buttons';
+import Input from '../components/Input';
 
 export default function Login(props) {
 

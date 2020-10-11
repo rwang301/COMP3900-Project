@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Buttons from './Buttons';
+import Buttons from '../components/Buttons';
 
 const Main = styled.main`
   height: 50vh;
@@ -13,11 +13,11 @@ const Main = styled.main`
   }
 
   & > h1 {
-    font-size: 10vmin;
+    font-size: 8vw;
   }
 
   & > h2 {
-    font-size: 4vmin;
+    font-size: 3vw;
   }
 `;
 
