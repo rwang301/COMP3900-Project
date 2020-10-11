@@ -32,22 +32,22 @@ const Img = styled.img`
   }
 `;
 
-const Section = styled.section`
-  display: flex;
-  align-items: center;
-
-  & > p {
-    color: goldenrod;
-    font-weight: bold;
-    font-size: 3vmin;
-  }
-
-  & > img {
-    height: 5vmin;
-  }
-`;
-
 export default function Nav(props) {
+  const Section = styled.section`
+    display: flex;
+    align-items: center;
+
+    & > p {
+      color: ${props.login ? 'skyblue' : 'red'};
+      font-weight: bold;
+      font-size: 3vmin;
+    }
+
+    & > img {
+      height: 5vmin;
+    }
+  `;
+
   return (
     <Header>
       <Img src={logo} alt="logo" />
