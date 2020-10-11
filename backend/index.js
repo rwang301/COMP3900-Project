@@ -10,23 +10,27 @@ app.use(bodyParser.json());
 const port = 8000;
 const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
+const sendResponse = (response, status, message) => {
+    response.send({status: status});
+    console.log(message);
+}
+
 app.post('/auth/login', (req, res) => {
     const sql = 'select * from users';
     db.all(sql, [], (err, users) => {
         if (err) {
-            console.log(err.message);
-            res.send({status: 500});
+            sendResponse(res, 500, err.message);
         } else {
             const {email, password} = req.body;
             if (users.length) {// if there are users in the database
                 for (const user of users) {
                     if (user.email === email && user.password === password) {
-                        res.send({status: 200});
+                        sendResponse(res, 200, 'Successful login');
                         return;
                     }
                 }
-                res.send({status: 403});
-            } else res.send({status: 403});
+                sendResponse(res, 403, 'User does not exist');
+            } else sendResponse(res, 403, 'User does not exist');
         }
     });
 });
@@ -36,14 +40,13 @@ app.post('/auth/register', (req, res) => {
     const sql = `select email from users where email = '${email}'`;
     db.get(sql, [], (err, user) => {
         if (err) {
-            console.log(err.message);
-            res.send({status: 500});
+            sendResponse(res, 500, err.message);
         } else {
-            if (user) {// if user already exists
-                res.send({status: 403});
+            if (user) {// if user with email already exists
+                sendResponse(res, 400, `${email} already exists`);
             } else {
                 db.run(`insert into Users values ('${name}', '${email}', '${password}', '${employer}')`);
-                res.send({status: 200});
+                sendResponse(res, 200, `Inserted ${name} into the database`);
             }
         }
     });
