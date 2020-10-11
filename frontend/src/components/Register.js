@@ -64,7 +64,7 @@ export default function Register(props) {
     <Main>
       <Header>Sign Up</Header>
       <Form id="register">
-        <Input type="text" id="Name" value={name} handleChange={handleNameChange} />
+        <Input type="text" id="Full Name" value={name} handleChange={handleNameChange} />
         <Input type="email" id="Email Address" value={email} handleChange={handleEmailChange} />
         <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
         <Input type="password" id="Confirm Password" value={confirmPassword} handleChange={handleConfirmPasswordChange} />

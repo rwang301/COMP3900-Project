@@ -16,7 +16,7 @@ const Div = styled.div`
 `;
 
 export default function Homepage() {
-  const [state, setState] = React.useState('main');
+  const [state, setState] = React.useState('employer');
   const setMain = () => setState('main');
   const setRegister = () => setState('register');
   const setLogin = () => setState('login');
@@ -36,8 +36,8 @@ export default function Homepage() {
 
   return (
     <Div>
-      <Nav login={isLoggedIn}/>
-      {states[state]}
+      <Nav login={isLoggedIn} currState={state}/>
+      {states['employer']}
     </Div>
   );
 }
