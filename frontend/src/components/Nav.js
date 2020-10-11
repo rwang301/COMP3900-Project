@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { keyframes } from "styled-components";
 import logo from '../assets/logo.svg';
 import lock from '../assets/lock.svg';
+import profile from '../assets/profile.svg';
 
 const Header = styled.header`
   height: 20vh;
@@ -53,7 +54,7 @@ export default function Nav(props) {
       <Section id="profile">
         <p>My Profile</p>
         &nbsp;
-        {props.login || <img src={lock} alt="Lock"></img>}
+        <img src={props.login ? profile : lock} alt="Lock"></img>
       </Section>
     </Header>
   )
