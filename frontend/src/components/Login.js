@@ -1,6 +1,7 @@
 import React from 'react';
-import Buttons from './Buttons';
 import { Main, Header, Form, Link, isEmailValid } from './Form';
+import API_URL from '../index';
+import Buttons from './Buttons';
 import Input from './Input';
 
 export default function Login(props) {
@@ -32,14 +33,11 @@ export default function Login(props) {
         },
         body: JSON.stringify(data)
       }
-      const response = await fetch('http://localhost:8000/auth/login', options);
+      const response = await fetch(`${API_URL}/auth/login`, options);
       const json = await response.json();
-      console.log(json);
-      if (json.status === 200) {
-        alert("Successful Login");
-      } else {
-        alert("Email and/or Password is incorrect!");
-      }
+      if (json.status === 200) alert('Login successful'); // TODO event handler to switch to homepage
+      else if (json.status === 403) alert('Incorrect email or password');
+      else alert('Oops something went wrong');
     }
   }
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import Buttons from './Buttons';
 import { Main, Header, Form, Link, isEmailValid } from './Form';
+import API_URL from '../index';
+import Buttons from './Buttons';
 import Input from './Input';
 import Radios from './Radios';
 
@@ -56,9 +57,11 @@ export default function Register(props) {
         },
         body: JSON.stringify(data)
       }
-      const response = await fetch('http://localhost:8000/auth/register', options);
+      const response = await fetch(`${API_URL}/auth/register`, options);
       const json = await response.json();
-      console.log(json)
+      if (json.status === 200) alert('Register successful');// TODO event handler to switch to homepage
+      else if (json.status === 400) alert('Email already exists');
+      else alert('Oops something went wrong');
     }
 	}
 
