@@ -2,6 +2,7 @@ import React from 'react';
 import Buttons from './Buttons';
 import { Main, Header, Form, Link, isEmailValid } from './Form';
 import Input from './Input';
+import Radios from './Radios';
 
 export default function Register(props) {
 	const [name, setName] = React.useState('');
@@ -69,10 +70,12 @@ export default function Register(props) {
         <Input type="email" id="Email Address" value={email} handleChange={handleEmailChange} />
         <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
         <Input type="password" id="Confirm Password" value={confirmPassword} handleChange={handleConfirmPasswordChange} />
-        <input type="radio" id="employer" name="role" checked={employer} onChange={handleEmployerChange} />
-        <label htmlFor="employer">I'm an Employer</label>
-        <input type="radio" id="seeker" name="role" checked={jobSeeker} onChange={handleJobSeekerChange} />
-        <label htmlFor="seeker">I'm looking for a job</label>
+        <Radios
+          employer={employer}
+          jobSeeker={jobSeeker}
+          handleEmployerChange={handleEmployerChange}
+          handleJobSeekerChange={handleJobSeekerChange}
+        />
       </Form>
       <Link onClick={props.setLogin}>Already had an account? No worries, come login here</Link>
       <Buttons
