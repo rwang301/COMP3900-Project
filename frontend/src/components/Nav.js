@@ -4,6 +4,7 @@ import logo from '../assets/logo.svg';
 import lock from '../assets/lock.svg';
 import profile from '../assets/profile.svg';
 import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = styled.header`
   height: 20vh;
@@ -78,7 +79,7 @@ const Active = styled(Paragraph)`
   font-weight: bold;
 `;
 
-export default function Nav({login}) {
+export default function Nav({login, logout}) {
   const location = useLocation();
   const tabs = (
     <>
@@ -93,11 +94,13 @@ export default function Nav({login}) {
       <Img src={logo} alt="logo" />
       <Section>
         {tabs}
-        <Div login={login}>
-          <Paragraph login={login} visible={true}>My Profile</Paragraph>
-          &nbsp;
-          <img src={login ? profile : lock} alt="Lock"></img>
-        </Div>
+        <Link style={{textDecoration: 'none'}} to='/'>
+          <Div login={login} onClick={login ? logout : undefined}>
+            <Paragraph login={login} visible={true}>My Profile</Paragraph>
+            &nbsp;
+            <img src={login ? profile : lock} alt="Lock"></img>
+          </Div>
+        </Link>
       </Section>
     </Header>
   )

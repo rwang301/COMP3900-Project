@@ -10,9 +10,10 @@ import JobSeeker from './pages/JobSeeker';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const login = () => setIsLoggedIn(true);
+  const logout = () => setIsLoggedIn(false);
   return (
     <Router>
-      <Nav login={isLoggedIn}/>
+      <Nav login={isLoggedIn} logout={logout} />
       <Switch>
         <Route
           exact
