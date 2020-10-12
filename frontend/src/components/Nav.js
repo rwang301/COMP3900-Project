@@ -48,6 +48,7 @@ const border = css`
 const Div = styled.div`
   display: flex;
   align-items: center;
+  cursor: ${props => props.login ? 'pointer' : 'unset'};
   ${props => props.login && border}
   border: ${props => {
     if (props.login) {

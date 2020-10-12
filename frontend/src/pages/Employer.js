@@ -3,7 +3,6 @@ import NewMatches from '../components/NewMatches'
 import AppsTable from '../components/AppsTable'
 import styled from "styled-components";
 
-
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;

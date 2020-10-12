@@ -43,25 +43,25 @@ const MatchContainer = styled.div`
 
 
 export default function MatchRow(props) {
-  return <MatchContainer>
-    <Avatar fontSize="large"/>
-    <PersonalDetails>
-      <FullNameText>
-        Kaiqi Liang
-      </FullNameText>
-      <ExperienceText>
-        Software Developer at Google
-      </ExperienceText>
-    </PersonalDetails>
-    <AppliedContainer>
-      <AppliedText>
-        Applied to your listing: 
-      </AppliedText>
-      <AppliedJob>
-        Software Developer at Apple
-      </AppliedJob>
-    </AppliedContainer>
-
-  </MatchContainer>
-
+  return (
+    <MatchContainer>
+      <Avatar fontSize="large"/>
+      <PersonalDetails>
+        <FullNameText>
+          Kaiqi Liang
+        </FullNameText>
+        <ExperienceText>
+          Software Developer at Google
+        </ExperienceText>
+      </PersonalDetails>
+      <AppliedContainer>
+        <AppliedText>
+          Applied to your listing: 
+        </AppliedText>
+        <AppliedJob>
+          Software Developer at Apple
+        </AppliedJob>
+      </AppliedContainer>
+    </MatchContainer>
+  )
 }
