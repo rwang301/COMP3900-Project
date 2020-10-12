@@ -19,7 +19,7 @@ const TitleText = styled.p`
 
 export default function NewMatches() {
   return <MatchesContainer>
-    <TitleText>New Matches!</TitleText>
+    <TitleText>New Matches</TitleText>
     <MatchRow/>
     <MatchRow/>
     <MatchRow/>
