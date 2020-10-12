@@ -69,7 +69,7 @@ export default function Nav({login}) {
   const location = useLocation();
   const tabs = (
     <>
-      <Active>Home</Active>
+      <Active login={login}>Home</Active>
       <Paragraph login={login}>My Matches</Paragraph>
       {location.pathname.slice(1) === 'employer' ? <Paragraph login={login}>Recruit Now</Paragraph> : <Paragraph login={login}>Apply Now</Paragraph>}
     </>
