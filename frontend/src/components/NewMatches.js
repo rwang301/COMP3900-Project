@@ -7,7 +7,7 @@ const MatchesContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 5vh 3vh 5vh;
-  border: 5px solid white;
+  /* border: 5px solid white; */
   border-radius: 3px;
   width: 75%;
 `;
