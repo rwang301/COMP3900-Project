@@ -58,7 +58,7 @@ export default function Register(props) {
         // implicit error checking
         if (json.status === 200) {
           props.login();
-          return employer ? 'employer' : 'jobSeeker';
+          return employer ? 'employer' : 'job-seeker';
         } else if (json.status === 400) {
           alert('Email already exists');
         } else {
