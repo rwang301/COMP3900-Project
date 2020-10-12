@@ -18,9 +18,17 @@ const ExperienceText = styled.p`
   font-style: italic;
 `;
 
-const AppliedText = styled.p`
-  /* font-size: 3vw; */
+const AppliedContainer = styled.div`
   flex: 2;
+`
+
+const AppliedText = styled.p`
+  
+`;
+
+const AppliedJob = styled.p`
+  /* font-size: 3vw; */
+  text-decoration: underline;
 `;
 
 const MatchContainer = styled.div`
@@ -45,9 +53,15 @@ export default function MatchRow(props) {
         Software Developer at Google
       </ExperienceText>
     </PersonalDetails>
-    <AppliedText>
-      Applied to your: Software Developer at Apple
-    </AppliedText>
+    <AppliedContainer>
+      <AppliedText>
+        Applied to your listing: 
+      </AppliedText>
+      <AppliedJob>
+        Software Developer at Apple
+      </AppliedJob>
+    </AppliedContainer>
+
   </MatchContainer>
 
 }
