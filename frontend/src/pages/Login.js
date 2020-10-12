@@ -39,7 +39,7 @@ export default function Login(props) {
         // implicit error checking
         if (json.status === 200) {
           props.login();
-          return json.data ? 'employer' : 'jobSeeker';
+          return json.data === 'true' ? 'employer' : 'job-seeker';
         } else if (json.status === 403) {
           alert('Incorrect email or password');
         } else {
