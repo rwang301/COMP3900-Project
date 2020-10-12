@@ -46,7 +46,7 @@ export default function Login(props) {
           alert('Oops something went wrong');
         }
       } catch (error) {
-        console.error(error.message);
+        console.warn(error.message);
       }
     }
     return '';

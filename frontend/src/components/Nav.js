@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import logo from '../assets/logo.svg';
 import lock from '../assets/lock.svg';
 import profile from '../assets/profile.svg';
@@ -40,9 +40,22 @@ const Section = styled.section`
   flex: 3;
 `;
 
+const border = css`
+  border-radius: 5px;
+  padding: 0 2vw;
+`;
+
 const Div = styled.div`
   display: flex;
   align-items: center;
+  ${props => props.login && border}
+  border: ${props => {
+    if (props.login) {
+      return '2px solid aqua';
+    } else {
+      return 'unset';
+    }
+  }};
 
   & > p {
     color: ${props => props.login ? 'skyblue' : 'red'};
@@ -60,9 +73,8 @@ const Paragraph = styled.p`
 `;
 
 const Active = styled(Paragraph)`
-  border: 2px solid aqua;
-  border-radius: 5px;
-  padding: 0 10px 3px 10px;
+  color: aqua;
+  font-weight: bold;
 `;
 
 export default function Nav({login}) {
