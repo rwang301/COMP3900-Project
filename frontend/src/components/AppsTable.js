@@ -44,7 +44,7 @@ const DefaultButton = css`
   border-radius: 3px;
   height: 3vh;
   width: 6vh;
-  font-size: 0.9vw;
+  font-size: 0.8vw;
   font-weight: bold;
 
   &:hover {
