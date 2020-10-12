@@ -40,38 +40,38 @@ const Section = styled.section`
   flex: 3;
 `;
 
-export default function Nav(props) {
-  const Div = styled.div`
-    display: flex;
-    align-items: center;
+const Div = styled.div`
+  display: flex;
+  align-items: center;
 
-    & > p {
-      color: ${props.login ? 'skyblue' : 'red'};
-      font-weight: bold;
-    }
+  & > p {
+    color: ${props => props.login ? 'skyblue' : 'red'};
+    font-weight: bold;
+  }
 
-    & > img {
-      height: 3vw;
-    }
-  `;
+  & > img {
+    height: 3vw;
+  }
+`;
 
-  const Paragraph = styled.p`
-    font-size: 2vw;
-    visibility: ${props.login ? 'unset' : 'hidden'};
-  `;
+const Paragraph = styled.p`
+  font-size: 2vw;
+  visibility: ${props => props.login || props.visible ? 'unset' : 'hidden'};
+`;
 
-  const Active = styled(Paragraph)`
-    border: 2px solid aqua;
-    border-radius: 5px;
-    padding: 0 10px 3px 10px;
-  `;
+const Active = styled(Paragraph)`
+  border: 2px solid aqua;
+  border-radius: 5px;
+  padding: 0 10px 3px 10px;
+`;
 
+export default function Nav({login}) {
   const location = useLocation();
   const tabs = (
     <>
       <Active>Home</Active>
-      <Paragraph>My Matches</Paragraph>
-      {location.pathname.slice(1) === 'employer' ? <Paragraph>Recruit Now</Paragraph> : <Paragraph>Apply Now</Paragraph>}
+      <Paragraph login={login}>My Matches</Paragraph>
+      {location.pathname.slice(1) === 'employer' ? <Paragraph login={login}>Recruit Now</Paragraph> : <Paragraph login={login}>Apply Now</Paragraph>}
     </>
   );
 
@@ -80,10 +80,10 @@ export default function Nav(props) {
       <Img src={logo} alt="logo" />
       <Section>
         {tabs}
-        <Div>
-          <Paragraph style={{visibility: 'visible'}}>My Profile</Paragraph>
+        <Div login={login}>
+          <Paragraph login={login} visible={true}>My Profile</Paragraph>
           &nbsp;
-          <img src={props.login ? profile : lock} alt="Lock"></img>
+          <img src={login ? profile : lock} alt="Lock"></img>
         </Div>
       </Section>
     </Header>

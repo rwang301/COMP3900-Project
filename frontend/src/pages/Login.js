@@ -33,14 +33,18 @@ export default function Login(props) {
         },
         body: JSON.stringify(data)
       }
-      const response = await fetch(`${API_URL}/auth/login`, options);
-      const json = await response.json();
-      if (json.status === 200) {
-        props.login()
-        return json.data ? 'employer' : 'jobSeeker';
+      try {
+        const response = await fetch(`${API_URL}/auth/login`, options);
+        const json = await response.json();
+        if (json.status === 200) {
+          props.login()
+          return json.data ? 'employer' : 'jobSeeker';
+        }
+        else if (json.status === 403) alert('Incorrect email or password');
+        else alert('Oops something went wrong');
+      } catch (error) {
+        console.warn(error.message);
       }
-      else if (json.status === 403) alert('Incorrect email or password');
-      else alert('Oops something went wrong');
     }
     return '';
   }

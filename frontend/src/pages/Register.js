@@ -52,14 +52,18 @@ export default function Register(props) {
         },
         body: JSON.stringify(data)
       }
-      const response = await fetch(`${API_URL}/auth/register`, options);
-      const json = await response.json();
-      if (json.status === 200) {
-        props.login();
-        return employer ? 'employer' : 'jobSeeker';
+      try {
+        const response = await fetch(`${API_URL}/auth/register`, options);
+        const json = await response.json();
+        if (json.status === 200) {
+          props.login();
+          return employer ? 'employer' : 'jobSeeker';
+        }
+        else if (json.status === 400) alert('Email already exists');
+        else alert('Oops something went wrong');
+      } catch (error) {
+        alert(error.message);
       }
-      else if (json.status === 400) alert('Email already exists');
-      else alert('Oops something went wrong');
     }
     return '';
 	}
