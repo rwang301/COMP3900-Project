@@ -6,8 +6,6 @@ import profile from '../assets/profile.svg';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-
-
 const Div = styled.div`
   display: flex;
   align-items: center;
