@@ -15,3 +15,11 @@ code {
 button {
   cursor: pointer;
 }
+
+#root {
+  background-color: #282c34;
+  color: whitesmoke;
+  min-height: 100vh;
+  padding: 5% 10%;
+  box-sizing: border-box;
+}

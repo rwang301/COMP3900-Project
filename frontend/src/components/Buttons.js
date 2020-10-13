@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import { Link, Redirect } from 'react-router-dom';
 
 const Section = styled.section`
   width: 50vmin;
@@ -25,11 +26,32 @@ const Button = styled.button`
   }
 `;
 
-export default function Buttons(props) {
-    return (
-      <Section>
-        <Button onClick={props.onClickHandler1}>{props.innerText1}</Button>
-        <Button onClick={props.onClickHandler2}>{props.innerText2}</Button>
-      </Section>
+export default function Buttons({primaryRoute, secondaryRoute, primaryInnerText, secondaryInnerText}) {
+  const [success, setSuccess] = React.useState('');
+  async function onClickHandler() {
+    setSuccess(await primaryRoute());
+  }
+
+  let button;
+  if (typeof primaryRoute === 'function') {
+    if (success) button = <Redirect to={success} />
+    else button = <Button onClick={onClickHandler}>{primaryInnerText}</Button>;
+  } else {
+    button = (
+      <Link to={primaryRoute}>
+        <Button>{primaryInnerText}</Button>
+      </Link>
     )
+  }
+
+  return (
+    <Section>
+      {button}
+      <Link to={`${secondaryRoute}`}>
+        <Button>
+          {secondaryInnerText}
+        </Button>
+      </Link>
+    </Section>
+  )
 }

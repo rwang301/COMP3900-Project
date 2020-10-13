@@ -1,8 +1,42 @@
 import React from 'react';
-import Homepage from './pages/Homepage';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Nav from './components/Nav'
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Employer from './pages/Employer';
+import JobSeeker from './pages/JobSeeker';
 
 function App() {
-  return <Homepage />;
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const login = () => setIsLoggedIn(true);
+  const logout = () => setIsLoggedIn(false);
+  return (
+    <Router>
+      <Nav login={isLoggedIn} logout={logout} />
+      <Switch>
+        <Route exact path="/login">
+          <Login login={login} />
+        </Route>
+
+        <Route exact path="/register">
+          <Register login={login} />
+        </Route>
+
+        <Route exact path="/employer">
+          <Employer />
+        </Route>
+
+        <Route exact path="/job-seeker">
+          <JobSeeker />
+        </Route>
+
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
+  )
 }
 
 export default App;

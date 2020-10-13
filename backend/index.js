@@ -10,33 +10,49 @@ app.use(bodyParser.json());
 const port = 8000;
 const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
-app.get('/', (req, res) => {
-    console.log('root');
-    res.send({status: 200});
-});
+const sendResponse = (response, status, message, data) => {
+    response.status(status);
+    response.send({data: data});
+    console.log(message);
+}
 
-app.get('/users', (req, res) => {
+app.post('/auth/login', (req, res) => {
     const sql = 'select * from users';
-    db.all(sql, [], (err, row) => {
+    db.all(sql, [], (err, users) => {
         if (err) {
-            console.log(err.message);
+            sendResponse(res, 500, err.message);
         } else {
-            res.send({status: 200, data: row});
+            const {email, password} = req.body;
+            if (users.length) {// if there are users in the database
+                for (const user of users) {
+                    if (user.email === email && user.password === password) {
+                        sendResponse(res, 200, 'Successful login', user.employer);
+                        return;
+                    }
+                }
+                sendResponse(res, 403, 'User does not exist');
+            } else sendResponse(res, 403, 'User does not exist');
         }
     });
 });
 
-app.post('/auth/login', (req, res) => {
-    console.log(req.body);
-    res.send({status: 200});
-});
-
 app.post('/auth/register', (req, res) => {
-    console.log(req.body);
-    res.send({status: 200});
+    const {name, email, password, employer} = req.body;
+    const sql = `select email from users where email = '${email}'`;
+    db.get(sql, [], (err, user) => {
+        if (err) {
+            sendResponse(res, 500, err.message);
+        } else {
+            if (user) {// if user with email already exists
+                sendResponse(res, 409, `${email} already exists`);
+            } else {
+                db.run(`insert into Users values ('${name}', '${email}', '${password}', '${employer}')`);
+                sendResponse(res, 200, `Inserted ${name} into the database`);
+            }
+        }
+    });
 });
 
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
 
-const dataSql = fs.readFileSync("./db/users.sql").toString();
-db.run(dataSql);
+db.run(fs.readFileSync("./db/users.sql").toString());
