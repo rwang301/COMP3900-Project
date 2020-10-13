@@ -1,7 +1,8 @@
 import React from 'react';
 import styled, { keyframes } from "styled-components";
 import logo from '../assets/logo.svg';
-import lock from '../assets/lock.svg';
+import { useLocation } from 'react-router-dom';
+import NavDropdown from './NavDropdown';
 
 const Header = styled.header`
   height: 20vh;
@@ -22,6 +23,7 @@ const spin = keyframes`
 `;
 
 const Img = styled.img`
+  flex: 1;
   height: 20vmin;
   width: 20vmin;
   pointer-events: none;
@@ -33,27 +35,36 @@ const Img = styled.img`
 
 const Section = styled.section`
   display: flex;
-  align-items: center;
-
-  & > p {
-    color: goldenrod;
-    font-weight: bold;
-    font-size: 3vmin;
-  }
-
-  & > img {
-    height: 5vmin;
-  }
+  justify-content: space-evenly;
+  flex: 3;
 `;
 
-export default function Nav() {
+const Paragraph = styled.p`
+  font-size: 2vw;
+  visibility: ${props => props.login || props.visible ? 'unset' : 'hidden'};
+`;
+
+const Active = styled(Paragraph)`
+  color: aqua;
+  font-weight: bold;
+`;
+
+export default function Nav({login, logout}) {
+  const location = useLocation();
+  const tabs = (
+    <>
+      <Active login={login}>Home</Active>
+      <Paragraph login={login}>My Matches</Paragraph>
+      {location.pathname.slice(1) === 'employer' ? <Paragraph login={login}>Recruit Now</Paragraph> : <Paragraph login={login}>Apply Now</Paragraph>}
+      <NavDropdown login={login} logout={logout}/>
+    </>
+  );
+
   return (
     <Header>
       <Img src={logo} alt="logo" />
-      <Section id="profile">
-        <p>My Profile</p>
-        &nbsp;
-        <img src={lock} alt="Lock"></img>
+      <Section>
+        {tabs}
       </Section>
     </Header>
   )

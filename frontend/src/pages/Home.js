@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Buttons from './Buttons';
+import Buttons from '../components/Buttons';
 
 const Main = styled.main`
   height: 50vh;
@@ -13,24 +13,24 @@ const Main = styled.main`
   }
 
   & > h1 {
-    font-size: 10vmin;
+    font-size: 8vw;
   }
 
   & > h2 {
-    font-size: 4vmin;
+    font-size: 3vw;
   }
 `;
 
-export default function Home(props) {
+export default function Home() {
   return (
     <Main>
       <h1>Recruit Assistant</h1>
       <h2>Find your dream job today. Without the hassle.</h2>
       <Buttons
-        onClickHandler1={props.setRegister}
-        onClickHandler2={props.setLogin}
-        innerText1="Register"
-        innerText2="Login"
+        primaryRoute='register'
+        secondaryRoute='login'
+        primaryInnerText='Register'
+        secondaryInnerText='Login'
       />
     </Main>
   )

@@ -1,7 +1,9 @@
 import React from 'react';
-import Buttons from './Buttons';
-import { Main, Header, Form, Link, isEmailValid } from './Form';
-import Input from './Input';
+import { Main, Header, Form, Href, isEmailValid } from '../components/Form';
+import API_URL from '../index';
+import Buttons from '../components/Buttons';
+import Input from '../components/Input';
+import Radios from '../components/Radios';
 
 export default function Register(props) {
 	const [name, setName] = React.useState('');
@@ -9,7 +11,6 @@ export default function Register(props) {
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [employer, setEmployer] = React.useState(true);
-  const [jobSeeker, setJobSeeker] = React.useState(false);
 	
 	const handleNameChange = (event) => {
     setName(event.target.value);
@@ -29,10 +30,6 @@ export default function Register(props) {
 
 	const handleEmployerChange = () => {
     setEmployer(!employer);
-  }
-
-	const handleJobSeekerChange = () => {
-    setJobSeeker(!jobSeeker);
   }
 
 	async function register() {
@@ -55,10 +52,22 @@ export default function Register(props) {
         },
         body: JSON.stringify(data)
       }
-      const response = await fetch('http://localhost:8000/auth/register', options);
-      const json = await response.json();
-      console.log(json)
+      try {// explicit error checking
+        const response = await fetch(`${API_URL}/auth/register`, options);
+        // implicit error checking
+        if (response.status === 200) {
+          props.login();
+          return employer ? 'employer' : 'job-seeker';
+        } else if (response.status === 409) {
+          alert('Email already exists');
+        } else {
+          alert('Oops something went wrong');
+        }
+      } catch (error) {
+        console.warn(error.message);
+      }
     }
+    return '';
 	}
 
   return (
@@ -69,17 +78,17 @@ export default function Register(props) {
         <Input type="email" id="Email Address" value={email} handleChange={handleEmailChange} />
         <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
         <Input type="password" id="Confirm Password" value={confirmPassword} handleChange={handleConfirmPasswordChange} />
-        <input type="radio" id="employer" name="role" checked={employer} onChange={handleEmployerChange} />
-        <label htmlFor="employer">I'm an Employer</label>
-        <input type="radio" id="seeker" name="role" checked={jobSeeker} onChange={handleJobSeekerChange} />
-        <label htmlFor="seeker">I'm looking for a job</label>
+        <Radios
+          value={employer}
+          onChangeHandler={handleEmployerChange}
+        />
       </Form>
-      <Link onClick={props.setLogin}>Already had an account? No worries, come login here</Link>
+      <Href route='login'>Already had an account? No worries, come login here</Href>
       <Buttons
-        onClickHandler1={register}
-        onClickHandler2={props.setMain}
-        innerText1="Register"
-        innerText2="Back"
+        primaryRoute={register}
+        secondaryRoute='/'
+        primaryInnerText='Register'
+        secondaryInnerText='Back'
       />
     </Main>
   )

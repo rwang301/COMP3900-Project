@@ -1,7 +1,8 @@
 import React from 'react';
-import Buttons from './Buttons';
-import { Main, Header, Form, Link, isEmailValid } from './Form';
-import Input from './Input';
+import { Main, Header, Form, Href, isEmailValid } from '../components/Form';
+import API_URL from '../index';
+import Buttons from '../components/Buttons';
+import Input from '../components/Input';
 
 export default function Login(props) {
 
@@ -32,15 +33,23 @@ export default function Login(props) {
         },
         body: JSON.stringify(data)
       }
-      const response = await fetch('http://localhost:8000/auth/login', options);
-      const json = await response.json();
-      console.log(json);
-      if (json.status === 200) {
-        alert("Successful Login");
-      } else {
-        alert("Email and/or Password is incorrect!");
+      try {// explicit error checking
+        const response = await fetch(`${API_URL}/auth/login`, options);
+        // implicit error checking
+        if (response.status === 200) {
+          const json = await response.json();
+          props.login();
+          return json.data === 'true' ? 'employer' : 'job-seeker';
+        } else if (response.status === 403) {
+          alert('Incorrect email or password');
+        } else {
+          alert('Oops something went wrong');
+        }
+      } catch (error) {
+        console.warn(error.message);
       }
     }
+    return '';
   }
 
   return (
@@ -50,12 +59,12 @@ export default function Login(props) {
         <Input type="email" id="Email" value={email} handleChange={handleEmailChange} />
         <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
 	    </Form>
-      <Link onClick={props.setRegister}>New around here? No worries, come sign up here</Link>
+      <Href route='register'>New around here? No worries, come sign up here</Href>
       <Buttons
-        onClickHandler1={login}
-        onClickHandler2={props.setMain}
-        innerText1="Login"
-        innerText2="Back"
+        primaryRoute={login}
+        secondaryRoute="/"
+        primaryInnerText="Login"
+        secondaryInnerText="Back"
       />
     </Main>
   )
