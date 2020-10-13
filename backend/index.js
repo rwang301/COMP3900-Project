@@ -11,7 +11,8 @@ const port = 8000;
 const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
 const sendResponse = (response, status, message, data) => {
-    response.send({status: status, data: data});
+    response.status(status);
+    response.send({data: data});
     console.log(message);
 }
 

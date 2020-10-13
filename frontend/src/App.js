@@ -15,39 +15,24 @@ function App() {
     <Router>
       <Nav login={isLoggedIn} logout={logout} />
       <Switch>
-        <Route
-          exact
-          path="/"
-        >
-          <Home />
-        </Route>
-
-        <Route
-          exact
-          path="/login"
-        >
+        <Route exact path="/login">
           <Login login={login} />
         </Route>
 
-        <Route
-          exact
-          path="/register"
-        >
+        <Route exact path="/register">
           <Register login={login} />
         </Route>
 
-        <Route
-          exact
-          path="/employer"
-        >
+        <Route exact path="/employer">
           <Employer />
         </Route>
 
-        <Route
-          exact
-          path="/job-seeker"
-        >
+        <Route exact path="/job-seeker">
           <JobSeeker />
+        </Route>
+
+        <Route path="/">
+          <Home />
         </Route>
       </Switch>
     </Router>
