@@ -8,7 +8,7 @@ import Employer from './pages/Employer';
 import JobSeeker from './pages/JobSeeker';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const login = () => setIsLoggedIn(true);
   const logout = () => setIsLoggedIn(false);
   return (

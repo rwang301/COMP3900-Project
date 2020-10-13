@@ -54,7 +54,7 @@ const DropdownMenu = styled.div`
     border: 10px solid transparent;
     border-bottom-color: #f9f9f9;
     border-top: 0;
-    margin-top: -0.61vw;
+    margin-top: -0.5vw;
     z-index: 3;
   };
 `;
