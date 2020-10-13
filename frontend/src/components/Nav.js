@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import logo from '../assets/logo.svg';
 import { useLocation } from 'react-router-dom';
 import NavDropdown from './NavDropdown';
@@ -37,11 +37,6 @@ const Section = styled.section`
   display: flex;
   justify-content: space-evenly;
   flex: 3;
-`;
-
-const border = css`
-  border-radius: 5px;
-  padding: 0 2vw;
 `;
 
 const Paragraph = styled.p`
