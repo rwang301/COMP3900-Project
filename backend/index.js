@@ -43,7 +43,7 @@ app.post('/auth/register', (req, res) => {
             sendResponse(res, 500, err.message);
         } else {
             if (user) {// if user with email already exists
-                sendResponse(res, 400, `${email} already exists`);
+                sendResponse(res, 409, `${email} already exists`);
             } else {
                 db.run(`insert into Users values ('${name}', '${email}', '${password}', '${employer}')`);
                 sendResponse(res, 200, `Inserted ${name} into the database`);

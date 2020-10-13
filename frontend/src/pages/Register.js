@@ -59,7 +59,7 @@ export default function Register(props) {
         if (json.status === 200) {
           props.login();
           return employer ? 'employer' : 'job-seeker';
-        } else if (json.status === 400) {
+        } else if (json.status === 409) {
           alert('Email already exists');
         } else {
           alert('Oops something went wrong');
