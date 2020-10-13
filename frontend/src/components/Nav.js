@@ -44,8 +44,6 @@ const border = css`
   padding: 0 2vw;
 `;
 
-
-
 const Paragraph = styled.p`
   font-size: 2vw;
   visibility: ${props => props.login || props.visible ? 'unset' : 'hidden'};
@@ -63,6 +61,7 @@ export default function Nav({login, logout}) {
       <Active login={login}>Home</Active>
       <Paragraph login={login}>My Matches</Paragraph>
       {location.pathname.slice(1) === 'employer' ? <Paragraph login={login}>Recruit Now</Paragraph> : <Paragraph login={login}>Apply Now</Paragraph>}
+      <NavDropdown login={login} logout={logout}/>
     </>
   );
 
@@ -71,7 +70,6 @@ export default function Nav({login, logout}) {
       <Img src={logo} alt="logo" />
       <Section>
         {tabs}
-        <NavDropdown login={login} logout={logout}/>
       </Section>
     </Header>
   )

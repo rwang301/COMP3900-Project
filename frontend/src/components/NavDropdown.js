@@ -32,41 +32,13 @@ const Paragraph = styled.p`
 const DropdownArrow = styled.div`
   border: solid white;
   border-width: 0 3px 3px 0;
-  //display: inline-block;
   padding: 3px;
   display: ${props => props.login ? 'unset' : 'none'};
   transform: rotate(45deg);
 `;
 
-const DropdownLink = styled(Link)`
-  /* position: relative;
-  display: inline-block; */
-  text-decoration: none;
-`;
-
-const Dropdown = styled.div`
-  
-`;
-
-// const DropdownTriangle = styled.div`
-//   position: absolute;
-//   top: 4.9vw;
-// 	left: 11.4vw;
-// 	width: 0;
-// 	height: 0;
-// 	border: 8px solid transparent;
-// 	border-bottom-color: #f9f9f9;
-// 	border-top: 0;
-//   /* margin-top: 5vw;
-//   margin-left: 5.2vw; */
-//   /* box-shadow: 0px 4px 8px 0px #bababa; */
-//   z-index: 1;
-// `;
-
-
-
 const DropdownMenu = styled.div`
-  display: block;
+  display: none;
   position: absolute;
   background-color: #f9f9f9;
   box-shadow: 0px 4px 8px 0px #bababa;
@@ -78,17 +50,18 @@ const DropdownMenu = styled.div`
     content: '';
     position: absolute;
     top: 0;
-    right: 1vmin;
+    right: 1.8vmin;
     width: 0;
     height: 0;
     border: 10px solid transparent;
-    border-bottom-color: inherit;
+    border-bottom-color: #f9f9f9;
     border-top: 0;
-    margin-top: -0.63vw;
+    margin-top: -0.61vw;
     z-index: 3;
   };
+`;
 
-  & > a {
+  const DropdownLink = styled(Link)`
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -99,10 +72,7 @@ const DropdownMenu = styled.div`
     &:hover{
       background-color: #c6f5f7;
     };
-
-
-  }
-`;
+  `;
 
 const Wrapper = styled.div`
   position: relative;
@@ -114,35 +84,32 @@ const Wrapper = styled.div`
 
 const OptionText = styled.p`
     font-size: 1vw;
+    color: ${props => props.logout ? '#f05656' : '#408bed'};
 `;
 
 export default function NavDropdown(props) {
   return (
     <Wrapper>
-      {/* <DropdownLink to='/'> */}
-        <Div login={props.login} onClick={props.login ? props.logout : undefined}>
+        <Div login={props.login}>
           <img src={props.login ? profile : lock} alt="Lock"></img>
           <Paragraph login={props.login} visible={true}>My Profile</Paragraph>
           &nbsp;
           <DropdownArrow login={props.login}/>
         </Div>
-        <DropdownMenu>
-          <a href="">
+        {props.login ? (<DropdownMenu>
+          <DropdownLink href="">
             <OptionText>
               My Account
             </OptionText>
             <AccountBoxIcon/>
-          </a>
-          <a href="">
-            <OptionText>
+          </DropdownLink>
+          <DropdownLink to='/' onClick={props.login ? props.logout : undefined}>
+            <OptionText logout={true} >
               Logout
             </OptionText>
             <ExitToAppIcon/>
-          </a>
-        </DropdownMenu>
-
-
-      {/* </DropdownLink> */}
+          </DropdownLink>
+        </DropdownMenu>) : null}        
     </Wrapper>
   )
 }
