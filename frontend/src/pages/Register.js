@@ -54,12 +54,11 @@ export default function Register(props) {
       }
       try {// explicit error checking
         const response = await fetch(`${API_URL}/auth/register`, options);
-        const json = await response.json();
         // implicit error checking
-        if (json.status === 200) {
+        if (response.status === 200) {
           props.login();
           return employer ? 'employer' : 'job-seeker';
-        } else if (json.status === 400) {
+        } else if (response.status === 409) {
           alert('Email already exists');
         } else {
           alert('Oops something went wrong');

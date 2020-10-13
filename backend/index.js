@@ -11,7 +11,8 @@ const port = 8000;
 const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
 const sendResponse = (response, status, message, data) => {
-    response.send({status: status, data: data});
+    response.status(status);
+    response.send({data: data});
     console.log(message);
 }
 
@@ -43,7 +44,7 @@ app.post('/auth/register', (req, res) => {
             sendResponse(res, 500, err.message);
         } else {
             if (user) {// if user with email already exists
-                sendResponse(res, 400, `${email} already exists`);
+                sendResponse(res, 409, `${email} already exists`);
             } else {
                 db.run(`insert into Users values ('${name}', '${email}', '${password}', '${employer}')`);
                 sendResponse(res, 200, `Inserted ${name} into the database`);
