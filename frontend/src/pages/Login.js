@@ -39,7 +39,7 @@ export default function Login(props) {
         if (response.status === 200) {
           const json = await response.json();
           props.login();
-          return json.data === 'true' ? 'employer' : 'job-seeker';
+          return json.data ? 'employer' : 'job-seeker';
         } else if (response.status === 403) {
           alert('Incorrect email or password');
         } else {
