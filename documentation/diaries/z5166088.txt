@@ -9,3 +9,6 @@ I was assigned to do the Storyboarding for the proposal. I picked up skills such
 
 Week 4
 Begun coding the front end for Sprint 1, have organised a stand up meeting on Saturday to check progress of everyone. Have organised the GitHub repository and divided tickets to do. 
+
+Week 5
+Last week, we had our first iteration of our project due where we demo'd our work in Sprint 1. I managed to complete all intended front end components and fix minor bugs/issues before our presentation. We are now organising a meeting for a Retrospective where we will talk about what was good/bad in Sprint 1. 
