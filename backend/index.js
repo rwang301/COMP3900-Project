@@ -33,18 +33,18 @@ app.post('/auth/login', (req, res) => {
                             } else {
                                 for (const employer of employers) {
                                     if (employer.email === email) {
-                                        sendResponse(res, 200, 'Successful login', true);
+                                        sendResponse(res, 200, 'Successful login as an employer', true);
                                         return;
                                     }
                                 }
-                                sendResponse(res, 200, 'Successful login', false);
+                                sendResponse(res, 200, 'Successful login as a job seeker', false);
                             }
                         });
                         return;
                     }
                 }
-                sendResponse(res, 403, 'User does not exist');
-            } else sendResponse(res, 403, 'User does not exist');
+            }
+            sendResponse(res, 403, 'User does not exist');
         }
     });
 });
@@ -65,6 +65,22 @@ app.post('/auth/register', (req, res) => {
             }
         }
     });
+});
+
+app.get('/matches', (req, res) => {
+    const { token } = req.header;
+    const sql = `select email from users where token = '${token}'`;
+    const data = [];
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            sendResponse(res, 500, err.message);
+        } else {
+            rows.forEach(row => {
+                data.push(row);
+            });
+        }
+    })
+    sendResponse(res, 200, `Getting matches for `, data);
 });
 
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
@@ -145,4 +161,11 @@ create table if not exists Skills (
     job_seeker_email serial,
     foreign key (job_seeker_email) references JobSeekers(email),
     primary key (job_seeker_email, skill)
+)`);
+
+db.run(`
+create table if not exists Matches (
+    application_id serial references Applications(id),
+    job_id serial references Jobs(id),
+    primary key (application_id, job_id)
 )`);
