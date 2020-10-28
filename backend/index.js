@@ -146,3 +146,10 @@ create table if not exists Skills (
     foreign key (job_seeker_email) references JobSeekers(email),
     primary key (job_seeker_email, skill)
 )`);
+
+db.run(`
+create table if not exists Matches (
+    application_id serial references Applications(id),
+    job_id serial references Jobs(id),
+    primary key (application_id, job_id)
+)`);

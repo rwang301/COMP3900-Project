@@ -12,7 +12,8 @@ create table if not exists JobSeekers (
 
 create table if not exists Employers (
     email text primary key,
-    foreign key(email) references Users(email) 
+    foreign key(email) references Users(email)
+    primary key(employer_email, jobseeker_email)
 );
 
 
@@ -40,6 +41,7 @@ create table if not exists Jobs (
     employment_type text not null check (employment_type in ('casual', 'full-time', 'part-time')),
     required_qualification text not null,
     location text not null,
+    job_title text not null,
     primary key(id)
 );
 
@@ -69,4 +71,11 @@ create table if not exists Skills (
     job_seeker_email serial,
     foreign key (job_seeker_email) references JobSeekers(email),
     primary key (job_seeker_email, skill)
-); 
+);
+
+
+create table if not exists Matches (
+    application_id serial references Applications(id),
+    job_id serial references Jobs(id),
+    primary key (application_id, job_id)
+);
