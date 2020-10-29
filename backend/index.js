@@ -67,6 +67,23 @@ app.post('/auth/register', (req, res) => {
     });
 });
 
+app.post('/post/job', (req, res) => {
+    const { job_title, location, description, employment_type, closing_date } = req.body;
+    console.log(req.body);
+    db.run(`insert into Jobs (job_title, location, description, employment_type, closing_date) values ('${job_title}', '${location}', '${description}', '${employment_type}', '${closing_date}')`);
+    const sql = `select id from Jobs order by id desc`;
+    db.get(sql, [], (err, row) => {
+        console.log(row);
+        if (err) {
+            sendResponse(res, 500, err.message);
+        } else {
+            const { token } = req.header;
+            db.run(`insert into Posts values ('${employer_email}', '${row.job_id}')`);
+        }
+    });
+});
+
+/*
 app.get('/matches', (req, res) => {
     const { token } = req.header;
     const sql = `select email from users where token = '${token}'`;
@@ -82,6 +99,7 @@ app.get('/matches', (req, res) => {
     })
     sendResponse(res, 200, `Getting matches for `, data);
 });
+*/
 
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
 db.run(`
@@ -106,66 +124,60 @@ create table if not exists Employers (
 
 db.run(`
 create table if not exists Offers (
-    id serial,
+    id integer primary key autoincrement,
     message text not null,
-    kind text not null check (kind in ('offer', 'interview')),
-    primary key(id)
+    kind text not null check (kind in ('offer', 'interview'))
 )`);
 
 db.run(`
 create table if not exists Sends (
     employer_email text references Employers(email),
-    offer_id serial references Offers(id),
+    offer_id integer references Offers(id),
     primary key(employer_email, offer_id)
 )`);
 
 db.run(`
 create table if not exists Jobs (
-    id serial,
-    closing_date datetime not null,
-    description text not null,
-    responsibilities text not null,
-    remuneration float not null,
-    required_experience text not null,
-    employment_type text not null check (employment_type in ('casual', 'full-time', 'part-time')),
-    required_qualification text not null,
+    id integer primary key autoincrement,
+    job_title text not null,
     location text not null,
-    primary key(id)
+    description text not null,
+    employment_type text not null check (employment_type in ('casual', 'full-time', 'part-time')),
+    closing_date text not null
 )`);
 
 db.run(`
 create table if not exists Posts (
     employer_email text references Employers(email),
-    job_id serial references Jobs(id),
+    job_id integer references Jobs(id),
     primary key(employer_email, job_id)
 )`);
 
 db.run(`
 create table if not exists Applications (
-    id serial,
+    id integer primary key autoincrement,
     cover_letter text,
-    resume text not null,
-    primary key(id)
+    resume text not null
 )`)
 
 db.run(`
 create table if not exists Applies (
     job_seeker_email text references JobSeekers(email),
-    application_id serial references Applications(id),
+    application_id integer references Applications(id),
     primary key(job_seeker_email, application_id)
 )`);
 
 db.run(`
 create table if not exists Skills (
     skill text,
-    job_seeker_email serial,
+    job_seeker_email integer,
     foreign key (job_seeker_email) references JobSeekers(email),
     primary key (job_seeker_email, skill)
 )`);
 
 db.run(`
 create table if not exists Matches (
-    application_id serial references Applications(id),
-    job_id serial references Jobs(id),
+    application_id integer references Applications(id),
+    job_id integer references Jobs(id),
     primary key (application_id, job_id)
 )`);
