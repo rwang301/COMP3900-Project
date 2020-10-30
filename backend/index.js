@@ -7,6 +7,8 @@ app.use(require('cors')());
 app.use(bodyParser.json());
 
 const port = 8000;
+app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
+
 const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
 
 const sendResponse = (response, status, message, data) => {
@@ -83,7 +85,6 @@ app.post('/post/job', (req, res) => {
     });
 });
 
-/*
 app.get('/matches', (req, res) => {
     const { token } = req.header;
     const sql = `select email from users where token = '${token}'`;
@@ -96,12 +97,11 @@ app.get('/matches', (req, res) => {
                 data.push(row);
             });
         }
-    })
+    });
     sendResponse(res, 200, `Getting matches for `, data);
 });
-*/
 
-app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
+
 db.run(`
 create table if not exists Users (
     name text not null,
