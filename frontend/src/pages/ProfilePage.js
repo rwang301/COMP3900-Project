@@ -9,7 +9,7 @@ export default function ProfilePage() {
         "location":"lol",
         "description":"desc",
         "employment_type":"full-time",
-        "closing_date":"202-09-19"
+        "closing_date":"2020-09-19"
       };
       const options = {
         body: JSON.stringify(data),

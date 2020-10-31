@@ -1,9 +1,7 @@
 import express from 'express';
-import sqlite from 'sqlite3';
-import bodyParser from 'body-parser';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 
-import createTables from './src/db.js';
 import { login, register } from './src/auth.js';
 import { postJob } from './src/employer.js';
 
@@ -14,10 +12,7 @@ app.use(bodyParser.json());
 const port = 8000;
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
 
-export const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
-createTables();
-
-export const sendResponse = (response, status, message, data) => {
+export default (response, status, message, data) => {
     response.status(status).send(data);
     console.log(message);
 }
@@ -25,7 +20,7 @@ export const sendResponse = (response, status, message, data) => {
 app.post('/auth/login', login);
 app.post('/auth/register', register);
 app.post('/post/job', postJob);
-
+/*
 app.get('/matches', (req, res) => {
     const { token } = req.header;
     const data = [];
@@ -40,3 +35,4 @@ app.get('/matches', (req, res) => {
     });
     sendResponse(res, 200, `Getting matches for `, data);
 });
+*/
