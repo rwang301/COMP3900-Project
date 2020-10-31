@@ -24,14 +24,12 @@ export const sendResponse = (response, status, message, data) => {
 
 app.post('/auth/login', login);
 app.post('/auth/register', register);
-
 app.post('/post/job', postJob);
 
 app.get('/matches', (req, res) => {
     const { token } = req.header;
-    const sql = `select email from users where token = '${token}'`;
     const data = [];
-    db.all(sql, [], (err, rows) => {
+    db.all(`select email from users where token = '${token}'`, [], (err, rows) => {
         if (err) {
             sendResponse(res, 500, err.message);
         } else {

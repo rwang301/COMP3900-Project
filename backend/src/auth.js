@@ -3,21 +3,20 @@ import { generateToken } from './jwt.js';
 
 export const login = (req, res) => {
     const {email, password} = req.body;
-    const sql = 'select * from users';
-    db.all(sql, [], (err, users) => {
+    db.all('select * from users', [], (err, users) => {
         if (err) {
             sendResponse(res, 500, err.message);
         } else {
             if (users.length) {// if there are users in the database
                 for (const user of users) {
                     if (user.email === email && user.password === password) {
-                        const query = 'select * from employers';
-                        db.all(query, [], (err, employers) => {
+                        db.all('select * from employers', [], (err, employers) => {
                             if (err) {
                                 sendResponse(res, 500, err.message);
                                 return;
                             } else {
                                 const token = generateToken(email);
+                                db.run(`update Users set token = '${token}' where email = '${email}'`);
                                 for (const employer of employers) {
                                     if (employer.email === email) {
                                         sendResponse(res, 200, 'Successful login as an employer', {'employer': true, 'token': token});
@@ -38,8 +37,7 @@ export const login = (req, res) => {
 
 export const register = (req, res) => {
     const {name, email, password, employer} = req.body;
-    const sql = `select email from users where email = '${email}'`;
-    db.get(sql, [], (err, user) => {
+    db.get(`select email from users where email = '${email}'`, [], (err, user) => {
         if (err) {
             sendResponse(res, 500, err.message);
         } else {
