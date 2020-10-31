@@ -56,6 +56,8 @@ export default function Register(props) {
         const response = await fetch(`${API_URL}/auth/register`, options);
         // implicit error checking
         if (response.status === 200) {
+          const json = await response.json();
+          localStorage.setItem('token', json.token);
           props.login();
           return employer ? 'employer' : 'job-seeker';
         } else if (response.status === 409) {
@@ -74,7 +76,7 @@ export default function Register(props) {
     <Main>
       <Header>Sign Up</Header>
       <Form id="register">
-        <Input type="text" id="Name" value={name} handleChange={handleNameChange} />
+        <Input type="text" id="Full Name" value={name} handleChange={handleNameChange} />
         <Input type="email" id="Email Address" value={email} handleChange={handleEmailChange} />
         <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
         <Input type="password" id="Confirm Password" value={confirmPassword} handleChange={handleConfirmPasswordChange} />

@@ -6,11 +6,13 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Employer from './pages/Employer';
 import JobSeeker from './pages/JobSeeker';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const login = () => setIsLoggedIn(true);
   const logout = () => setIsLoggedIn(false);
+
   return (
     <Router>
       <Nav login={isLoggedIn} logout={logout} />
@@ -29,6 +31,10 @@ function App() {
 
         <Route exact path="/job-seeker">
           <JobSeeker />
+        </Route>
+
+        <Route exact path="/post/job">
+          <ProfilePage />
         </Route>
 
         <Route path="/">

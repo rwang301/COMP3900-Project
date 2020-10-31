@@ -14,8 +14,8 @@ const PageContainer = styled.div`
 export default function JobSeeker() {
   return (
     <PageContainer>
-      <NewMatches/>
-      <AppsTable/>
+      <NewMatches />
+      <AppsTable employer={false} />
     </PageContainer>
   )
 }

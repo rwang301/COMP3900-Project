@@ -1,7 +1,9 @@
 create table if not exists Users (
-    name text not null,
     email text,
+    name text not null,
     password text not null,
+    token text,
+    location text,
     primary key (email)
 );
 
@@ -12,61 +14,63 @@ create table if not exists JobSeekers (
 
 create table if not exists Employers (
     email text primary key,
-    foreign key(email) references Users(email) 
+    company text,
+    foreign key(email) references Users(email)
 );
 
 
 create table if not exists Offers (
-    id serial,
+    id integer primary key autoincrement,
     message text not null,
-    kind text not null check (kind in ('offer', 'interview')),
-    primary key(id)
+    kind text not null check (kind in ('offer', 'interview'))
 );
 
 create table if not exists Sends (
     employer_email text references Employers(email),
-    offer_id serial references Offers(id),
+    offer_id integer references Offers(id),
     primary key(employer_email, offer_id)
 );
 
 
 create table if not exists Jobs (
-    id serial,
-    closing_date datetime not null,
-    description text not null,
-    responsibilities text not null,
-    remuneration float not null,
-    required_experience text not null,
-    employment_type text not null check (employment_type in ('casual', 'full-time', 'part-time')),
-    required_qualification text not null,
+    id integer primary key autoincrement,
+    job_title text not null,
     location text not null,
-    primary key(id)
+    description text not null,
+    employment_type text not null check (employment_type in ('casual', 'full-time', 'part-time')),
+    closing_date text not null
 );
 
 create table if not exists Posts (
     employer_email text references Employers(email),
-    job_id serial references Jobs(id),
+    job_id integer references Jobs(id),
     primary key(employer_email, job_id)
 );
 
 
 create table if not exists Applications (
-    id serial,
+    id integer primary key autoincrement,
     cover_letter text,
-    resume text not null,
-    primary key(id)
+    resume text not null
 );
 
 create table if not exists Applies (
     job_seeker_email text references JobSeekers(email),
-    application_id serial references Applications(id),
+    application_id integer references Applications(id),
     primary key(job_seeker_email, application_id)
 );
 
 
 create table if not exists Skills (
     skill text,
-    job_seeker_email serial,
+    job_seeker_email integer,
     foreign key (job_seeker_email) references JobSeekers(email),
     primary key (job_seeker_email, skill)
-); 
+);
+
+
+create table if not exists Matches (
+    application_id integer references Applications(id),
+    job_id integer references Jobs(id),
+    primary key (application_id, job_id)
+);

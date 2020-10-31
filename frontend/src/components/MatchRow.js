@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ApplicationDetail from './ApplicationDetail';
+
 
 const Avatar = styled(AccountCircleIcon)`
   flex: 1;
@@ -39,10 +41,13 @@ const MatchContainer = styled.div`
   border-radius: 5px;
   margin: 5px;
   width: 100%;
+  cursor: pointer;
 `;
 
 
 export default function MatchRow(props) {
+  const [showDetails, setShowDetails] = React.useState(true);
+
   return (
     <MatchContainer>
       <Avatar fontSize="large"/>
@@ -62,6 +67,7 @@ export default function MatchRow(props) {
           Software Developer at Apple
         </AppliedJob>
       </AppliedContainer>
+      <ApplicationDetail toShow={showDetails}/>
     </MatchContainer>
   )
 }
