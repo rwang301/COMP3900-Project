@@ -2,6 +2,7 @@ create table if not exists Users (
     name text not null,
     email text,
     password text not null,
+    token text,
     primary key (email)
 );
 

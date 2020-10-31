@@ -56,6 +56,8 @@ export default function Register(props) {
         const response = await fetch(`${API_URL}/auth/register`, options);
         // implicit error checking
         if (response.status === 200) {
+          const json = await response.json();
+          localStorage.setItem('token', json.token);
           props.login();
           return employer ? 'employer' : 'job-seeker';
         } else if (response.status === 409) {
