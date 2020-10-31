@@ -1,13 +1,18 @@
-const express = require('express');
-const sqlite = require('sqlite3');
-const bodyParser = require('body-parser');
+import express from 'express';
+import sqlite from 'sqlite3';
+import bodyParser from 'body-parser';
+import createTables from './db.js';
+import cors from 'cors';
 
 const app = express();
-app.use(require('cors')());
+app.use(cors());
 app.use(bodyParser.json());
 
 const port = 8000;
+app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
+
 const db = new sqlite.Database('./db/database.db', err => err ? console.log(err.message) : console.log('Connected to database successfully'));
+createTables(db);
 
 const sendResponse = (response, status, message, data) => {
     response.status(status);
@@ -67,6 +72,22 @@ app.post('/auth/register', (req, res) => {
     });
 });
 
+app.post('/post/job', (req, res) => {
+    const { job_title, location, description, employment_type, closing_date } = req.body;
+    console.log(req.body);
+    db.run(`insert into Jobs (job_title, location, description, employment_type, closing_date) values ('${job_title}', '${location}', '${description}', '${employment_type}', '${closing_date}')`);
+    const sql = `select id from Jobs order by id desc`;
+    db.get(sql, [], (err, row) => {
+        console.log(row);
+        if (err) {
+            sendResponse(res, 500, err.message);
+        } else {
+            const { token } = req.header;
+            db.run(`insert into Posts values ('${employer_email}', '${row.job_id}')`);
+        }
+    });
+});
+
 app.get('/matches', (req, res) => {
     const { token } = req.header;
     const sql = `select email from users where token = '${token}'`;
@@ -79,93 +100,6 @@ app.get('/matches', (req, res) => {
                 data.push(row);
             });
         }
-    })
+    });
     sendResponse(res, 200, `Getting matches for `, data);
 });
-
-app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
-db.run(`
-create table if not exists Users (
-    name text not null,
-    email text,
-    password text not null,
-    primary key (email)
-)`);
-
-db.run(`
-create table if not exists JobSeekers (
-    email text primary key,
-    foreign key(email) references Users(email)
-)`);
-
-db.run(`
-create table if not exists Employers (
-    email text primary key,
-    foreign key(email) references Users(email)
-)`);
-
-db.run(`
-create table if not exists Offers (
-    id serial,
-    message text not null,
-    kind text not null check (kind in ('offer', 'interview')),
-    primary key(id)
-)`);
-
-db.run(`
-create table if not exists Sends (
-    employer_email text references Employers(email),
-    offer_id serial references Offers(id),
-    primary key(employer_email, offer_id)
-)`);
-
-db.run(`
-create table if not exists Jobs (
-    id serial,
-    closing_date datetime not null,
-    description text not null,
-    responsibilities text not null,
-    remuneration float not null,
-    required_experience text not null,
-    employment_type text not null check (employment_type in ('casual', 'full-time', 'part-time')),
-    required_qualification text not null,
-    location text not null,
-    primary key(id)
-)`);
-
-db.run(`
-create table if not exists Posts (
-    employer_email text references Employers(email),
-    job_id serial references Jobs(id),
-    primary key(employer_email, job_id)
-)`);
-
-db.run(`
-create table if not exists Applications (
-    id serial,
-    cover_letter text,
-    resume text not null,
-    primary key(id)
-)`)
-
-db.run(`
-create table if not exists Applies (
-    job_seeker_email text references JobSeekers(email),
-    application_id serial references Applications(id),
-    primary key(job_seeker_email, application_id)
-)`);
-
-db.run(`
-create table if not exists Skills (
-    skill text,
-    job_seeker_email serial,
-    foreign key (job_seeker_email) references JobSeekers(email),
-    primary key (job_seeker_email, skill)
-)`);
-
-db.run(`
-create table if not exists Matches (
-    application_id serial references Applications(id),
-    job_id serial references Jobs(id),
-    primary key (application_id, job_id)
-)`);
