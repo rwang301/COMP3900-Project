@@ -46,8 +46,12 @@ export const register = (req, res) => {
                 sendResponse(res, 409, `${email} already exists`);
             } else {
                 const token = generateToken(email);
-                db.run(`insert into Users values ('${name}', '${email}', '${password}', '${token}')`);
-                db.run(`insert into ${employer ? 'Employers' : 'JobSeekers'} values ('${email}')`);
+                db.run(`insert into Users (email, name, password, token) values ('${email}', '${name}', '${password}', '${token}')`);
+                if (employer) {
+                    db.run(`insert into Employers (email) values ('${email}')`);
+                } else {
+                    db.run(`insert into Employers values ('${email}')`);
+                }
                 sendResponse(res, 200, `Inserted ${name} into the database`, {'token': token});
             }
         }

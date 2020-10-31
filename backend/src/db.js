@@ -6,10 +6,11 @@ const db = new sqlite.Database('./db/database.db', err => {
         console.log('Connected to sqlite database');
         db.run(`
         create table if not exists Users (
-            name text not null,
             email text,
+            name text not null,
             password text not null,
             token text,
+            location text,
             primary key (email)
         )`);
 
@@ -51,10 +52,9 @@ const db = new sqlite.Database('./db/database.db', err => {
 
         db.run(`
         create table if not exists Posts (
-            employer_email text,
+            employer_email text references Employers(email)
             job_id integer references Jobs(id),
             primary key(employer_email, job_id)
-            foreign key(employer_email) references Employers(email)
         )`);
 
         db.run(`

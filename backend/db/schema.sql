@@ -1,8 +1,9 @@
 create table if not exists Users (
-    name text not null,
     email text,
+    name text not null,
     password text not null,
     token text,
+    location text,
     primary key (email)
 );
 
@@ -13,6 +14,7 @@ create table if not exists JobSeekers (
 
 create table if not exists Employers (
     email text primary key,
+    company text,
     foreign key(email) references Users(email)
 );
 
