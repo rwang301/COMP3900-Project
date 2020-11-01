@@ -3,7 +3,7 @@ import sendResponse from '../server.js';
 import { verifyToken } from './token.js';
 
 export const postJob = (req, res) => {
-    const user = verifyToken(token);
+    const user = verifyToken(req.header('token'), res);
     if (user) {
         const { job_title, location, description, employment_type, closing_date } = req.body;
         db.run(`insert into Jobs (job_title, location, description, employment_type, closing_date) values ('${job_title}', '${location}', '${description}', '${employment_type}', '${closing_date}')`);

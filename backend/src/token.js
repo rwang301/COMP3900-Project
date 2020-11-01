@@ -5,7 +5,7 @@ import sendResponse from '../server.js';
 
 const SECRET = 'kai-will-make-tony-rich';
 export const generateToken = (email) => jwt.sign({email}, SECRET, {algorithm: 'HS256'});
-export const verifyToken = (token) => {
+export const verifyToken = (token, res) => {
     try {
         const email = jwt.verify(token, SECRET).email;
         db.get(`select email, name from Users where token = '${token}'`, [], (err, user) => {
