@@ -63,7 +63,7 @@ const db = new sqlite.Database('./db/database.db', err => {
             id integer primary key autoincrement,
             cover_letter text,
             resume text not null
-        )`)
+        )`);
 
         db.run(`
         create table if not exists Applies (

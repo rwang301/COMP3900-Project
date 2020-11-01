@@ -34,7 +34,7 @@ export const login = (req, res) => {
             sendResponse(res, 403, 'User does not exist');
         }
     });
-}
+};
 
 export const register = (req, res) => {
     const {name, email, password, employer} = req.body;
@@ -56,4 +56,4 @@ export const register = (req, res) => {
             }
         }
     });
-}
+};

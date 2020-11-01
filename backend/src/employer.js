@@ -9,7 +9,7 @@ export const postJob = (req, res) => {
     if (email) {
         db.get(`select email, name from Users where token = '${token}'`, [], (err, user) => {
             if (err) {
-                sendResponse(res, 500, err,message);
+                sendResponse(res, 500, err.message);
             } else if (user && email === user.email) {
                 db.run(`insert into Jobs (job_title, location, description, employment_type, closing_date) values ('${job_title}', '${location}', '${description}', '${employment_type}', '${closing_date}')`);
                 db.get('select id from Jobs order by id desc', [], (err, job) => {
@@ -27,4 +27,4 @@ export const postJob = (req, res) => {
     } else {
         sendResponse(res, 403, 'Invalid token');
     }
-}
+};
