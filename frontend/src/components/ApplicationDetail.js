@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from "styled-components";
-import AccountCircleBig from '../assets/accountCircleBig.svg';
 import ExperienceRow from './ExperienceRow';
 import kai_dp from '../assets/kai_dp.jpg'
 import SkillPoint from './SkillPoint';
