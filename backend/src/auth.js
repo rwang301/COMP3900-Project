@@ -1,6 +1,6 @@
 import db from './db.js';
 import sendResponse from '../server.js';
-import { generateToken } from './jwt.js';
+import { generateToken } from './token.js';
 
 export const login = (req, res) => {
     const {email, password} = req.body;
