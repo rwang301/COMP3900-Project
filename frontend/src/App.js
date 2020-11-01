@@ -9,7 +9,7 @@ import JobSeeker from './pages/JobSeeker';
 import ProfilePage from './pages/ProfilePage';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const login = () => setIsLoggedIn(true);
   const logout = () => setIsLoggedIn(false);
 
@@ -33,7 +33,7 @@ function App() {
           <JobSeeker />
         </Route>
 
-        <Route exact path="/post/job">
+        <Route exact path="/profile">
           <ProfilePage />
         </Route>
 

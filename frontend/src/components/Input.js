@@ -15,9 +15,22 @@ const Input = styled.input`
   margin-bottom: 2vmin;
 `;
 
-export default function ControlledInput({type, id, value, handleChange}) {
+const Textarea = styled.textarea`
+  font-size: 2vmin;
+  padding: 1vmin;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 2vmin;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  height: ${(props) => props.large ? '100px' : 'unset'};
+  overflow: ${(props) => props.large ? 'scroll' : 'unset'};
+`;
+
+export default function ControlledInput({type, id, value, handleChange, large}) {
   return <>
     <Label type={type} htmlFor={id}>{id}</Label>
-    <Input type={type} id={id} placeholder={id} value={value} onChange={handleChange}/>
+    {large ? <Textarea type={type} id={id} placeholder={id} value={value} large={large} onChange={handleChange}/> :     <Input type={type} id={id} placeholder={id} value={value} large={large} onChange={handleChange}/>}
   </>
 }
