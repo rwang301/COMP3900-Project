@@ -16,7 +16,5 @@ export const postJob = (req, res) => {
             });
             sendResponse(res, 200, `${user.name} posted a job`);
         })
-        .catch(({status, message}) => {
-            sendResponse(res, status, message)
-        });
+        .catch(({status, message}) => sendResponse(res, status, message));
 };
