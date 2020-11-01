@@ -50,7 +50,7 @@ export const register = (req, res) => {
                 if (employer) {
                     db.run(`insert into Employers (email) values ('${email}')`);
                 } else {
-                    db.run(`insert into Employers values ('${email}')`);
+                    db.run(`insert into JobSeekers values ('${email}')`);
                 }
                 sendResponse(res, 200, `Inserted ${name} into the database`, {'token': token});
             }

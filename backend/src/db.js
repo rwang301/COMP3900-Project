@@ -23,6 +23,7 @@ const db = new sqlite.Database('./db/database.db', err => {
         db.run(`
         create table if not exists Employers (
             email text primary key,
+            company text,
             foreign key(email) references Users(email)
         )`);
 
@@ -52,7 +53,7 @@ const db = new sqlite.Database('./db/database.db', err => {
 
         db.run(`
         create table if not exists Posts (
-            employer_email text references Employers(email)
+            employer_email text references Employers(email),
             job_id integer references Jobs(id),
             primary key(employer_email, job_id)
         )`);
