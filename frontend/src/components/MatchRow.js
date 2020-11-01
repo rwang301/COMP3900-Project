@@ -46,10 +46,10 @@ const MatchContainer = styled.div`
 
 
 export default function MatchRow(props) {
-  const [showDetails, setShowDetails] = React.useState(true);
+  const [showDetails, setShowDetails] = React.useState(false);
 
   return (
-    <MatchContainer>
+    <MatchContainer onClick={() => setShowDetails(true)}>
       <Avatar fontSize="large"/>
       <PersonalDetails>
         <FullNameText>
@@ -67,7 +67,7 @@ export default function MatchRow(props) {
           Software Developer at Apple
         </AppliedJob>
       </AppliedContainer>
-      <ApplicationDetail toShow={showDetails}/>
+      <ApplicationDetail toShow={showDetails} setShow={setShowDetails}/>
     </MatchContainer>
   )
 }
