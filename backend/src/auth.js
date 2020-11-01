@@ -1,6 +1,6 @@
 import db from './db.js';
 import sendResponse from '../server.js';
-import { generateToken } from './jwt.js';
+import { generateToken } from './token.js';
 
 export const login = (req, res) => {
     const {email, password} = req.body;
@@ -34,7 +34,7 @@ export const login = (req, res) => {
             sendResponse(res, 403, 'User does not exist');
         }
     });
-}
+};
 
 export const register = (req, res) => {
     const {name, email, password, employer} = req.body;
@@ -56,4 +56,4 @@ export const register = (req, res) => {
             }
         }
     });
-}
+};

@@ -12,6 +12,9 @@
     },
     "rules": {
         "indent": ["error", 4],
-        "max-len": ["error", 120]
+        "max-len": ["error", 240],
+        "arrow-parens": 0,
+        "camelcase": "off",
+        "object-curly-spacing": "off"
     }
 }
