@@ -61,6 +61,10 @@ const ProfilePic = styled.img`
   max-width: 20vw;
 `;
 
+const KaiPic = styled(ProfilePic)`
+  border-radius: 10vw;
+`;
+
 const FullNameText = styled.p`
   font-weight: bold;
   font-size: 2vw;
@@ -179,7 +183,7 @@ export default function ApplicationDetail({toShow, setShow}) {
         }}/>
         <ProfileHeader>
           {/* <ProfilePic src={AccountCircleBig}/> */}
-          <ProfilePic src={kai_dp}/>
+          <KaiPic src={kai_dp}/>
           <HeaderText>
             <FullNameText>Kaiqi Liang</FullNameText>
             <AppliedContainer>
