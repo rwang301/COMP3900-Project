@@ -4,3 +4,9 @@ Had a meeting and assigned work to everyone
 Week 3
 Draw system architecture diagram and explained it in words.
 Put together the work from everyone and compiled into a markdown file for the proposal
+
+Week 4
+Built frontend login and register page with Richard
+
+Week 5
+Built backend schema with William
