@@ -47,9 +47,9 @@ create table if not exists Skills (
 
 
 create table if not exists Matches (
-    application_id integer references Applications(id),
+    job_seeker_email integer references JobSeekers(email),
     job_id integer references Jobs(id),
-    primary key (application_id, job_id)
+    primary key (job_seeker_email, job_id)
 );
 
 
