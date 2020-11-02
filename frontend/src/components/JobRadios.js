@@ -14,12 +14,12 @@ const InnerContainer = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: 2.5vmin;
+  font-size: 1.5vmin;
   @media (max-width: 750px) {
-    font-size: 2vmin;
+    font-size: 1vmin;
   }
   @media (max-width: 500px) {
-    font-size: 1.5vmin;
+    font-size: 0.5vmin;
   }
 `;
 
