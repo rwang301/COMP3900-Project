@@ -38,12 +38,11 @@ create table if not exists Posts (
 
 create table if not exists Skills (
     id integer primary key autoincrement,
-    skill1 text,
-    skill2 text,
-    skill3 text,
     job_seeker_email integer references JobSeekers(email),
     job_id integer references Jobs(id),
-    primary key (id)
+    skill1 text,
+    skill2 text,
+    skill3 text
 );
 
 
