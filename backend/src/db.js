@@ -18,6 +18,8 @@ const db = new sqlite.Database('./db/database.db', err => {
         db.run(`
             create table if not exists JobSeekers (
                 email text primary key,
+                education text,
+                resume text,
                 foreign key(email) references Users(email)
             );
         `);

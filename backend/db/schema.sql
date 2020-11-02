@@ -9,6 +9,7 @@ create table if not exists Users (
 
 create table if not exists JobSeekers (
     email text primary key,
+    education text,
     foreign key(email) references Users(email)
 );
 
