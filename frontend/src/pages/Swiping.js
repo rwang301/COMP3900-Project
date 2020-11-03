@@ -2,10 +2,18 @@ import React from 'react';
 import styled from "styled-components";
 import leftArrow from '../assets/left-arrow.svg';
 import rightArrow from '../assets/right-arrow.svg';
+import tick from '../assets/tick.svg';
+import cancel from '../assets/cancel.svg';
 import swipeProfile from '../assets/swipeProfile.svg';
 import AboutRow from '../components/AboutRow';
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const SwipingContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,7 +27,7 @@ const ArrowIcon = styled.img`
   cursor: pointer;
 `;
 
-const SwipingContainer = styled.div`
+const UserContainer = styled.div`
   border: 0.5vw white solid;
   border-radius: 3vw;
   padding: 1vw;
@@ -57,37 +65,56 @@ const SubtitleText = styled.p`
   text-decoration: underline;
 `;
 
+const HelperIconsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+const HelperIcons = styled.img`
+  height: 5vw;
+  width: 5vw;
+  margin: 1vw;
+`;
+
 //name, email, location, education, 3 skills
 
 export default function Swiping() {
   return (
     <Wrapper>
-      <ArrowIcon src={leftArrow}/>
       <SwipingContainer>
-        <UserHeader>
-          <UserIcon src={swipeProfile}/>
-          <UserNames>
-            Kaiqi Liang
-          </UserNames>
-        </UserHeader>
-        <SubContainer>
-          <SubtitleText>
-            Details
-          </SubtitleText>
-          <AboutRow iconType={"email"} text={"kaiqi.liang@gmail.com"}/>
-          <AboutRow iconType={"location"} text={"Sydney, Australia"}/>
-          <AboutRow iconType={"education"} text={"Bachelor's of Computer Science @ UNSW"}/>
-        </SubContainer>
-        <SubContainer>
-          <SubtitleText>
-            Skills
-          </SubtitleText>
-          <AboutRow iconType={"one"} text={"Scummaster skills"}/>
-          <AboutRow iconType={"two"} text={"Pissing on call"}/>
-          <AboutRow iconType={"three"} text={"Able to create Big Maclaurin"}/>
-        </SubContainer>
+        <ArrowIcon src={leftArrow}/>
+        <UserContainer>
+          <UserHeader>
+            <UserIcon src={swipeProfile}/>
+            <UserNames>
+              Kaiqi Liang
+            </UserNames>
+          </UserHeader>
+          <SubContainer>
+            <SubtitleText>
+              Details
+            </SubtitleText>
+            <AboutRow iconType={"email"} text={"kaiqi.liang@gmail.com"}/>
+            <AboutRow iconType={"location"} text={"Sydney, Australia"}/>
+            <AboutRow iconType={"education"} text={"Bachelor's of Computer Science @ UNSW"}/>
+          </SubContainer>
+          <SubContainer>
+            <SubtitleText>
+              Skills
+            </SubtitleText>
+            <AboutRow iconType={"one"} text={"Scummaster skills"}/>
+            <AboutRow iconType={"two"} text={"Pissing on call"}/>
+            <AboutRow iconType={"three"} text={"Able to create Big Maclaurin"}/>
+          </SubContainer>
+        </UserContainer>
+        <ArrowIcon src={rightArrow}/>
       </SwipingContainer>
-      <ArrowIcon src={rightArrow}/>
+      <HelperIconsContainer>
+        <HelperIcons src={cancel}/>
+        <HelperIcons src={tick}/>
+      </HelperIconsContainer>
     </Wrapper>
   )
 }
