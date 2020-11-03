@@ -131,7 +131,7 @@ export default function JobseekerProfilePage() {
   };
 
   const skillRows = skillsToRender.map((skill) => {
-    if (skill !== "") return <SkillsRow skillName={skill}/>
+    if (skill) return <SkillsRow skillName={skill}/>
   });
 
   return (

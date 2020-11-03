@@ -93,21 +93,21 @@ export default function EmployerProfilePage() {
   const [postJobModal, setPostJobModal] = React.useState(false);
   const [jobsToRender, setJobsToRender] = React.useState([]);
 
-  // React.useEffect(() => {
-  //   const getJobs = async () => {
-  //     const options = {
-  //       headers: {
-  //         'token': localStorage.getItem('token')
-  //       },
-  //     };
-  //     const response = await fetch("http://localhost:8000/profile/jobs", options);
-  //     console.log(response, 'response');
-  //     const json = await response.json();
-  //     console.log(json, 'json');
-  //     setJobsToRender(json);
-  //   };
-  //   getJobs();
-  // }, []);
+  React.useEffect(() => {
+    const getJobs = async () => {
+      const options = {
+        headers: {
+          'token': localStorage.getItem('token')
+        },
+      };
+      const response = await fetch("http://localhost:8000/profile/jobs", options);
+      console.log(response, 'response');
+      const json = await response.json();
+      console.log(json, 'json');
+      setJobsToRender(json);
+    };
+    getJobs();
+  }, []);
   
   const fetchData = async (jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType) => {
     const data = {
@@ -149,10 +149,7 @@ export default function EmployerProfilePage() {
         <SubtitleText>
           Listed Jobs
         </SubtitleText>
-        <ListedJobRow jobTitle={"Software Engineer"}/>
-        <ListedJobRow jobTitle={"HR Manager"}/>
-        <ListedJobRow jobTitle={"Product Specialist"}/>
-        {/* {jobsToRender.map((job) => <ListedJobRow jobTitle={job.job_title}/>)} */}
+        {jobsToRender.map((job) => <ListedJobRow jobTitle={job.job_title}/>)}
         <AddButton src={add} onClick={() => setPostJobModal(true)}/>
       </AboutContainer>
       <PostJobModal toShow={postJobModal} setShow={setPostJobModal} postJob={fetchData}/>

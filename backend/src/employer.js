@@ -17,3 +17,15 @@ export const postJob = (req, res) => {
         sendResponse(res, 200, `${user.name} posted a job`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
+
+export const getJobs = (req, res) => {
+    verifyToken(req.header('token')).then(user => {
+        db.all('select job_title, location, description, employment_type, closing_date, skill1, skill2, skill3 from Jobs join Skills on Jobs.id = Skills.job_id;', [], (err, jobs) => {
+            if (err) {
+                sendResponse(res, 500, err.message);
+            } else {
+                sendResponse(res, 200, `Here are you jobs\n${jobs}`, jobs);
+            }
+        })
+    }).catch(({status, message}) => sendResponse(res, status, message));
+}
