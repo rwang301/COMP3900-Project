@@ -16,7 +16,6 @@ const JobText = styled.p`
 
 const JobName = styled(JobText)`
   flex: 2;
-  cursor: pointer;
 `;
 
 const Actions = styled.div`
@@ -68,18 +67,23 @@ export function ListedJobRow({jobTitle}) {
   )
 };
 
-export function SkillsRow({jobTitle}) {
+export function SkillsRow({skillName}) {
+  const removeSkill = () => {
+    //TO DO - make fetch to remove
+    console.log('dummy remove')
+  };
+
   return (
     <RowContainer>
       <JobName>
-        {jobTitle}
+        {skillName}
       </JobName>
       <Actions>
-        <IconAndText>
+        {/* <IconAndText>
           <JobEditIcon src={jobEdit}/>
           <IconText>Edit</IconText>
-        </IconAndText>
-        <IconAndText>
+        </IconAndText> */}
+        <IconAndText onClick={removeSkill}>
           <JobEditIcon src={remove}/>
           <IconText>Remove</IconText>
         </IconAndText>

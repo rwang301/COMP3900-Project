@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ApplicationModal({toShow, setShow, setSkillsToRender}) {
+export default function ApplicationModal({toShow, setShow, setSkillsToRender, postSkills}) {
   const classes = useStyles();
   const [skillOne, setSkillOne] = React.useState('');
   const [skillTwo, setSkillTwo] = React.useState('');
@@ -101,8 +101,12 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender}) {
   };
 
   const handleSkillSave = () => {
-    console.log('your skills:', skillOne, skillTwo, skillThree);
-    setSkillsToRender([skillOne, skillTwo, skillThree]);
+    let skills = [skillOne, skillTwo, skillThree]
+    console.log('your skills:', skills);
+    setSkillsToRender(skills);
+    postSkills(skills)
+    setShow(false);
+    //TO DO: Add route to save skills
   };
 
   return (
