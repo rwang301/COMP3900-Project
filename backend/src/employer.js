@@ -12,9 +12,23 @@ export const postJob = (req, res) => {
             } else {
                 db.run(`insert into Posts values ('${user.email}', '${job.id}')`);
                 db.run(`insert into Skills (job_id, skill1, skill2, skill3) values ('${job.id}', '${skills[0]}', '${skills[1]}', '${skills[2]}')`);
+                db.all('select email, skill1, skill2, skill3 from Skills where email is not null and job_id is null', [], (err, jobSeekers) => {
+                    if (err) {
+                        sendResponse(res, 500, err.message);
+                    } else {
+                        for (const jobSeeker of jobSeekers) {
+                            for (const skill of skills) {
+                                if (Object.values(jobSeeker).includes(skill)) {
+                                    db.run(`insert into PotentialJobs values ('${jobSeeker.email}', '${job.id}', ${0})`);
+                                    sendResponse(res, 200, `${user.name} posted a job`);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                });
             }
         });
-        sendResponse(res, 200, `${user.name} posted a job`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
@@ -24,8 +38,25 @@ export const getJobs = (req, res) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
-                sendResponse(res, 200, `Here are you jobs\n${jobs}`, jobs);
+                sendResponse(res, 200, `Here are ${user.name}'s jobs\n${jobs}`, jobs);
             }
-        })
+        });
+    }).catch(({status, message}) => sendResponse(res, status, message));
+}
+
+export const getPotentialJobSeekers = (req, res) => {
+    verifyToken(req.header('token')).then(user => {
+        db.all(`select u.email, name, location, education, skill1, skill2, skill3
+                from PotentialJobSeekers as p
+                join Skills as s on p.job_seeker_email = s.email
+                join JobSeekers as j on s.email = j.email
+                join Users as u on j.email = u.email;`
+                , [], (err, jobSeekers) => {
+            if (err) {
+                sendResponse(res, 500, err.message);
+            } else {
+                sendResponse(res, 200, `Here are all the job seekers that match with ${user.name} jobs\n${jobSeekers}`, jobSeekers);
+            }
+        });
     }).catch(({status, message}) => sendResponse(res, status, message));
 }
