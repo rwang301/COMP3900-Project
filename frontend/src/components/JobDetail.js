@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import CloseIcon from '@material-ui/icons/Close';
 import { Header, Form } from './Form';
-import Input from './Input';
+import { SeparatedInput } from './Input';
 import JobRadios from './JobRadios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -87,13 +87,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function JobDetail({toShow, setShow, postJob}) {
+//TO DO: Write a PUT Request to edit a job and delete postJob
+
+export default function JobDetail({toShow, setShow, job, postJob}) {
   const classes = useStyles();
   const [employmentType, setEmploymentType] = React.useState('part-time');
   const [jobTitle, setJobTitle] = React.useState('');
-  const [skillOne, setSkillOne] = React.useState('');
-  const [skillTwo, setSkillTwo] = React.useState('');
-  const [skillThree, setSkillThree] = React.useState('');
+  const [skillOne, setSkillOne] = React.useState(null);
+  const [skillTwo, setSkillTwo] = React.useState(null);
+  const [skillThree, setSkillThree] = React.useState(null);
   const [location, setLocation] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [closingDate, setClosingDate] = React.useState(new Date());
@@ -135,16 +137,16 @@ export default function JobDetail({toShow, setShow, postJob}) {
         }}/>
         <Header>Your Job</Header>
         <Form id="register">
-          <Input type="text" id="Job Title" handleChange={handleJobTitleChange}/>
-          <Input type="text" id="Location" handleChange={handleLocationChange}/>
-          <Input type="text" large={true} id="Description" handleChange={handleDescriptionChange}/>
+          <SeparatedInput type="text" id="Job Title" curr_value={job.job_title} value={jobTitle} handleChange={handleJobTitleChange}/>
+          <SeparatedInput type="text" id="Location" curr_value={job.location} handleChange={handleLocationChange}/>
+          <SeparatedInput type="text" large={true} id="Description" curr_value={job.description} handleChange={handleDescriptionChange}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={skillOne}
+                defaultValue={job.skill1}
                 onChange={handleSkillOneChange}
               >
                 <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
@@ -160,7 +162,7 @@ export default function JobDetail({toShow, setShow, postJob}) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={skillTwo}
+                defaultValue={job.skill2}
                 onChange={handleSkillTwoChange}
               >
                 <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
@@ -176,7 +178,7 @@ export default function JobDetail({toShow, setShow, postJob}) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={skillThree}
+                defaultValue={job.skill3}
                 onChange={handleSkillThreeChange}
               >
                 <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
@@ -188,10 +190,10 @@ export default function JobDetail({toShow, setShow, postJob}) {
               </Select>
           </FormControl>
           <DateText>Application Closing Date:</DateText>
-          <DateContainer selected={closingDate} onChange={date => {
+          <DateContainer width={200} showTimeSelect timeFormat="HH:mm" dateFormat={"dd/MM/yyyy HH:mm:ss"} selected={Date.parse(job.closing_date)} onChange={date => {
             setClosingDate(date);
           }} />
-          <JobRadios value={employmentType} onChangeHandler={handleTypeChange}/>
+          <JobRadios value={job.employment_type} onChangeHandler={handleTypeChange}/>
         </Form>
         <Button onClick={() => postJob(jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType)}>Send</Button>
       </ModalContent>

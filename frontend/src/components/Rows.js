@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import jobEdit from '../assets/jobEdit.svg';
 import remove from '../assets/remove.svg';
+import JobDetail from './JobDetail';
 
 const RowContainer = styled.div`
   display: flex;
@@ -47,14 +48,16 @@ const IconText = styled(JobText)`
   font-style: italic;
 `;
 
-export function ListedJobRow({jobTitle}) {
+export function ListedJobRow({job, postJob}) {
+  const [jobDetailModal, setJobDetailModal] = React.useState(false);
+
   return (
     <RowContainer>
       <JobName>
-        {jobTitle}
+        {job.job_title}
       </JobName>
       <Actions>
-        <IconAndText>
+        <IconAndText onClick={() => setJobDetailModal(true)}>
           <JobEditIcon src={jobEdit}/>
           <IconText>Edit</IconText>
         </IconAndText>
@@ -63,6 +66,7 @@ export function ListedJobRow({jobTitle}) {
           <IconText>Remove</IconText>
         </IconAndText>
       </Actions>
+      <JobDetail toShow={jobDetailModal} setShow={setJobDetailModal} job={job} postJob={postJob}/>
     </RowContainer>
   )
 };
