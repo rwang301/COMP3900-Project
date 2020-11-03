@@ -4,6 +4,9 @@ import email from '../assets/email.svg'
 import company from '../assets/company.svg'
 import location from '../assets/location.svg'
 import education from '../assets/education.svg'
+import one from '../assets/one.svg'
+import two from '../assets/two.svg'
+import three from '../assets/three.svg'
 
 
 const RowContainer = styled.div`
@@ -37,6 +40,17 @@ export default function AboutRow({iconType, text}) {
     case 'education':
       icon = <RowIcon src={education}/>;
       break;
+    case 'one':
+      icon = <RowIcon src={one}/>;
+      break;
+    case 'two':
+      icon = <RowIcon src={two}/>;
+      break;
+    case 'three':
+      icon = <RowIcon src={three}/>;
+      break;
+    default:
+      icon = null;
   }
   return (
     <RowContainer>
