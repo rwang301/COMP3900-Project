@@ -6,7 +6,7 @@ import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
 import { SkillsRow } from '../components/Rows';
 import ApplicationModal from '../components/ApplicationModal';
-
+import skillEdit from '../assets/jobEdit.svg';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -70,6 +70,10 @@ const AddButton = styled(SideButton)`
   margin-top: 19.75vw;
 `;
 
+const SkillEditButton = styled(SideButton)`
+  margin-top: 19.75vw;
+`;
+
 const AboutContainer = styled.div`
   border: 3px solid white;
   border-radius: 1vw;
@@ -93,13 +97,9 @@ export default function JobseekerProfilePage() {
   const [applicationModal, setApplicationModal] = React.useState(true);
   const [skillsToRender, setSkillsToRender] = React.useState([]);
 
-  const fetchData = async (jobTitle, location, description, closingDate, employmentType) => {
+  const postSkills = async (skills) => {
     const data = {
-      "job_title": jobTitle,
-      "location": location,
-      "description": description,
-      "employment_type": employmentType,
-      "closing_date": closingDate
+      "skills": skills
     };
     const options = {
       body: JSON.stringify(data),
@@ -109,9 +109,13 @@ export default function JobseekerProfilePage() {
         'token': localStorage.getItem('token')
       },
     };
-    const response = await fetch("http://localhost:8000/post/job", options);
-    console.log(response);
+    // const response = await fetch("http://localhost:8000/post/job", options);
+    // console.log(response);
   };
+
+  const skillRows = skillsToRender.map((skill) => {
+    if (skill !== "") return <SkillsRow skillName={skill}/>
+  });
 
   return (
     <ProfileContainer >
@@ -132,10 +136,10 @@ export default function JobseekerProfilePage() {
         <SubtitleText>
           Skills
         </SubtitleText>
-        {skillsToRender.map((skill) => <SkillsRow jobTitle={skill}/>)}
-        <AddButton src={add} onClick={() => setApplicationModal(true)}/>
+        {skillRows}
+        {skillsToRender.length > 0 ? <SkillEditButton src={skillEdit} onClick={() => setApplicationModal(true)} /> : <AddButton src={add} onClick={() => setApplicationModal(true)}/>}
       </AboutContainer>
-      <ApplicationModal toShow={applicationModal} setShow={setApplicationModal} postJob={fetchData} setSkillsToRender={setSkillsToRender}/>
+      <ApplicationModal toShow={applicationModal} setShow={setApplicationModal} postSkills={postSkills} setSkillsToRender={setSkillsToRender}/>
     </ProfileContainer>
   )
 }
