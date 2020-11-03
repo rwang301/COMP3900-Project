@@ -2,8 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import CloseIcon from '@material-ui/icons/Close';
 import { Header, Form } from './Form';
-import Input from './Input';
-import JobRadios from './JobRadios';
 import DatePicker from "react-datepicker";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
