@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import CloseIcon from '@material-ui/icons/Close';
 import { Header, Form } from './Form';
-import Input from './Input';
+import { ControlledInput } from './Input';
 import JobRadios from './JobRadios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -135,9 +135,9 @@ export default function PostJobModal({toShow, setShow, postJob}) {
         }}/>
         <Header>Post a Job</Header>
         <Form id="register">
-          <Input type="text" id="Job Title" handleChange={handleJobTitleChange}/>
-          <Input type="text" id="Location" handleChange={handleLocationChange}/>
-          <Input type="text" large={true} id="Description" handleChange={handleDescriptionChange}/>
+          <ControlledInput type="text" id="Job Title" handleChange={handleJobTitleChange}/>
+          <ControlledInput type="text" id="Location" handleChange={handleLocationChange}/>
+          <ControlledInput type="text" large={true} id="Description" handleChange={handleDescriptionChange}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
@@ -188,7 +188,7 @@ export default function PostJobModal({toShow, setShow, postJob}) {
               </Select>
           </FormControl>
           <DateText>Application Closing Date:</DateText>
-          <DateContainer selected={closingDate} onChange={date => {
+          <DateContainer width={200} showTimeSelect timeFormat="HH:mm" dateFormat={"dd/MM/yyyy HH:mm:ss"} selected={closingDate} onChange={date => {
             setClosingDate(date);
           }} />
           <JobRadios value={employmentType} onChangeHandler={handleTypeChange}/>

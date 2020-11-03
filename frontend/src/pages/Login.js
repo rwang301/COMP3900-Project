@@ -2,7 +2,7 @@ import React from 'react';
 import { Main, Header, Form, Href, isEmailValid } from '../components/Form';
 import API_URL from '../index';
 import Buttons from '../components/Buttons';
-import Input from '../components/Input';
+import { ControlledInput } from '../components/Input';
 
 export default function Login(props) {
 
@@ -57,8 +57,8 @@ export default function Login(props) {
     <Main>
       <Header>Welcome Back!</Header>
       <Form id="login">
-        <Input type="email" id="Email" value={email} handleChange={handleEmailChange} />
-        <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
+        <ControlledInput type="email" id="Email" value={email} handleChange={handleEmailChange} />
+        <ControlledInput type="password" id="Password" value={password} handleChange={handlePasswordChange} />
 	    </Form>
       <Href route='register'>New around here? No worries, come sign up here</Href>
       <Buttons

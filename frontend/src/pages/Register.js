@@ -2,7 +2,7 @@ import React from 'react';
 import { Main, Header, Form, Href, isEmailValid } from '../components/Form';
 import API_URL from '../index';
 import Buttons from '../components/Buttons';
-import Input from '../components/Input';
+import { ControlledInput } from '../components/Input';
 import Radios from '../components/Radios';
 
 export default function Register(props) {
@@ -76,10 +76,10 @@ export default function Register(props) {
     <Main>
       <Header>Sign Up</Header>
       <Form id="register">
-        <Input type="text" id="Full Name" value={name} handleChange={handleNameChange} />
-        <Input type="email" id="Email Address" value={email} handleChange={handleEmailChange} />
-        <Input type="password" id="Password" value={password} handleChange={handlePasswordChange} />
-        <Input type="password" id="Confirm Password" value={confirmPassword} handleChange={handleConfirmPasswordChange} />
+        <ControlledInput type="text" id="Full Name" value={name} handleChange={handleNameChange} />
+        <ControlledInput type="email" id="Email Address" value={email} handleChange={handleEmailChange} />
+        <ControlledInput type="password" id="Password" value={password} handleChange={handlePasswordChange} />
+        <ControlledInput type="password" id="Confirm Password" value={confirmPassword} handleChange={handleConfirmPasswordChange} />
         <Radios
           value={employer}
           onChangeHandler={handleEmployerChange}

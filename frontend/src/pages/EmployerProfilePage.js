@@ -6,6 +6,7 @@ import edit from '../assets/edit.svg'
 import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
 import { ListedJobRow } from '../components/Rows';
+import JobDetail from '../components/JobDetail';
 
 
 const ProfileContainer = styled.div`
@@ -109,7 +110,7 @@ export default function EmployerProfilePage() {
     getJobs();
   }, []);
   
-  const fetchData = async (jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType) => {
+  const postJob = async (jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType) => {
     const data = {
       "job_title": jobTitle,
       "location": location,
@@ -149,10 +150,10 @@ export default function EmployerProfilePage() {
         <SubtitleText>
           Listed Jobs
         </SubtitleText>
-        {jobsToRender.map((job) => <ListedJobRow jobTitle={job.job_title}/>)}
+        {jobsToRender.map((job) => <ListedJobRow key={job.job_title} job={job} postJob={postJob}/>)}
         <AddButton src={add} onClick={() => setPostJobModal(true)}/>
       </AboutContainer>
-      <PostJobModal toShow={postJobModal} setShow={setPostJobModal} postJob={fetchData}/>
+      <PostJobModal toShow={postJobModal} setShow={setPostJobModal} postJob={postJob}/>
     </ProfileContainer>
   )
 }
