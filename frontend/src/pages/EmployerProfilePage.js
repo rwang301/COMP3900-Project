@@ -90,7 +90,7 @@ const AboutRowContainer = styled.div`
 `;
 
 export default function EmployerProfilePage() {
-  const [postJobModal, setPostJobModal] = React.useState(true);
+  const [postJobModal, setPostJobModal] = React.useState(false);
   
   const fetchData = async (jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType) => {
     const data = {
@@ -101,7 +101,6 @@ export default function EmployerProfilePage() {
       "employment_type": employmentType,
       "closing_date": closingDate
     };
-    console.log(data, 'this is dataaaa!!')
     const options = {
       body: JSON.stringify(data),
       method: 'POST',
@@ -110,8 +109,8 @@ export default function EmployerProfilePage() {
         'token': localStorage.getItem('token')
       },
     };
-    // const response = await fetch("http://localhost:8000/post/job", options);
-    // console.log(response);
+    const response = await fetch("http://localhost:8000/post/job", options);
+    console.log(response);
   };
 
   return (

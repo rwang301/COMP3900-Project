@@ -94,8 +94,25 @@ const AboutRowContainer = styled.div`
 `;
 
 export default function JobseekerProfilePage() {
-  const [applicationModal, setApplicationModal] = React.useState(true);
+  const [applicationModal, setApplicationModal] = React.useState(false);
   const [skillsToRender, setSkillsToRender] = React.useState([]);
+
+  React.useEffect(() => {
+    const getSkills = async () => {
+      const options = {
+        headers: {
+          'token': localStorage.getItem('token')
+        },
+      };
+      const response = await fetch("http://localhost:8000/profile/skills", options);
+      console.log(response, 'response');
+      const json = await response.json();
+      console.log(json, 'json');
+      setSkillsToRender(json);
+      console.log(skillsToRender, 'skillsToRender');
+    };
+    getSkills();
+  }, []);
 
   const postSkills = async (skills) => {
     const data = {
