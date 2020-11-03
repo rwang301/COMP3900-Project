@@ -50,11 +50,12 @@ export const getPotentialJobSeekers = (req, res) => {
                 from PotentialJobSeekers as p
                 join Skills as s on p.job_seeker_email = s.email
                 join JobSeekers as j on s.email = j.email
-                join Users as u on j.email = u.email;`
-                , [], (err, jobSeekers) => {
+                join Users as u on j.email = u.email;`,
+                [], (err, jobSeekers) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
+                console.log(jobSeekers);
                 sendResponse(res, 200, `Here are all the job seekers that match with ${user.name} jobs\n${jobSeekers}`, jobSeekers);
             }
         });
