@@ -102,11 +102,9 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
 
   const handleSkillSave = () => {
     let skills = [skillOne, skillTwo, skillThree]
-    console.log('your skills:', skills);
     setSkillsToRender(skills);
     postSkills(skills)
     setShow(false);
-    //TO DO: Add route to save skills
   };
 
   return (

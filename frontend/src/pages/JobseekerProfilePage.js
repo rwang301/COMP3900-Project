@@ -103,14 +103,14 @@ export default function JobseekerProfilePage() {
     };
     const options = {
       body: JSON.stringify(data),
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'token': localStorage.getItem('token')
       },
     };
-    // const response = await fetch("http://localhost:8000/post/job", options);
-    // console.log(response);
+    const response = await fetch("http://localhost:8000/profile/update", options);
+    console.log(response);
   };
 
   const skillRows = skillsToRender.map((skill) => {
