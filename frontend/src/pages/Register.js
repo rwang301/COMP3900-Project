@@ -85,7 +85,7 @@ export default function Register(props) {
           onChangeHandler={handleEmployerChange}
         />
       </Form>
-      <Href route='login'>Already had an account? No worries, come login here</Href>
+      <Href route='login'>Already have an account? No worries, come login here</Href>
       <Buttons
         primaryRoute={register}
         secondaryRoute='/'
