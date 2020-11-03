@@ -2,29 +2,22 @@ import db from './db.js';
 import sendResponse from '../server.js';
 import { verifyToken } from './token.js';
 
-export const sendApplication = (req, res) => {
-    const { coverLetter, resume } = req.body;
-    const token = req.header('token');
-    const email = verifyToken(token);
-    if (email) {
-        db.get(`select email, name from Users where token = '${token}'`, [], (err, user) => {
-            if (err) {
+export const updateProfile = (req, res) => {
+    verifyToken(req.header('token')).then(user => {
+        const { email, name, password, location, education, skills } = req.body;
+        db.run(`update Users set ${name ? `name = ${name},` : ''} ${password ? `password = ${password},` : ''} ${location ? `location = ${location},` : ''} where email = ${email}`);
+        if (education) db.run(`update JobSeekers set education=${education} where email = ${email}`);
+        db.get(`select job_seeker_email from Skills where job_seeker_email = ${email}`, [], (err, row) => {
+            if (err){
                 sendResponse(res, 500, err.message);
-            } else if (user && email === user.email) {
-                db.run(`insert into Jobs (job_title, location, description, employment_type, closing_date) values ('${job_title}', '${location}', '${description}', '${employment_type}', '${closing_date}')`);
-                db.get('select id from Jobs order by id desc', [], (err, job) => {
-                    if (err) {
-                        sendResponse(res, 500, err.message);
-                    } else {
-                        db.run(`insert into Posts values ('${user.email}', '${job.id}')`);
-                    }
-                });
-                sendResponse(res, 200, `${user.name} posted a job`);
             } else {
-                sendResponse(res, 403, 'Invalid token');
+                if (row) {
+                    db.run(`update Skills set skill1 = ${skills[0]}, skill2 = ${skills[1]}, skill3 = ${skills[2]}`);
+                } else {
+                    db.run(`insert into Skills (skill1, skill2, skill3) values ('${skills[0]}', '${skills[1]}', '${skills[2]}')`);
+                }
             }
         });
-    } else {
-        sendResponse(res, 403, 'Invalid token');
-    }
+        sendResponse(res, 200, `${name} updated profile`);
+    }).catch(({status, message}) => sendResponse(res, status, message));
 };

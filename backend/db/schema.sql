@@ -35,10 +35,21 @@ create table if not exists Posts (
     primary key(employer_email, job_id)
 );
 
+create table if not exists PotentialJobs (
+    email text references JobSeekers(email),
+    id integer references Jobs(id),
+    primary key(email, id)
+);
+
+create table if not exists PotentialJobSeekers (
+    employer_email text references Employers(email),
+    job_seeker_email text references JobSeekers(email),
+    primary key(employer_email, job_seeker_email)
+);
 
 create table if not exists Skills (
     id integer primary key autoincrement,
-    job_seeker_email integer references JobSeekers(email),
+    job_seeker_email text references JobSeekers(email),
     job_id integer references Jobs(id),
     skill1 text,
     skill2 text,
