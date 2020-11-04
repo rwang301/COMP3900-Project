@@ -13,7 +13,10 @@ import Swiping from './pages/Swiping';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
+  const logout = () => {
+    setIsLoggedIn(false); 
+    localStorage.clear();
+  };
 
   return (
     <Router>

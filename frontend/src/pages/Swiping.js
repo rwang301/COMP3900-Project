@@ -119,7 +119,7 @@ export default function Swiping() {
           <UserHeader>
             <UserIcon src={swipeProfile}/>
             <UserNames>
-              Kaiqi Liang
+              {name}
             </UserNames>
           </UserHeader>
           <SubContainer>
