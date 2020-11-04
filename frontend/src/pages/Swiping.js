@@ -79,9 +79,38 @@ const HelperIcons = styled.img`
   margin: 1vw;
 `;
 
-//name, email, location, education, 3 skills
-
 export default function Swiping() {
+  const [email, setEmail] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [location, setLocation] = React.useState('');
+  const [education, setEducation] = React.useState('');
+  const [skill1, setSkill1] = React.useState('');
+  const [skill2, setSkill2] = React.useState('');
+  const [skill3, setSkill3] = React.useState('');
+
+  React.useEffect(() => {
+    const getPotentialJobSeekers = async () => {
+      const options = {
+        headers: {
+          'token': localStorage.getItem('token')
+        },
+      };
+      const response = await fetch("http://localhost:8000/potential/jobseekers", options);
+      const json = await response.json();
+      if (json.length) {
+        const {email, name, location, education, skill1, skill2, skill3} = json[0];
+        setEmail(email);
+        setName(name);
+        setLocation(location);
+        setEducation(education);
+        setSkill1(skill1);
+        setSkill2(skill2);
+        setSkill3(skill3);
+      }
+    }
+    getPotentialJobSeekers();
+  }, []);
+
   return (
     <Wrapper>
       <SwipingContainer>
@@ -97,17 +126,17 @@ export default function Swiping() {
             <SubtitleText>
               Details
             </SubtitleText>
-            <AboutRow iconType={"email"} text={"kaiqi.liang@gmail.com"}/>
-            <AboutRow iconType={"location"} text={"Sydney, Australia"}/>
-            <AboutRow iconType={"education"} text={"Bachelor's of Computer Science @ UNSW"}/>
+              <AboutRow iconType={"email"} text={email}/>
+              <AboutRow iconType={"location"} text={location}/>
+              <AboutRow iconType={"education"} text={education}/>
           </SubContainer>
           <SubContainer>
             <SubtitleText>
-              Skills
+                Skills
             </SubtitleText>
-            <AboutRow iconType={"one"} text={"Scummaster skills"}/>
-            <AboutRow iconType={"two"} text={"Pissing on call"}/>
-            <AboutRow iconType={"three"} text={"Able to create Big Maclaurin"}/>
+            <AboutRow iconType={"one"} text={skill1}/>
+            <AboutRow iconType={"two"} text={skill2}/>
+            <AboutRow iconType={"three"} text={skill3}/>
           </SubContainer>
         </UserContainer>
         <ArrowIcon src={rightArrow}/>
