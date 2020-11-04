@@ -26,3 +26,4 @@ app.put('/profile/update', updateProfile);
 app.get('/profile/skills', getSkills);
 app.get('/potential/jobseekers', getPotentialJobSeekers);
 app.get('/potential/jobs');
+

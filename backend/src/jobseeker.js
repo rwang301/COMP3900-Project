@@ -5,7 +5,7 @@ import { verifyToken } from './token.js';
 export const updateProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         const { name, password, location, education, skills } = req.body;
-        //if (name || password || location) db.run(`update Users set ${name ? `name = '${name}',` : ''} ${password ? `password = '${password}',` : ''} ${location ? `location = '${location}',` : ''} where email = '${user.email}'`);
+        if (name || password || location) db.run(`update Users set ${name ? `name = '${name}',` : ''} ${password ? `password = '${password}',` : ''} ${location ? `location = '${location}',` : ''} where email = '${user.email}'`);
         if (education) db.run(`update JobSeekers set education = ${education} where email = '${user.email}'`);
         db.get(`select email from Skills where email = '${user.email}'`, [], (err, row) => {
             if (err) {
