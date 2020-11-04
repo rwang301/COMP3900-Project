@@ -2,15 +2,13 @@ import React from 'react';
 import styled from "styled-components";
 import CloseIcon from '@material-ui/icons/Close';
 import { Header, Form } from './Form';
-import { ControlledInput } from './Input';
-import JobRadios from './JobRadios';
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+
 
 const ModalContainer = styled.div`
   display: ${props => props.toShow ? 'block' : 'none'};
@@ -46,7 +44,7 @@ const CloseButton = styled(CloseIcon)`
 `;
 
 const DateText = styled.p`
-  margin-top: 3vw;
+  margin-top: 0vw;
 `;
 
 const DateContainer = styled(DatePicker)`
@@ -62,6 +60,7 @@ const Button = styled.button`
   color: black;
   border: 3px solid darkcyan;
   margin: 0.75vw;
+  margin-top: 2vw;
 
   &:hover {
     font-weight: bold;
@@ -69,12 +68,6 @@ const Button = styled.button`
     color: whitesmoke;
     border: 1px solid whitesmoke;
   }
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 1vmin;
-  font-size: 3vmin;
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -87,32 +80,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PostJobModal({toShow, setShow, postJob}) {
+export default function ApplicationModal({toShow, setShow, setSkillsToRender, postSkills}) {
   const classes = useStyles();
-  const [employmentType, setEmploymentType] = React.useState('part-time');
-  const [jobTitle, setJobTitle] = React.useState('');
   const [skillOne, setSkillOne] = React.useState('');
   const [skillTwo, setSkillTwo] = React.useState('');
   const [skillThree, setSkillThree] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [closingDate, setClosingDate] = React.useState(new Date());
-
-  const handleJobTitleChange = (event) => {
-    setJobTitle(event.target.value);
-  }
-
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  }
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  }
-
-  const handleTypeChange = (event) => {
-    setEmploymentType(event.target.value);
-  }
 
   const handleSkillOneChange = (event) => {
     setSkillOne(event.target.value);
@@ -126,6 +98,13 @@ export default function PostJobModal({toShow, setShow, postJob}) {
     setSkillThree(event.target.value);
   };
 
+  const handleSkillSave = () => {
+    let skills = [skillOne, skillTwo, skillThree]
+    setSkillsToRender(skills);
+    postSkills(skills)
+    setShow(false);
+  };
+
   return (
     <ModalContainer toShow={toShow}>
       <ModalContent>
@@ -133,12 +112,7 @@ export default function PostJobModal({toShow, setShow, postJob}) {
             e.stopPropagation();
             setShow(false);
         }}/>
-        <Header>Post a Job</Header>
-        <Form id="register">
-          <ControlledInput type="text" id="Job Title" handleChange={handleJobTitleChange}/>
-          <ControlledInput type="text" id="Location" handleChange={handleLocationChange}/>
-          <ControlledInput type="text" large={true} id="Description" handleChange={handleDescriptionChange}/>
-          <Label>Skills Required</Label>
+        <Header>Apply for Roles</Header>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
               <Select
@@ -170,7 +144,7 @@ export default function PostJobModal({toShow, setShow, postJob}) {
                 <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
                 <MenuItem value={'C Programming'}>C Programming</MenuItem>
               </Select>
-          </FormControl>
+            </FormControl>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 3</InputLabel>
               <Select
@@ -186,14 +160,8 @@ export default function PostJobModal({toShow, setShow, postJob}) {
                 <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
                 <MenuItem value={'C Programming'}>C Programming</MenuItem>
               </Select>
-          </FormControl>
-          <DateText>Application Closing Date:</DateText>
-          <DateContainer width={200} showTimeSelect timeFormat="HH:mm" dateFormat={"dd/MM/yyyy HH:mm:ss"} selected={closingDate} onChange={date => {
-            setClosingDate(date);
-          }} />
-          <JobRadios value={employmentType} onChangeHandler={handleTypeChange}/>
-        </Form>
-        <Button onClick={() => postJob(jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType)}>Send</Button>
+            </FormControl>
+        <Button onClick={handleSkillSave}>Save</Button>
       </ModalContent>
     </ModalContainer>
   )

@@ -18,6 +18,8 @@ const db = new sqlite.Database('./db/database.db', err => {
         db.run(`
             create table if not exists JobSeekers (
                 email text primary key,
+                education text,
+                resume text,
                 foreign key(email) references Users(email)
             );
         `);
@@ -43,21 +45,38 @@ const db = new sqlite.Database('./db/database.db', err => {
 
         db.run(`
             create table if not exists Posts (
-                employer_email text references Employers(email),
-                job_id integer references Jobs(id),
-                primary key(employer_email, job_id)
+                email text references Employers(email),
+                id integer references Jobs(id),
+                primary key(email, id)
             );
         `);
 
         db.run(`
             create table if not exists Skills (
                 id integer primary key autoincrement,
+                email text references JobSeekers(email),
+                job_id integer references Jobs(id),
                 skill1 text,
                 skill2 text,
-                skill3 text,
-                job_seeker_email integer references JobSeekers(email),
-                job_id integer references Jobs(id),
-                primary key (id)
+                skill3 text
+            );
+        `);
+
+        db.run(`
+            create table if not exists PotentialJobs (
+                email text references JobSeekers(email),
+                id integer references Jobs(id),
+                has_swiped integer not null check (has_swiped in (1, 0)),
+                primary key(email, id)
+            );
+        `);
+            
+        db.run(`
+            create table if not exists PotentialJobSeekers (
+                employer_email text references Employers(email),
+                job_seeker_email text references JobSeekers(email),
+                has_swiped integer not null check (has_swiped in (1, 0)),
+                primary key(employer_email, job_seeker_email)
             );
         `);
 

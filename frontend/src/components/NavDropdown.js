@@ -95,7 +95,7 @@ export default function NavDropdown(props) {
           <DropdownArrow login={props.login}/>
         </Div>
         {props.login ? (<DropdownMenu>
-          <DropdownLink href="" to='/profile'>
+          <DropdownLink href="" to='/employer-profile'>
             <OptionText>
               My Account
             </OptionText>

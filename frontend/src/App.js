@@ -6,12 +6,17 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Employer from './pages/Employer';
 import JobSeeker from './pages/JobSeeker';
-import ProfilePage from './pages/ProfilePage';
+import EmployerProfilePage from './pages/EmployerProfilePage';
+import JobseekerProfilePage from './pages/JobseekerProfilePage';
+import Swiping from './pages/Swiping';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
+  const logout = () => {
+    setIsLoggedIn(false); 
+    localStorage.clear();
+  };
 
   return (
     <Router>
@@ -33,8 +38,16 @@ function App() {
           <JobSeeker />
         </Route>
 
-        <Route exact path="/profile">
-          <ProfilePage />
+        <Route exact path="/employer-profile">
+          <EmployerProfilePage />
+        </Route>
+
+        <Route exact path="/jobseeker-profile">
+          <JobseekerProfilePage />
+        </Route>
+
+        <Route exact path="/swiping">
+          <Swiping />
         </Route>
 
         <Route path="/">

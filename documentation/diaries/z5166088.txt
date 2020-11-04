@@ -12,3 +12,9 @@ Begun coding the front end for Sprint 1, have organised a stand up meeting on Sa
 
 Week 5
 Last week, we had our first iteration of our project due where we demo'd our work in Sprint 1. I managed to complete all intended front end components and fix minor bugs/issues before our presentation. We are now organising a meeting for a Retrospective where we will talk about what was good/bad in Sprint 1. 
+
+Week 6
+During our break, we have had a meeting to discuss our next sprint. I have built the profile and employer page. I have been in regular contract with our backend engineers to build queries that I need to fetch.
+
+Week 7
+I have begun also touching on our backend. We have completely overhauled our project and changed a few ideas to simplify our project as we realised it was too out of scope.
