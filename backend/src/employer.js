@@ -38,7 +38,10 @@ export const getJobs = (req, res) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
-                sendResponse(res, 200, `Here are ${user.name}'s jobs\n${jobs}`, jobs);
+                sendResponse(res, 200,
+`Here are ${user.name}'s jobs
+${jobs.map(job => job.job_title)}`,
+                jobs);
             }
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
@@ -55,8 +58,10 @@ export const getPotentialJobSeekers = (req, res) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
-                console.log(jobSeekers);
-                sendResponse(res, 200, `Here are all the job seekers that match with ${user.name} jobs\n${jobSeekers}`, jobSeekers);
+                sendResponse(res, 200,
+`Here are all the job seekers that match with ${user.name}'s jobs
+${jobSeekers.map(jobSeeker => jobSeeker.name).join(', ')}`,
+                jobSeekers);
             }
         });
     }).catch(({status, message}) => sendResponse(res, status, message));

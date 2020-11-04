@@ -6,7 +6,6 @@ import edit from '../assets/edit.svg'
 import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
 import { ListedJobRow } from '../components/Rows';
-import JobDetail from '../components/JobDetail';
 
 
 const ProfileContainer = styled.div`
@@ -129,6 +128,7 @@ export default function EmployerProfilePage() {
     };
     const response = await fetch("http://localhost:8000/post/job", options);
     console.log(response);
+    setPostJobModal(false);
   };
 
   return (
