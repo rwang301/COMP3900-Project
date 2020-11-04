@@ -112,7 +112,7 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
             e.stopPropagation();
             setShow(false);
         }}/>
-        <Header>Apply for Roles</Header>
+        <Header>Update Skills</Header>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
               <Select
