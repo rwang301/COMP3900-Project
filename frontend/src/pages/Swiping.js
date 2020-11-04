@@ -69,7 +69,8 @@ const HelperIconsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  width: 80%;
+  justify-content: space-evenly;;
 `;
 
 const HelperIcons = styled.img`
