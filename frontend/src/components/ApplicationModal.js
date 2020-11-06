@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import CloseIcon from '@material-ui/icons/Close';
 import { Header, Form } from './Form';
-import DatePicker from "react-datepicker";
+import { ControlledInput } from './Input';
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -43,12 +43,10 @@ const CloseButton = styled(CloseIcon)`
   cursor: pointer;
 `;
 
-const DateText = styled.p`
-  margin-top: 0vw;
-`;
-
-const DateContainer = styled(DatePicker)`
-  margin-bottom: 1.5vw;
+const Label = styled.label`
+  display: block;
+  margin-bottom: 1vmin;
+  font-size: 3vmin;
 `;
 
 const Button = styled.button`
@@ -82,9 +80,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ApplicationModal({toShow, setShow, setSkillsToRender, postSkills}) {
   const classes = useStyles();
+  const [email, setEmail] = React.useState('');
+  const [education, setEducation] = React.useState('');
+  const [location, setLocation] = React.useState('');
   const [skillOne, setSkillOne] = React.useState('');
   const [skillTwo, setSkillTwo] = React.useState('');
   const [skillThree, setSkillThree] = React.useState('');
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleEducationChange = (event) => {
+    setEducation(event.target.value);
+  };
+
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  };
 
   const handleSkillOneChange = (event) => {
     setSkillOne(event.target.value);
@@ -101,7 +114,7 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
   const handleSkillSave = () => {
     let skills = [skillOne, skillTwo, skillThree]
     setSkillsToRender(skills);
-    postSkills(skills)
+    postSkills(email, education, location, skills);
     setShow(false);
   };
 
@@ -112,7 +125,12 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
             e.stopPropagation();
             setShow(false);
         }}/>
-        <Header>Apply for Roles</Header>
+        <Header>Edit Profile</Header>
+        <Form id="register">
+          <ControlledInput type="text" id="Email" handleChange={handleEmailChange}/>
+          <ControlledInput type="text" id="Education" handleChange={handleEducationChange}/>
+          <ControlledInput type="text" id="Location" handleChange={handleLocationChange}/>
+          <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
               <Select
@@ -161,6 +179,7 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
                 <MenuItem value={'C Programming'}>C Programming</MenuItem>
               </Select>
             </FormControl>
+        </Form>
         <Button onClick={handleSkillSave}>Save</Button>
       </ModalContent>
     </ModalContainer>

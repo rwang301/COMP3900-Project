@@ -2,11 +2,11 @@ import React from 'react';
 import styled from "styled-components";
 import kai_dp2 from '../assets/kai_dp2.jpg'
 import edit from '../assets/edit.svg'
-import add from '../assets/add.svg'
+// import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
 import { SkillsRow } from '../components/Rows';
 import ApplicationModal from '../components/ApplicationModal';
-import skillEdit from '../assets/jobEdit.svg';
+// import skillEdit from '../assets/jobEdit.svg';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -14,24 +14,6 @@ const ProfileContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 2vh;
-`;
-
-const Button = styled.button`
-  width: 13vmin;
-  height: 5vmin;
-  font-size: 1.5vmin;
-  border-radius: 5px;
-  background: whitesmoke;
-  color: black;
-  border: 3px solid darkcyan;
-  margin: 0.75vw;
-
-  &:hover {
-    font-weight: bold;
-    background: black;
-    color: whitesmoke;
-    border: 1px solid whitesmoke;
-  };
 `;
 
 const AvatarContainer = styled.div`
@@ -114,8 +96,11 @@ export default function JobseekerProfilePage() {
     getSkills();
   }, []);
 
-  const postSkills = async (skills) => {
+  const postSkills = async (email, education, location, skills) => {
     const data = {
+      "email": email,
+      "education": education,
+      "location": location,
       "skills": skills
     };
     const options = {
@@ -131,7 +116,7 @@ export default function JobseekerProfilePage() {
   };
 
   const skillRows = skillsToRender.map((skill) => {
-    if (skill) return <SkillsRow skillName={skill}/>
+    if (skill) return <SkillsRow key={skill} skillName={skill}/>
   });
 
   return (
@@ -141,7 +126,7 @@ export default function JobseekerProfilePage() {
         <NameText>Kaiqi Liang</NameText>
       </AvatarContainer>
       <AboutContainer>
-        <EditButton src={edit} />
+        <EditButton src={edit} onClick={() => setApplicationModal(true)}/>
         <SubtitleText>
           About
         </SubtitleText>
@@ -154,7 +139,7 @@ export default function JobseekerProfilePage() {
           Skills
         </SubtitleText>
         {skillRows}
-        {skillsToRender.length > 0 ? <SkillEditButton src={skillEdit} onClick={() => setApplicationModal(true)} /> : <AddButton src={add} onClick={() => setApplicationModal(true)}/>}
+        {/* {skillsToRender.length > 0 ? <SkillEditButton src={skillEdit} onClick={() => setApplicationModal(true)} /> : <AddButton src={add} onClick={() => setApplicationModal(true)}/>} */}
       </AboutContainer>
       <ApplicationModal toShow={applicationModal} setShow={setApplicationModal} postSkills={postSkills} setSkillsToRender={setSkillsToRender}/>
     </ProfileContainer>
