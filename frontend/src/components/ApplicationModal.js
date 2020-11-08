@@ -111,6 +111,12 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
     setSkillThree(event.target.value);
   };
 
+  // const clearFields = () => {
+  //   setEmail('');
+  //   setLocation('');
+  //   setDescri
+  // };
+
   const handleSkillSave = () => {
     let skills = [skillOne, skillTwo, skillThree]
     setSkillsToRender(skills);
