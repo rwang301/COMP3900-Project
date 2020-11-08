@@ -52,7 +52,7 @@ export const register = (req, res) => {
                 } else {
                     db.run(`insert into JobSeekers (email) values ('${email}')`);
                 }
-                sendResponse(res, 200, `Inserted ${name} into the database`, {'token': token});
+                sendResponse(res, 200, `${name} has registered as a${employer ? 'n employer' : ' jobseeker'}`, {'token': token});
             }
         }
     });

@@ -98,6 +98,8 @@ export default function PostJobModal({toShow, setShow, postJob}) {
   const [description, setDescription] = React.useState('');
   const [closingDate, setClosingDate] = React.useState(new Date());
 
+  console.log(jobTitle)
+
   const handleJobTitleChange = (event) => {
     setJobTitle(event.target.value);
   }
@@ -126,6 +128,19 @@ export default function PostJobModal({toShow, setShow, postJob}) {
     setSkillThree(event.target.value);
   };
 
+  const resetFields = () => {
+    console.log(jobTitle);
+    setJobTitle('');
+    console.log(jobTitle);
+    setLocation('');
+    setDescription('');
+    setSkillOne('');
+    setSkillTwo('');
+    setSkillThree('');
+    setClosingDate(new Date());
+    setEmploymentType('part-time');
+  };
+
   return (
     <ModalContainer toShow={toShow}>
       <ModalContent>
@@ -135,9 +150,9 @@ export default function PostJobModal({toShow, setShow, postJob}) {
         }}/>
         <Header>Post a Job</Header>
         <Form id="register">
-          <ControlledInput type="text" id="Job Title" handleChange={handleJobTitleChange}/>
-          <ControlledInput type="text" id="Location" handleChange={handleLocationChange}/>
-          <ControlledInput type="text" large={true} id="Description" handleChange={handleDescriptionChange}/>
+          <ControlledInput value={jobTitle} type="text" id="Job Title" handleChange={handleJobTitleChange}/>
+          <ControlledInput value={location} type="text" id="Location" handleChange={handleLocationChange}/>
+          <ControlledInput value={description} type="text" large={true} id="Description" handleChange={handleDescriptionChange}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
@@ -193,7 +208,11 @@ export default function PostJobModal({toShow, setShow, postJob}) {
           }} />
           <JobRadios value={employmentType} onChangeHandler={handleTypeChange}/>
         </Form>
-        <Button onClick={() => postJob(jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType)}>Send</Button>
+        <Button onClick={() => {
+            postJob(jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType);
+            resetFields();
+            console.log('tester!!!!!!!!!!')
+        }}>Send</Button>
       </ModalContent>
     </ModalContainer>
   )
