@@ -77,7 +77,12 @@ const AboutRowContainer = styled.div`
 
 export default function JobseekerProfilePage() {
   const [applicationModal, setApplicationModal] = React.useState(false);
-  const [skillsToRender, setSkillsToRender] = React.useState([]);
+  const [email, setEmail] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [education, setEducation] = React.useState('');
+  const [location, setLocation] = React.useState('');
+  const [skills, setSkills] = React.useState([]);
 
   React.useEffect(() => {
     const getSkills = async () => {
@@ -88,20 +93,19 @@ export default function JobseekerProfilePage() {
       };
       const response = await fetch("http://localhost:8000/profile/skills", options);
       console.log(response, 'response');
-      const json = await response.json();
-      console.log(json, 'json');
-      setSkillsToRender(json);
-      console.log(skillsToRender, 'skillsToRender');
+      const skills = await response.json();
+      setSkills(skills);
     };
     getSkills();
   }, []);
 
-  const postSkills = async (email, education, location, skills) => {
+  const updateProfile = async () => {
     const data = {
-      "email": email,
-      "education": education,
-      "location": location,
-      "skills": skills
+      name,
+      password,
+      education,
+      location,
+      skills,
     };
     const options = {
       body: JSON.stringify(data),
@@ -111,19 +115,16 @@ export default function JobseekerProfilePage() {
         'token': localStorage.getItem('token')
       },
     };
+    console.log(options);
     const response = await fetch("http://localhost:8000/profile/update", options);
     console.log(response);
   };
-
-  const skillRows = skillsToRender.map((skill) => {
-    if (skill) return <SkillsRow key={skill} skillName={skill}/>
-  });
 
   return (
     <ProfileContainer >
       <AvatarContainer>
         <KaiPic src={kai_dp2}/>
-        <NameText>Kaiqi Liang</NameText>
+        <NameText>{name}</NameText>
       </AvatarContainer>
       <AboutContainer>
         <EditButton src={edit} onClick={() => setApplicationModal(true)}/>
@@ -131,17 +132,30 @@ export default function JobseekerProfilePage() {
           About
         </SubtitleText>
         <AboutRowContainer>
-          <AboutRow iconType={'email'} text={'kaiqi.liang@gmail.com'}/>
-          <AboutRow iconType={'education'} text={'Bachelor of Computer Science'}/>
-          <AboutRow iconType={'location'} text={'Sydney, Australia'}/>
+          <AboutRow iconType={'email'} text={email}/>
+          <AboutRow iconType={'education'} text={education}/>
+          <AboutRow iconType={'location'} text={location}/>
         </AboutRowContainer>
         <SubtitleText>
           Skills
         </SubtitleText>
-        {skillRows}
-        {/* {skillsToRender.length > 0 ? <SkillEditButton src={skillEdit} onClick={() => setApplicationModal(true)} /> : <AddButton src={add} onClick={() => setApplicationModal(true)}/>} */}
+        {skills.map((skill) => skill && <SkillsRow key={skill} skillName={skill}/>)}
       </AboutContainer>
-      <ApplicationModal toShow={applicationModal} setShow={setApplicationModal} postSkills={postSkills} setSkillsToRender={setSkillsToRender}/>
+      <ApplicationModal
+        name={name}
+        setName={setName}
+        password={password}
+        setPassword={setPassword}
+        location={location}
+        setLocation={setLocation}
+        education={education}
+        setEducation={setEducation}
+        skills={skills}
+        setSkills={setSkills}
+        toShow={applicationModal}
+        setShow={setApplicationModal}
+        updateProfile={updateProfile}
+      />
     </ProfileContainer>
   )
 }

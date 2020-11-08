@@ -70,7 +70,7 @@ const db = new sqlite.Database('./db/database.db', err => {
                 primary key(email, id)
             );
         `);
-            
+
         db.run(`
             create table if not exists PotentialJobSeekers (
                 employer_email text references Employers(email),

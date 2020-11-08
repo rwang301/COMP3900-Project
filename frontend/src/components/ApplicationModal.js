@@ -78,43 +78,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ApplicationModal({toShow, setShow, setSkillsToRender, postSkills}) {
+export default function ApplicationModal({
+  name, setName, password, setPassword, location, setLocation, education, setEducation, skills, setSkills, toShow, setShow
+}) {
   const classes = useStyles();
-  const [email, setEmail] = React.useState('');
-  const [education, setEducation] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [skillOne, setSkillOne] = React.useState('');
-  const [skillTwo, setSkillTwo] = React.useState('');
-  const [skillThree, setSkillThree] = React.useState('');
+  const [skill1, setSkill1] = React.useState(skills[0]);
+  const [skill2, setSkill2] = React.useState(skills[1]);
+  const [skill3, setSkill3] = React.useState(skills[2]);
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleEducationChange = (event) => {
-    setEducation(event.target.value);
-  };
-
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  };
-
-  const handleSkillOneChange = (event) => {
-    setSkillOne(event.target.value);
-  };
-
-  const handleSkillTwoChange = (event) => {
-    setSkillTwo(event.target.value);
-  };
-
-  const handleSkillThreeChange = (event) => {
-    setSkillThree(event.target.value);
-  };
-
-  const handleSkillSave = () => {
-    let skills = [skillOne, skillTwo, skillThree]
-    setSkillsToRender(skills);
-    postSkills(email, education, location, skills);
+  const handleSave = () => {
+    setName(name);
+    setPassword(password);
+    setLocation(location);
+    setEducation(education);
+    setSkills([skill1, skill2, skill3]);
     setShow(false);
   };
 
@@ -126,34 +103,35 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
             setShow(false);
         }}/>
         <Header>Edit Profile</Header>
-        <Form id="register">
-          <ControlledInput type="text" id="Email" handleChange={handleEmailChange}/>
-          <ControlledInput type="text" id="Education" handleChange={handleEducationChange}/>
-          <ControlledInput type="text" id="Location" handleChange={handleLocationChange}/>
+        <Form id="updateProfile">
+          <ControlledInput type="text" id="Name" handleChange={(event) => setName(event.target.value)}/>
+          <ControlledInput type="password" id="Password" handleChange={(event) => setPassword(event.target.value)}/>
+          <ControlledInput type="text" id="Education" handleChange={(event) => setEducation(event.target.value)}/>
+          <ControlledInput type="text" id="Location" handleChange={(event) => setLocation(event.target.value)}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={skillOne}
-                onChange={handleSkillOneChange}
-              >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
-              </Select>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={skill1}
+              onChange={(event) => setSkill1(event.target.value)}
+            >
+              <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
+              <MenuItem value={'CSS'}>CSS</MenuItem>
+              <MenuItem value={'HTML'}>HTML</MenuItem>
+              <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
+              <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
+              <MenuItem value={'C Programming'}>C Programming</MenuItem>
+            </Select>
           </FormControl>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 2</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={skillTwo}
-                onChange={handleSkillTwoChange}
+                value={skill2}
+                onChange={(event) => setSkill2(event.target.value)}
               >
                 <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
                 <MenuItem value={'CSS'}>CSS</MenuItem>
@@ -168,8 +146,8 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={skillThree}
-                onChange={handleSkillThreeChange}
+                value={skill3}
+                onChange={(event) => setSkill3(event.target.value)}
               >
                 <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
                 <MenuItem value={'CSS'}>CSS</MenuItem>
@@ -180,7 +158,7 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
               </Select>
             </FormControl>
         </Form>
-        <Button onClick={handleSkillSave}>Save</Button>
+        <Button onClick={handleSave}>Save</Button>
       </ModalContent>
     </ModalContainer>
   )

@@ -5,8 +5,8 @@ import { verifyToken } from './token.js';
 export const updateProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         const { name, password, location, education, skills } = req.body;
-        //if (name || password || location) db.run(`update Users set ${name ? `name = '${name}',` : ''} ${password ? `password = '${password}',` : ''} ${location ? `location = '${location}',` : ''} where email = '${user.email}'`);
-        if (education) db.run(`update JobSeekers set education = ${education} where email = '${user.email}'`);
+        db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' where email = '${user.email}'`);
+        if (education) db.run(`update JobSeekers set education = '${education}' where email = '${user.email}'`);
         db.get(`select email from Skills where email = '${user.email}'`, [], (err, row) => {
             if (err) {
                 sendResponse(res, 500, err.message);
@@ -43,15 +43,15 @@ export const updateProfile = (req, res) => {
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
-export const getSkills = (req, res) => {
+export const getProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        db.get(`select skill1, skill2, skill3 from Skills where email = '${user.email}'`, [], (err, skills) => {
+        db.get(`select education, skill1, skill2, skill3 from JobSeekers as j join Skills as s on j.email = s.email where j.email = '${user.email}'`, [], (err, info) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
-                if (skills) {
-                    const {skill1, skill2, skill3} = skills;
-                    sendResponse(res, 200, `${user.name}'s skills are ${skill1}, ${skill2}, ${skill3}`, [skill1, skill2, skill3]);
+                if (info) {
+                    const {education, skill1, skill2, skill3} = info;
+                    sendResponse(res, 200, `${user.name}'s skills are ${skill1}, ${skill2}, ${skill3}`, { education, skills: [skill1, skill2, skill3] });
                 } else {
                     sendResponse(res, 200, `${user.name} has no skills`, ['', '', '']);
                 }

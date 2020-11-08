@@ -45,7 +45,7 @@ ${jobs.map(job => job.job_title)}`,
             }
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
-}
+};
 
 export const getPotentialJobSeekers = (req, res) => {
     verifyToken(req.header('token')).then(user => {
@@ -65,4 +65,4 @@ ${jobSeekers.map(jobSeeker => jobSeeker.name).join(', ')}`,
             }
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
-}
+};
