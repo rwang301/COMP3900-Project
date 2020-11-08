@@ -91,10 +91,14 @@ export default function JobseekerProfilePage() {
           'token': localStorage.getItem('token')
         },
       };
-      const response = await fetch("http://localhost:8000/profile/skills", options);
+      const response = await fetch("http://localhost:8000/jobseeker/profile", options);
       console.log(response, 'response');
-      const skills = await response.json();
+      const json = await response.json();
+      console.log(json);
+      const {education, skills} = json;
+      console.log(education, skills);
       setSkills(skills);
+      setEducation(education);
     };
     getSkills();
   }, []);

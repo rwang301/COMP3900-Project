@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ApplicationModal({
-  name, setName, password, setPassword, location, setLocation, education, setEducation, skills, setSkills, toShow, setShow
+  name, setName, password, setPassword, location, setLocation, education, setEducation, skills, setSkills, toShow, setShow, updateProfile,
 }) {
   const classes = useStyles();
   const [skill1, setSkill1] = React.useState(skills[0]);
@@ -87,6 +87,7 @@ export default function ApplicationModal({
   const [skill3, setSkill3] = React.useState(skills[2]);
 
   const handleSave = () => {
+    updateProfile();
     setName(name);
     setPassword(password);
     setLocation(location);

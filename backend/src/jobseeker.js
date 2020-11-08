@@ -7,11 +7,11 @@ export const updateProfile = (req, res) => {
         const { name, password, location, education, skills } = req.body;
         db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' where email = '${user.email}'`);
         if (education) db.run(`update JobSeekers set education = '${education}' where email = '${user.email}'`);
-        db.get(`select email from Skills where email = '${user.email}'`, [], (err, row) => {
+        db.get(`select email from Skills where email = '${user.email}'`, [], (err, email) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
-                if (row) {
+                if (email) {
                     db.run(`update Skills set skill1 = ${skills[0] ? `'${skills[0]}'` : null}, skill2 = ${skills[1] ? `'${skills[1]}'` : null}, skill3 = ${skills[2] ? `'${skills[2]}'` : null}`);
                 } else {
                     db.run(`insert into Skills (email, skill1, skill2, skill3) values ('${user.email}', '${skills[0]}', '${skills[1]}', '${skills[2]}')`);
@@ -39,6 +39,7 @@ export const updateProfile = (req, res) => {
                     }
                 });
             }
+            sendResponse(res, 200, `${user.name} updated profile`);
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
@@ -53,7 +54,7 @@ export const getProfile = (req, res) => {
                     const {education, skill1, skill2, skill3} = info;
                     sendResponse(res, 200, `${user.name}'s skills are ${skill1}, ${skill2}, ${skill3}`, { education, skills: [skill1, skill2, skill3] });
                 } else {
-                    sendResponse(res, 200, `${user.name} has no skills`, ['', '', '']);
+                    sendResponse(res, 200, `${user.name} has no skills`, { education: '', skills: ['', '', ''] });
                 }
             }
         });
