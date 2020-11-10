@@ -48,7 +48,7 @@ const IconText = styled(JobText)`
   font-style: italic;
 `;
 
-export function ListedJobRow({job, jobId, setJobId}) {
+export function ListedJobRow({job}) {
   const [jobDetailModal, setJobDetailModal] = React.useState(false);
 
   return (
@@ -60,7 +60,6 @@ export function ListedJobRow({job, jobId, setJobId}) {
         <IconAndText
           onClick={() => {
             setJobDetailModal(true)
-            setJobId(job.id);
           }}
         >
           <JobEditIcon src={jobEdit}/>
@@ -71,7 +70,7 @@ export function ListedJobRow({job, jobId, setJobId}) {
           <IconText>Remove</IconText>
         </IconAndText>
       </Actions>
-      {jobDetailModal && <JobDetail setShow={setJobDetailModal} job={job} jobId={jobId}/>}
+      {jobDetailModal && <JobDetail setShow={setJobDetailModal} job={job} />}
     </RowContainer>
   )
 };

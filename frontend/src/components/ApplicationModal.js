@@ -82,17 +82,8 @@ export default function ApplicationModal({
   name, setName, password, setPassword, location, setLocation, education, setEducation, skills, setSkills, toShow, setShow, updateProfile,
 }) {
   const classes = useStyles();
-  const [skill1, setSkill1] = React.useState(skills[0]);
-  const [skill2, setSkill2] = React.useState(skills[1]);
-  const [skill3, setSkill3] = React.useState(skills[2]);
-
   const handleSave = () => {
     updateProfile();
-    setName(name);
-    setPassword(password);
-    setLocation(location);
-    setEducation(education);
-    setSkills([skill1, skill2, skill3]);
     setShow(false);
   };
 
@@ -105,18 +96,21 @@ export default function ApplicationModal({
         }}/>
         <Header>Edit Profile</Header>
         <Form id="updateProfile">
-          <ControlledInput type="text" id="Name" handleChange={(event) => setName(event.target.value)}/>
-          <ControlledInput type="password" id="Password" handleChange={(event) => setPassword(event.target.value)}/>
-          <ControlledInput type="text" id="Education" handleChange={(event) => setEducation(event.target.value)}/>
-          <ControlledInput type="text" id="Location" handleChange={(event) => setLocation(event.target.value)}/>
+          <ControlledInput value={name} type="text" id="Name" handleChange={(event) => setName(event.target.value)}/>
+          <ControlledInput value={password} type="password" id="Password" handleChange={(event) => setPassword(event.target.value)}/>
+          <ControlledInput value={education} type="text" id="Education" handleChange={(event) => setEducation(event.target.value)}/>
+          <ControlledInput value={location} type="text" id="Location" handleChange={(event) => setLocation(event.target.value)}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={skill1}
-              onChange={(event) => setSkill1(event.target.value)}
+              value={skills[0]}
+              onChange={(event) => {
+                skills[0] = event.target.value;
+                setSkills(skills);
+              }}
             >
               <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
               <MenuItem value={'CSS'}>CSS</MenuItem>
@@ -128,35 +122,41 @@ export default function ApplicationModal({
           </FormControl>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 2</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={skill2}
-                onChange={(event) => setSkill2(event.target.value)}
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={skills[1]}
+              onChange={(event) => {
+                skills[1] = event.target.value;
+                setSkills(skills);
+              }}
               >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
-              </Select>
-            </FormControl>
+              <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
+              <MenuItem value={'CSS'}>CSS</MenuItem>
+              <MenuItem value={'HTML'}>HTML</MenuItem>
+              <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
+              <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
+              <MenuItem value={'C Programming'}>C Programming</MenuItem>
+            </Select>
+          </FormControl>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 3</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={skill3}
-                onChange={(event) => setSkill3(event.target.value)}
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={skills[2]}
+              onChange={(event) => {
+                skills[2] = event.target.value;
+                setSkills(skills);
+              }}
               >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
-              </Select>
+              <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
+              <MenuItem value={'CSS'}>CSS</MenuItem>
+              <MenuItem value={'HTML'}>HTML</MenuItem>
+              <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
+              <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
+              <MenuItem value={'C Programming'}>C Programming</MenuItem>
+            </Select>
             </FormControl>
         </Form>
         <Button onClick={handleSave}>Save</Button>

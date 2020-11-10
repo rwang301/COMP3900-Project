@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
 
 //TO DO: Write a PUT Request to edit a job and delete postJob
 
-export default function JobDetail({setShow, job, jobId}) {
+export default function JobDetail({setShow, job}) {
   const classes = useStyles();
   const [employmentType, setEmploymentType] = React.useState('part-time');
   const [jobTitle, setJobTitle] = React.useState('');
@@ -129,13 +129,13 @@ export default function JobDetail({setShow, job, jobId}) {
 
   const save = async () => {
     const data = {
-      id: jobId,
-      "job_title": jobTitle,
+      id: job.id,
+      job_title: jobTitle,
       location,
       description,
-      "skills": [skillOne, skillTwo, skillThree],
-      "employment_type": employmentType,
-      "closing_date": closingDate
+      skills: [skillOne, skillTwo, skillThree],
+      employment_type: employmentType,
+      closing_date: closingDate
     };
     const options = {
       body: JSON.stringify(data),

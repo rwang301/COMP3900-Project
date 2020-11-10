@@ -24,7 +24,7 @@ export const postJob = (req, res) => {
                                 }
                             }
                         }
-                        sendResponse(res, 200, `${user.name} posted a job`);
+                        sendResponse(res, 200, `${user.name} posted a job`, {id: job.id});
                     }
                 });
             }
@@ -57,8 +57,10 @@ ${jobs.map(job => job.job_title)}`,
 export const updateJob = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         const { id, job_title, location, description, employment_type, closing_date, skills } = req.body;
-        db.run(`update Skills set skill1 = '${skills[0]}', skill2 = '${skills[1]}', skill3 = '${skills[2]}' where id = ${id}`);
+        console.log(`update Skills set skill1 = '${skills[0]}', skill2 = '${skills[1]}', skill3 = '${skills[2]}' where job_id = ${id}`);
+        console.log(`update Jobs set job_title = '${job_title}', location = '${location}', description = '${description}', employment_type = '${employment_type}', closing_date = '${closing_date}' where id = ${id}`);
         db.run(`update Jobs set job_title = '${job_title}', location = '${location}', description = '${description}', employment_type = '${employment_type}', closing_date = '${closing_date}' where id = ${id}`);
+        db.run(`update Skills set skill1 = '${skills[0]}', skill2 = '${skills[1]}', skill3 = '${skills[2]}' where job_id = ${id}`);
         sendResponse(res, 200, `${user.name} updated job ${job_title}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };

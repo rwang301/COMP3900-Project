@@ -80,8 +80,8 @@ export default function JobseekerProfilePage() {
   const [email, setEmail] = React.useState('');
   const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [education, setEducation] = React.useState('');
   const [location, setLocation] = React.useState('');
+  const [education, setEducation] = React.useState('');
   const [skills, setSkills] = React.useState([]);
 
   React.useEffect(() => {
@@ -95,10 +95,13 @@ export default function JobseekerProfilePage() {
       console.log(response, 'response');
       const json = await response.json();
       console.log(json);
-      const {education, skills} = json;
-      console.log(education, skills);
-      setSkills(skills);
+      const {email, name, password, location, education, skills} = json;
+      setEmail(email);
+      setName(name);
+      setPassword(password);
+      setLocation(location);
       setEducation(education);
+      setSkills(skills);
     };
     getSkills();
   }, []);
@@ -143,7 +146,7 @@ export default function JobseekerProfilePage() {
         <SubtitleText>
           Skills
         </SubtitleText>
-        {skills.map((skill) => skill && <SkillsRow key={skill} skillName={skill}/>)}
+        {skills.map((skill, idx) => skill && <SkillsRow key={idx} skillName={skill}/>)}
       </AboutContainer>
       <ApplicationModal
         name={name}

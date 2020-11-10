@@ -46,15 +46,15 @@ export const updateProfile = (req, res) => {
 
 export const getProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        db.get(`select education, skill1, skill2, skill3 from JobSeekers as j join Skills as s on j.email = s.email where j.email = '${user.email}'`, [], (err, info) => {
+        db.get(`select u.email, name, password, location, education, skill1, skill2, skill3 from JobSeekers as j left join Skills as s on j.email = s.email join Users as u on u.email = j.email where j.email = '${user.email}'`, [], (err, info) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
                 if (info) {
-                    const {education, skill1, skill2, skill3} = info;
-                    sendResponse(res, 200, `${user.name}'s skills are ${skill1}, ${skill2}, ${skill3}`, { education, skills: [skill1, skill2, skill3] });
+                    const { email, name, password, location, education, skill1, skill2, skill3} = info;
+                    sendResponse(res, 200, `${user.name}'s skills are ${skill1}, ${skill2}, ${skill3}`, { email, name, password, location, education, skills: [skill1, skill2, skill3] });
                 } else {
-                    sendResponse(res, 200, `${user.name} has no skills`, { education: '', skills: ['', '', ''] });
+                    sendResponse(res, 400, 'No such user');
                 }
             }
         });

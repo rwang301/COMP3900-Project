@@ -92,7 +92,6 @@ const AboutRowContainer = styled.div`
 export default function EmployerProfilePage() {
   const [postJobModal, setPostJobModal] = React.useState(false);
   const [jobsToRender, setJobsToRender] = React.useState([]);
-  const [jobId, setJobId] = React.useState();
 
   React.useEffect(() => {
     const getJobs = async () => {
@@ -129,7 +128,8 @@ export default function EmployerProfilePage() {
     };
     const response = await fetch("http://localhost:8000/job", options);
     console.log(response);
-    setJobsToRender([...jobsToRender, data]);
+    const json = await response.json();
+    setJobsToRender([...jobsToRender, { ...data, id:json.id }]);
     console.log(jobsToRender, 'love');
     setPostJobModal(false);
   };
@@ -153,7 +153,7 @@ export default function EmployerProfilePage() {
         <SubtitleText>
           Listed Jobs
         </SubtitleText>
-        {jobsToRender.map((job) => <ListedJobRow key={job.id} job={job} jobId={jobId} setJobId={setJobId}/>)}
+        {jobsToRender.map((job) => <ListedJobRow key={job.id} job={job} />)}
         <AddButton src={add} onClick={() => setPostJobModal(true)}/>
       </AboutContainer>
       {postJobModal && <PostJobModal setShow={setPostJobModal} postJob={postJob}/>}
