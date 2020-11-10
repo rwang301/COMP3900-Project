@@ -45,7 +45,7 @@ const MatchContainer = styled.div`
 `;
 
 
-export default function MatchRow(props) {
+export default function MatchRow({name, skills, jobApplied}) {
   const [showDetails, setShowDetails] = React.useState(false);
 
   return (
@@ -53,10 +53,10 @@ export default function MatchRow(props) {
       <Avatar fontSize="large"/>
       <PersonalDetails>
         <FullNameText>
-          Kaiqi Liang
+          {name}
         </FullNameText>
         <ExperienceText>
-          Software Developer at Google
+          {skills.join(", ")}
         </ExperienceText>
       </PersonalDetails>
       <AppliedContainer>
@@ -64,7 +64,7 @@ export default function MatchRow(props) {
           Applied to your listing: 
         </AppliedText>
         <AppliedJob>
-          Software Developer at Apple
+          {jobApplied}
         </AppliedJob>
       </AppliedContainer>
       <ApplicationDetail toShow={showDetails} setShow={setShowDetails}/>
