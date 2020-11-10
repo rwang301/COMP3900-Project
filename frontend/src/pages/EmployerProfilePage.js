@@ -126,8 +126,11 @@ export default function EmployerProfilePage() {
         'token': localStorage.getItem('token')
       },
     };
-    const response = await fetch("http://localhost:8000/post/job", options);
+    const response = await fetch("http://localhost:8000/job", options);
     console.log(response);
+    const json = await response.json();
+    setJobsToRender([...jobsToRender, { ...data, id:json.id }]);
+    console.log(jobsToRender, 'love');
     setPostJobModal(false);
   };
 
@@ -150,10 +153,10 @@ export default function EmployerProfilePage() {
         <SubtitleText>
           Listed Jobs
         </SubtitleText>
-        {jobsToRender.map((job) => <ListedJobRow key={job.job_title} job={job} postJob={postJob}/>)}
+        {jobsToRender.map((job) => <ListedJobRow key={job.id} job={job} />)}
         <AddButton src={add} onClick={() => setPostJobModal(true)}/>
       </AboutContainer>
-      <PostJobModal toShow={postJobModal} setShow={setPostJobModal} postJob={postJob}/>
+      {postJobModal && <PostJobModal setShow={setPostJobModal} postJob={postJob}/>}
     </ProfileContainer>
   )
 }

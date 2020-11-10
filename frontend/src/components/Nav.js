@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from "styled-components";
 import logo from '../assets/logo.svg';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import NavDropdown from './NavDropdown';
 
@@ -42,6 +43,7 @@ const Section = styled.section`
 const Paragraph = styled.p`
   font-size: 2vw;
   visibility: ${props => props.login || props.visible ? 'unset' : 'hidden'};
+  cursor: pointer;
 `;
 
 const Active = styled(Paragraph)`
@@ -49,12 +51,19 @@ const Active = styled(Paragraph)`
   font-weight: bold;
 `;
 
+const PlainLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+`;
+
 export default function Nav({login, logout}) {
   const location = useLocation();
   const tabs = (
     <>
       <Active login={login}>Home</Active>
-      <Paragraph login={login}>My Matches</Paragraph>
+      <PlainLink to='/matches'>
+        <Paragraph login={login}>My Matches</Paragraph>
+      </PlainLink>
       {location.pathname.slice(1) === 'employer' ? <Paragraph login={login}>Recruit Now</Paragraph> : <Paragraph login={login}>Apply Now</Paragraph>}
       <NavDropdown login={login} logout={logout}/>
     </>

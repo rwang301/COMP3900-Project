@@ -2,11 +2,11 @@ import React from 'react';
 import styled from "styled-components";
 import kai_dp2 from '../assets/kai_dp2.jpg'
 import edit from '../assets/edit.svg'
-import add from '../assets/add.svg'
+// import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
 import { SkillsRow } from '../components/Rows';
 import ApplicationModal from '../components/ApplicationModal';
-import skillEdit from '../assets/jobEdit.svg';
+// import skillEdit from '../assets/jobEdit.svg';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -14,24 +14,6 @@ const ProfileContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 2vh;
-`;
-
-const Button = styled.button`
-  width: 13vmin;
-  height: 5vmin;
-  font-size: 1.5vmin;
-  border-radius: 5px;
-  background: whitesmoke;
-  color: black;
-  border: 3px solid darkcyan;
-  margin: 0.75vw;
-
-  &:hover {
-    font-weight: bold;
-    background: black;
-    color: whitesmoke;
-    border: 1px solid whitesmoke;
-  };
 `;
 
 const AvatarContainer = styled.div`
@@ -95,7 +77,12 @@ const AboutRowContainer = styled.div`
 
 export default function JobseekerProfilePage() {
   const [applicationModal, setApplicationModal] = React.useState(false);
-  const [skillsToRender, setSkillsToRender] = React.useState([]);
+  const [email, setEmail] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [location, setLocation] = React.useState('');
+  const [education, setEducation] = React.useState('');
+  const [skills, setSkills] = React.useState([]);
 
   React.useEffect(() => {
     const getSkills = async () => {
@@ -104,19 +91,28 @@ export default function JobseekerProfilePage() {
           'token': localStorage.getItem('token')
         },
       };
-      const response = await fetch("http://localhost:8000/profile/skills", options);
+      const response = await fetch("http://localhost:8000/jobseeker/profile", options);
       console.log(response, 'response');
       const json = await response.json();
-      console.log(json, 'json');
-      setSkillsToRender(json);
-      console.log(skillsToRender, 'skillsToRender');
+      console.log(json);
+      const {email, name, password, location, education, skills} = json;
+      setEmail(email);
+      setName(name);
+      setPassword(password);
+      setLocation(location);
+      setEducation(education);
+      setSkills(skills);
     };
     getSkills();
   }, []);
 
-  const postSkills = async (skills) => {
+  const updateProfile = async () => {
     const data = {
-      "skills": skills
+      name,
+      password,
+      education,
+      location,
+      skills,
     };
     const options = {
       body: JSON.stringify(data),
@@ -126,37 +122,47 @@ export default function JobseekerProfilePage() {
         'token': localStorage.getItem('token')
       },
     };
+    console.log(options);
     const response = await fetch("http://localhost:8000/profile/update", options);
     console.log(response);
   };
-
-  const skillRows = skillsToRender.map((skill) => {
-    if (skill) return <SkillsRow skillName={skill}/>
-  });
 
   return (
     <ProfileContainer >
       <AvatarContainer>
         <KaiPic src={kai_dp2}/>
-        <NameText>Kaiqi Liang</NameText>
+        <NameText>{name}</NameText>
       </AvatarContainer>
       <AboutContainer>
-        <EditButton src={edit} />
+        <EditButton src={edit} onClick={() => setApplicationModal(true)}/>
         <SubtitleText>
           About
         </SubtitleText>
         <AboutRowContainer>
-          <AboutRow iconType={'email'} text={'kaiqi.liang@gmail.com'}/>
-          <AboutRow iconType={'education'} text={'Bachelor of Computer Science'}/>
-          <AboutRow iconType={'location'} text={'Sydney, Australia'}/>
+          <AboutRow iconType={'email'} text={email}/>
+          <AboutRow iconType={'education'} text={education}/>
+          <AboutRow iconType={'location'} text={location}/>
         </AboutRowContainer>
         <SubtitleText>
           Skills
         </SubtitleText>
-        {skillRows}
-        {skillsToRender.length > 0 ? <SkillEditButton src={skillEdit} onClick={() => setApplicationModal(true)} /> : <AddButton src={add} onClick={() => setApplicationModal(true)}/>}
+        {skills.map((skill, idx) => skill && <SkillsRow key={idx} skillName={skill}/>)}
       </AboutContainer>
-      <ApplicationModal toShow={applicationModal} setShow={setApplicationModal} postSkills={postSkills} setSkillsToRender={setSkillsToRender}/>
+      <ApplicationModal
+        name={name}
+        setName={setName}
+        password={password}
+        setPassword={setPassword}
+        location={location}
+        setLocation={setLocation}
+        education={education}
+        setEducation={setEducation}
+        skills={skills}
+        setSkills={setSkills}
+        toShow={applicationModal}
+        setShow={setApplicationModal}
+        updateProfile={updateProfile}
+      />
     </ProfileContainer>
   )
 }

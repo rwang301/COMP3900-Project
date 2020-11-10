@@ -13,7 +13,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 const ModalContainer = styled.div`
-  display: ${props => props.toShow ? 'block' : 'none'};
   cursor: auto;
   position: fixed;
   z-index: 1;
@@ -87,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PostJobModal({toShow, setShow, postJob}) {
+export default function PostJobModal({setShow, postJob}) {
   const classes = useStyles();
   const [employmentType, setEmploymentType] = React.useState('part-time');
   const [jobTitle, setJobTitle] = React.useState('');
@@ -126,8 +125,19 @@ export default function PostJobModal({toShow, setShow, postJob}) {
     setSkillThree(event.target.value);
   };
 
+  const resetFields = () => {
+    setJobTitle('');
+    setLocation('');
+    setDescription('');
+    setSkillOne('');
+    setSkillTwo('');
+    setSkillThree('');
+    setClosingDate(new Date());
+    setEmploymentType('part-time');
+  };
+
   return (
-    <ModalContainer toShow={toShow}>
+    <ModalContainer>
       <ModalContent>
         <CloseButton onClick={(e) => {
             e.stopPropagation();
@@ -135,9 +145,9 @@ export default function PostJobModal({toShow, setShow, postJob}) {
         }}/>
         <Header>Post a Job</Header>
         <Form id="register">
-          <ControlledInput type="text" id="Job Title" handleChange={handleJobTitleChange}/>
-          <ControlledInput type="text" id="Location" handleChange={handleLocationChange}/>
-          <ControlledInput type="text" large={true} id="Description" handleChange={handleDescriptionChange}/>
+          <ControlledInput value={jobTitle} type="text" id="Job Title" handleChange={handleJobTitleChange}/>
+          <ControlledInput value={location} type="text" id="Location" handleChange={handleLocationChange}/>
+          <ControlledInput value={description} type="text" large={true} id="Description" handleChange={handleDescriptionChange}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
@@ -193,7 +203,14 @@ export default function PostJobModal({toShow, setShow, postJob}) {
           }} />
           <JobRadios value={employmentType} onChangeHandler={handleTypeChange}/>
         </Form>
-        <Button onClick={() => postJob(jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType)}>Send</Button>
+        <Button
+          onClick={() => {
+            postJob(jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType);
+            resetFields();
+          }}
+        >
+          Post
+        </Button>
       </ModalContent>
     </ModalContainer>
   )

@@ -24,7 +24,7 @@ export const postJob = (req, res) => {
                                 }
                             }
                         }
-                        sendResponse(res, 200, `${user.name} posted a job`);
+                        sendResponse(res, 200, `${user.name} posted a job`, {id: job.id});
                     }
                 });
             }
@@ -34,18 +34,45 @@ export const postJob = (req, res) => {
 
 export const getJobs = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        db.all('select job_title, location, description, employment_type, closing_date, skill1, skill2, skill3 from Jobs join Skills on Jobs.id = Skills.job_id;', [], (err, jobs) => {
+        db.all('select j.id, job_title, location, description, employment_type, closing_date, skill1, skill2, skill3 from Jobs as j join Skills as s on j.id = s.job_id;', [], (err, jobs) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
                 sendResponse(res, 200,
 `Here are ${user.name}'s jobs
 ${jobs.map(job => job.job_title)}`,
-                jobs);
+                jobs.map((job) => {
+                    const newJob = job;
+                    newJob.skills = [job.skill1, job.skill2, job.skill3];
+                    delete newJob['skill1'];
+                    delete newJob['skill2'];
+                    delete newJob['skill3'];
+                    return newJob;
+                }));
             }
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
-}
+};
+
+export const updateJob = (req, res) => {
+    verifyToken(req.header('token')).then(user => {
+        const { id, job_title, location, description, employment_type, closing_date, skills } = req.body;
+        console.log(`update Skills set skill1 = '${skills[0]}', skill2 = '${skills[1]}', skill3 = '${skills[2]}' where job_id = ${id}`);
+        console.log(`update Jobs set job_title = '${job_title}', location = '${location}', description = '${description}', employment_type = '${employment_type}', closing_date = '${closing_date}' where id = ${id}`);
+        db.run(`update Jobs set job_title = '${job_title}', location = '${location}', description = '${description}', employment_type = '${employment_type}', closing_date = '${closing_date}' where id = ${id}`);
+        db.run(`update Skills set skill1 = '${skills[0]}', skill2 = '${skills[1]}', skill3 = '${skills[2]}' where job_id = ${id}`);
+        sendResponse(res, 200, `${user.name} updated job ${job_title}`);
+    }).catch(({status, message}) => sendResponse(res, status, message));
+};
+
+export const deleteJob = (req, res) => {
+    verifyToken(req.header('token')).then(user => {
+        const { id, job_title, location, description, employment_type, closing_date, skills } = req.body;
+        db.run(`update Skills set skill1 = '${skills[0]}', '${skills[1]}', '${skills[2]}' where id = ${id}`);
+        db.run(`update Jobs set job_title = '${job_title}', location = '${location}', description = '${description}', employment_type = '${employment_type}', closing_date = '${closing_date}' where id = ${id}`);
+        sendResponse(res, 200, `${user.name} updated job ${job_title}`);
+    }).catch(({status, message}) => sendResponse(res, status, message));
+};
 
 export const getPotentialJobSeekers = (req, res) => {
     verifyToken(req.header('token')).then(user => {
@@ -65,4 +92,4 @@ ${jobSeekers.map(jobSeeker => jobSeeker.name).join(', ')}`,
             }
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
-}
+};

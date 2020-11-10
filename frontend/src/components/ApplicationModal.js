@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import CloseIcon from '@material-ui/icons/Close';
 import { Header, Form } from './Form';
-import DatePicker from "react-datepicker";
+import { ControlledInput } from './Input';
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -43,12 +43,10 @@ const CloseButton = styled(CloseIcon)`
   cursor: pointer;
 `;
 
-const DateText = styled.p`
-  margin-top: 0vw;
-`;
-
-const DateContainer = styled(DatePicker)`
-  margin-bottom: 1.5vw;
+const Label = styled.label`
+  display: block;
+  margin-bottom: 1vmin;
+  font-size: 3vmin;
 `;
 
 const Button = styled.button`
@@ -80,28 +78,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ApplicationModal({toShow, setShow, setSkillsToRender, postSkills}) {
+export default function ApplicationModal({
+  name, setName, password, setPassword, location, setLocation, education, setEducation, skills, setSkills, toShow, setShow, updateProfile,
+}) {
   const classes = useStyles();
-  const [skillOne, setSkillOne] = React.useState('');
-  const [skillTwo, setSkillTwo] = React.useState('');
-  const [skillThree, setSkillThree] = React.useState('');
-
-  const handleSkillOneChange = (event) => {
-    setSkillOne(event.target.value);
-  };
-
-  const handleSkillTwoChange = (event) => {
-    setSkillTwo(event.target.value);
-  };
-
-  const handleSkillThreeChange = (event) => {
-    setSkillThree(event.target.value);
-  };
-
-  const handleSkillSave = () => {
-    let skills = [skillOne, skillTwo, skillThree]
-    setSkillsToRender(skills);
-    postSkills(skills)
+  const handleSave = () => {
+    updateProfile();
     setShow(false);
   };
 
@@ -112,56 +94,72 @@ export default function ApplicationModal({toShow, setShow, setSkillsToRender, po
             e.stopPropagation();
             setShow(false);
         }}/>
-        <Header>Update Skills</Header>
+        <Header>Edit Profile</Header>
+        <Form id="updateProfile">
+          <ControlledInput value={name} type="text" id="Name" handleChange={(event) => setName(event.target.value)}/>
+          <ControlledInput value={password} type="password" id="Password" handleChange={(event) => setPassword(event.target.value)}/>
+          <ControlledInput value={education} type="text" id="Education" handleChange={(event) => setEducation(event.target.value)}/>
+          <ControlledInput value={location} type="text" id="Location" handleChange={(event) => setLocation(event.target.value)}/>
+          <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={skillOne}
-                onChange={handleSkillOneChange}
-              >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
-              </Select>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={skills[0]}
+              onChange={(event) => {
+                skills[0] = event.target.value;
+                setSkills(skills);
+              }}
+            >
+              <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
+              <MenuItem value={'CSS'}>CSS</MenuItem>
+              <MenuItem value={'HTML'}>HTML</MenuItem>
+              <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
+              <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
+              <MenuItem value={'C Programming'}>C Programming</MenuItem>
+            </Select>
           </FormControl>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 2</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={skillTwo}
-                onChange={handleSkillTwoChange}
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={skills[1]}
+              onChange={(event) => {
+                skills[1] = event.target.value;
+                setSkills(skills);
+              }}
               >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
-              </Select>
-            </FormControl>
+              <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
+              <MenuItem value={'CSS'}>CSS</MenuItem>
+              <MenuItem value={'HTML'}>HTML</MenuItem>
+              <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
+              <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
+              <MenuItem value={'C Programming'}>C Programming</MenuItem>
+            </Select>
+          </FormControl>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 3</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={skillThree}
-                onChange={handleSkillThreeChange}
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={skills[2]}
+              onChange={(event) => {
+                skills[2] = event.target.value;
+                setSkills(skills);
+              }}
               >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
-              </Select>
+              <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
+              <MenuItem value={'CSS'}>CSS</MenuItem>
+              <MenuItem value={'HTML'}>HTML</MenuItem>
+              <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
+              <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
+              <MenuItem value={'C Programming'}>C Programming</MenuItem>
+            </Select>
             </FormControl>
-        <Button onClick={handleSkillSave}>Save</Button>
+        </Form>
+        <Button onClick={handleSave}>Save</Button>
       </ModalContent>
     </ModalContainer>
   )

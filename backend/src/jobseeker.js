@@ -5,13 +5,13 @@ import { verifyToken } from './token.js';
 export const updateProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         const { name, password, location, education, skills } = req.body;
-        if (name || password || location) db.run(`update Users set ${name ? `name = '${name}',` : ''} ${password ? `password = '${password}',` : ''} ${location ? `location = '${location}',` : ''} where email = '${user.email}'`);
-        if (education) db.run(`update JobSeekers set education = ${education} where email = '${user.email}'`);
-        db.get(`select email from Skills where email = '${user.email}'`, [], (err, row) => {
+        db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' where email = '${user.email}'`);
+        if (education) db.run(`update JobSeekers set education = '${education}' where email = '${user.email}'`);
+        db.get(`select email from Skills where email = '${user.email}'`, [], (err, email) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
-                if (row) {
+                if (email) {//TODO WRONG didn't do where email
                     db.run(`update Skills set skill1 = ${skills[0] ? `'${skills[0]}'` : null}, skill2 = ${skills[1] ? `'${skills[1]}'` : null}, skill3 = ${skills[2] ? `'${skills[2]}'` : null}`);
                 } else {
                     db.run(`insert into Skills (email, skill1, skill2, skill3) values ('${user.email}', '${skills[0]}', '${skills[1]}', '${skills[2]}')`);
@@ -39,21 +39,22 @@ export const updateProfile = (req, res) => {
                     }
                 });
             }
+            sendResponse(res, 200, `${user.name} updated profile`);
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
-export const getSkills = (req, res) => {
+export const getProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        db.get(`select skill1, skill2, skill3 from Skills where email = '${user.email}'`, [], (err, skills) => {
+        db.get(`select u.email, name, password, location, education, skill1, skill2, skill3 from JobSeekers as j left join Skills as s on j.email = s.email join Users as u on u.email = j.email where j.email = '${user.email}'`, [], (err, info) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
-                if (skills) {
-                    const {skill1, skill2, skill3} = skills;
-                    sendResponse(res, 200, `${user.name}'s skills are ${skill1}, ${skill2}, ${skill3}`, [skill1, skill2, skill3]);
+                if (info) {
+                    const { email, name, password, location, education, skill1, skill2, skill3} = info;
+                    sendResponse(res, 200, `${user.name}'s skills are ${skill1}, ${skill2}, ${skill3}`, { email, name, password, location, education, skills: [skill1, skill2, skill3] });
                 } else {
-                    sendResponse(res, 200, `${user.name} has no skills`, ['', '', '']);
+                    sendResponse(res, 400, 'No such user');
                 }
             }
         });

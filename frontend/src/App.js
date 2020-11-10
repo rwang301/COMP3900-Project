@@ -9,6 +9,7 @@ import JobSeeker from './pages/JobSeeker';
 import EmployerProfilePage from './pages/EmployerProfilePage';
 import JobseekerProfilePage from './pages/JobseekerProfilePage';
 import Swiping from './pages/Swiping';
+import Matches from './pages/Matches';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
@@ -48,6 +49,10 @@ function App() {
 
         <Route exact path="/swiping">
           <Swiping />
+        </Route>
+
+        <Route exact path="/matches">
+          <Matches />
         </Route>
 
         <Route path="/">

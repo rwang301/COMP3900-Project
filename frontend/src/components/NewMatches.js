@@ -18,13 +18,16 @@ const TitleText = styled.p`
 `
 
 export default function NewMatches() {
+  const [allData, setAllData] = React.useState([
+    {"name": "Kaiqi Liang", "skills": ["Reactjs", "CSS", "SQL"], "jobApplied": "Software Developer at Apple"}, 
+    {"name": "Richard Wang", "skills": ["C++", "AWS", "SQL"], "jobApplied": "Game Engineer at Riot Games"}, 
+    {"name": "Tony Lu", "skills": ["Python", "Linear Regression", "Tableau"], "jobApplied": "Data Analyst at Quantium"}, 
+    {"name": "William Huang", "skills": ["C++", "Mechatronics", "MIPS"], "jobApplied": "Robot Developer at Google"} 
+  ]);
   return (
     <MatchesContainer>
       <TitleText>New Matches</TitleText>
-      <MatchRow/>
-      <MatchRow/>
-      <MatchRow/>
-      <MatchRow/>
+      {allData.map((match, index) => <MatchRow key={index} name={match.name} skills={match.skills} jobApplied={match.jobApplied}/>)}
     </MatchesContainer>
   )
 }
