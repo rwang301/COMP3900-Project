@@ -13,7 +13,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 const ModalContainer = styled.div`
-  display: ${props => props.toShow ? 'block' : 'none'};
   cursor: auto;
   position: fixed;
   z-index: 1;
@@ -87,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PostJobModal({toShow, setShow, postJob}) {
+export default function PostJobModal({setShow, postJob}) {
   const classes = useStyles();
   const [employmentType, setEmploymentType] = React.useState('part-time');
   const [jobTitle, setJobTitle] = React.useState('');
@@ -97,8 +96,6 @@ export default function PostJobModal({toShow, setShow, postJob}) {
   const [location, setLocation] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [closingDate, setClosingDate] = React.useState(new Date());
-
-  console.log(jobTitle)
 
   const handleJobTitleChange = (event) => {
     setJobTitle(event.target.value);
@@ -129,9 +126,7 @@ export default function PostJobModal({toShow, setShow, postJob}) {
   };
 
   const resetFields = () => {
-    console.log(jobTitle);
     setJobTitle('');
-    console.log(jobTitle);
     setLocation('');
     setDescription('');
     setSkillOne('');
@@ -142,7 +137,7 @@ export default function PostJobModal({toShow, setShow, postJob}) {
   };
 
   return (
-    <ModalContainer toShow={toShow}>
+    <ModalContainer>
       <ModalContent>
         <CloseButton onClick={(e) => {
             e.stopPropagation();
@@ -208,11 +203,14 @@ export default function PostJobModal({toShow, setShow, postJob}) {
           }} />
           <JobRadios value={employmentType} onChangeHandler={handleTypeChange}/>
         </Form>
-        <Button onClick={() => {
+        <Button
+          onClick={() => {
             postJob(jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType);
             resetFields();
-            console.log('tester!!!!!!!!!!')
-        }}>Send</Button>
+          }}
+        >
+          Post
+        </Button>
       </ModalContent>
     </ModalContainer>
   )

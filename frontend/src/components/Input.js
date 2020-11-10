@@ -28,16 +28,16 @@ const Textarea = styled.textarea`
   overflow: ${(props) => props.large ? 'scroll' : 'unset'};
 `;
 
-export function ControlledInput({type, id, value, handleChange, large}) {
+export function ControlledInput({type, id, value, handleChange}) {
   return <>
     <Label type={type} htmlFor={id}>{id}</Label>
-    {large ? <Textarea type={type} id={id} placeholder={id} value={value} large={large} onChange={handleChange}/> : <Input type={type} id={id} placeholder={id} value={value} large={large} onChange={handleChange}/>}
+    <Input type={type} id={id} placeholder={id} value={value} onChange={handleChange}/>
   </>
 }
 
-export function SeparatedInput({type, id, value, handleChange, large, curr_value}) {
+export function ControlledTextarea({type, id, value, handleChange, large}) {
   return <>
     <Label type={type} htmlFor={id}>{id}</Label>
-    {large ? <Textarea type={type} id={curr_value} placeholder={curr_value} value={value} large={large} onChange={handleChange}/> : <Input type={type} id={curr_value} placeholder={curr_value} value={value} large={large} onChange={handleChange}/>}
+    <Textarea type={type} id={id} placeholder={id} value={value}onChange={handleChange}/>
   </>
 }

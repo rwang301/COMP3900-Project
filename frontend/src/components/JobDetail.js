@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import CloseIcon from '@material-ui/icons/Close';
 import { Header, Form } from './Form';
-import { SeparatedInput } from './Input';
+import { ControlledInput, ControlledTextarea } from './Input';
 import JobRadios from './JobRadios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,7 +13,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 const ModalContainer = styled.div`
-  display: ${props => props.toShow ? 'block' : 'none'};
   cursor: auto;
   position: fixed;
   z-index: 1;
@@ -89,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
 
 //TO DO: Write a PUT Request to edit a job and delete postJob
 
-export default function JobDetail({toShow, setShow, job, postJob}) {
+export default function JobDetail({setShow, job, jobId}) {
   const classes = useStyles();
   const [employmentType, setEmploymentType] = React.useState('part-time');
   const [jobTitle, setJobTitle] = React.useState('');
@@ -128,8 +127,31 @@ export default function JobDetail({toShow, setShow, job, postJob}) {
     setSkillThree(event.target.value);
   };
 
+  const save = async () => {
+    const data = {
+      id: jobId,
+      "job_title": jobTitle,
+      location,
+      description,
+      "skills": [skillOne, skillTwo, skillThree],
+      "employment_type": employmentType,
+      "closing_date": closingDate
+    };
+    const options = {
+      body: JSON.stringify(data),
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
+      },
+    };
+    const response = await fetch("http://localhost:8000/job", options);
+    console.log(response);
+    setShow(false);
+  }
+
   return (
-    <ModalContainer toShow={toShow}>
+    <ModalContainer>
       <ModalContent>
         <CloseButton onClick={(e) => {
             e.stopPropagation();
@@ -137,16 +159,16 @@ export default function JobDetail({toShow, setShow, job, postJob}) {
         }}/>
         <Header>Your Job</Header>
         <Form id="register">
-          <SeparatedInput type="text" id="Job Title" curr_value={job.job_title} value={jobTitle} handleChange={handleJobTitleChange}/>
-          <SeparatedInput type="text" id="Location" curr_value={job.location} handleChange={handleLocationChange}/>
-          <SeparatedInput type="text" large={true} id="Description" curr_value={job.description} handleChange={handleDescriptionChange}/>
+          <ControlledInput type="text" id="Job Title" value={jobTitle} handleChange={handleJobTitleChange}/>
+          <ControlledInput type="text" id="Location" value={location} handleChange={handleLocationChange}/>
+          <ControlledTextarea type="text" id="Description" value={description} handleChange={handleDescriptionChange}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                defaultValue={job.skill1}
+                defaultValue={job.skills[0]}
                 onChange={handleSkillOneChange}
               >
                 <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
@@ -162,7 +184,7 @@ export default function JobDetail({toShow, setShow, job, postJob}) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                defaultValue={job.skill2}
+                defaultValue={job.skills[1]}
                 onChange={handleSkillTwoChange}
               >
                 <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
@@ -178,7 +200,7 @@ export default function JobDetail({toShow, setShow, job, postJob}) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                defaultValue={job.skill3}
+                defaultValue={job.skills[2]}
                 onChange={handleSkillThreeChange}
               >
                 <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
@@ -195,7 +217,11 @@ export default function JobDetail({toShow, setShow, job, postJob}) {
           }} />
           <JobRadios value={job.employment_type} onChangeHandler={handleTypeChange}/>
         </Form>
-        <Button onClick={() => postJob(jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType)}>Send</Button>
+        <Button
+          onClick={save}
+        >
+          Save
+        </Button>
       </ModalContent>
     </ModalContainer>
   )

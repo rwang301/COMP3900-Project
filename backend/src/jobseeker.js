@@ -11,7 +11,7 @@ export const updateProfile = (req, res) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
-                if (email) {
+                if (email) {//TODO WRONG didn't do where email
                     db.run(`update Skills set skill1 = ${skills[0] ? `'${skills[0]}'` : null}, skill2 = ${skills[1] ? `'${skills[1]}'` : null}, skill3 = ${skills[2] ? `'${skills[2]}'` : null}`);
                 } else {
                     db.run(`insert into Skills (email, skill1, skill2, skill3) values ('${user.email}', '${skills[0]}', '${skills[1]}', '${skills[2]}')`);
