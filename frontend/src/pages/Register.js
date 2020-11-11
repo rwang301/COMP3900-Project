@@ -57,9 +57,8 @@ export default function Register(props) {
         // implicit error checking
         if (response.status === 200) {
           const json = await response.json();
-          localStorage.setItem('token', json.token);
-          props.login();
-          return employer ? 'employer' : 'job-seeker';
+          props.login(json.token);
+          return employer ? 'employer' : 'jobseeker';
         } else if (response.status === 409) {
           alert('Email already exists');
         } else {

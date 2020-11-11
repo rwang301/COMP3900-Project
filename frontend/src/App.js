@@ -13,10 +13,14 @@ import Matches from './pages/Matches';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
-  const login = () => setIsLoggedIn(true);
+
+  const login = (token) => {
+    localStorage.setItem('token', token);
+    setIsLoggedIn(true);
+  };
   const logout = () => {
-    setIsLoggedIn(false); 
     localStorage.clear();
+    setIsLoggedIn(false);
   };
 
   return (
@@ -35,7 +39,7 @@ function App() {
           <Employer />
         </Route>
 
-        <Route exact path="/job-seeker">
+        <Route exact path="/jobseeker">
           <JobSeeker />
         </Route>
 

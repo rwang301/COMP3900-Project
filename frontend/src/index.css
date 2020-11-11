@@ -18,3 +18,8 @@ button {
   padding: 5% 10%;
   box-sizing: border-box;
 }
+
+.active {
+  color: aqua;
+  font-weight: bold;
+}

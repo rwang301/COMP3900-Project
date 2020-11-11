@@ -24,7 +24,7 @@ export const login = (req, res) => {
                                         return;
                                     }
                                 }
-                                sendResponse(res, 200, 'Successful login as a job seeker', {'employer': true, 'token': token});
+                                sendResponse(res, 200, 'Successful login as a job seeker', {'employer': false, 'token': token});
                             }
                         });
                         return;

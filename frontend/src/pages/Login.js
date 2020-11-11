@@ -38,9 +38,8 @@ export default function Login(props) {
         // implicit error checking
         if (response.status === 200) {
           const json = await response.json();
-          localStorage.setItem('token', json.token);
-          props.login();
-          return json.employer ? 'employer' : 'job-seeker';
+          props.login(json.token);
+          return json.employer ? 'employer' : 'jobseeker';
         } else if (response.status === 403) {
           alert('Incorrect email or password');
         } else {

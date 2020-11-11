@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { keyframes } from "styled-components";
 import logo from '../assets/logo.svg';
 import { Link } from 'react-router-dom';
+import { StoreContext } from '../utils/store';
 import { useLocation } from 'react-router-dom';
 import NavDropdown from './NavDropdown';
 
@@ -46,25 +47,25 @@ const Paragraph = styled.p`
   cursor: pointer;
 `;
 
-const Active = styled(Paragraph)`
-  color: aqua;
-  font-weight: bold;
-`;
-
 const PlainLink = styled(Link)`
   color: white;
   text-decoration: none;
 `;
 
 export default function Nav({login, logout}) {
-  const location = useLocation();
+  const { employer } = React.useContext(StoreContext);
+  const { pathname } = useLocation();
   const tabs = (
     <>
-      <Active login={login}>Home</Active>
-      <PlainLink to='/matches'>
-        <Paragraph login={login}>My Matches</Paragraph>
+      <PlainLink to='/jobseeker'>
+        <Paragraph className={(pathname === '/jobseeker' || pathname === '/employer') && 'active'} login={login}>Home</Paragraph>
       </PlainLink>
-      {location.pathname.slice(1) === 'employer' ? <Paragraph login={login}>Recruit Now</Paragraph> : <Paragraph login={login}>Apply Now</Paragraph>}
+      <PlainLink to='/matches'>
+        <Paragraph className={(pathname === '/matches') && 'active'} login={login}>My Matches</Paragraph>
+      </PlainLink>
+      <PlainLink to='/swiping'>
+        <Paragraph className={(pathname === '/swiping') && 'active'} login={login}>{employer ? 'Recruit Now' : 'Apply Now'}</Paragraph>
+      </PlainLink>
       <NavDropdown login={login} logout={logout}/>
     </>
   );

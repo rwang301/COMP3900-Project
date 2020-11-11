@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import { Link, Redirect } from 'react-router-dom';
+import { StoreContext } from '../utils/store';
 
 const Section = styled.section`
   width: 50vmin;
@@ -28,20 +29,25 @@ const Button = styled.button`
 
 export default function Buttons({primaryRoute, secondaryRoute, primaryInnerText, secondaryInnerText}) {
   const [success, setSuccess] = React.useState('');
+  const { setEmployer } = React.useContext(StoreContext);
   async function onClickHandler() {
     setSuccess(await primaryRoute());
   }
 
   let button;
   if (typeof primaryRoute === 'function') {
-    if (success) button = <Redirect to={success} />
-    else button = <Button onClick={onClickHandler}>{primaryInnerText}</Button>;
+    if (success) {
+      setEmployer(success === 'employer');
+      button = <Redirect to={success} />;
+    } else {
+      button = <Button onClick={onClickHandler}>{primaryInnerText}</Button>;
+    }
   } else {
     button = (
       <Link to={primaryRoute}>
         <Button>{primaryInnerText}</Button>
       </Link>
-    )
+    );
   }
 
   return (
