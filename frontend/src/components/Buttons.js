@@ -53,7 +53,7 @@ export default function Buttons({primaryRoute, secondaryRoute, primaryInnerText,
   return (
     <Section>
       {button}
-      <Link to={`${secondaryRoute}`}>
+      <Link to={secondaryRoute}>
         <Button>
           {secondaryInnerText}
         </Button>

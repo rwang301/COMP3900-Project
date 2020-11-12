@@ -12,6 +12,7 @@ import JobseekerProfilePage from './pages/JobseekerProfilePage';
 import Swiping from './pages/Swiping';
 import Matches from './pages/Matches';
 import Footer from './components/Footer';
+import Alert from './components/Alert';
 
 const Main = styled.main`
   padding: 5% 10%;
@@ -30,10 +31,10 @@ function App() {
   };
 
   return (
-    <>
-    <Main>
-      <Router>
+    <Router>
+      <Main>
         <Nav login={isLoggedIn} logout={logout} />
+        <Alert />
         <Switch>
           <Route exact path="/login">
             <Login login={login} />
@@ -71,10 +72,9 @@ function App() {
             <Home />
           </Route>
         </Switch>
-      </Router>
-    </Main>
-    <Footer/>
-    </>
+      </Main>
+      <Footer/>
+    </Router>
   )
 }
 

@@ -7,6 +7,7 @@ import AboutRow from '../components/AboutRow';
 import { SkillsRow } from '../components/Rows';
 import ApplicationModal from '../components/ApplicationModal';
 // import skillEdit from '../assets/jobEdit.svg';
+import { StoreContext } from '../utils/store';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -76,6 +77,7 @@ const AboutRowContainer = styled.div`
 `;
 
 export default function JobseekerProfilePage() {
+  const { api } = React.useContext(StoreContext);
   const [applicationModal, setApplicationModal] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [name, setName] = React.useState('');
@@ -85,25 +87,19 @@ export default function JobseekerProfilePage() {
   const [skills, setSkills] = React.useState([]);
 
   React.useEffect(() => {
-    const getSkills = async () => {
-      const options = {
-        headers: {
-          'token': localStorage.getItem('token')
-        },
-      };
-      const response = await fetch("http://localhost:8000/jobseeker/profile", options);
-      console.log(response, 'response');
-      const json = await response.json();
-      console.log(json);
-      const {email, name, password, location, education, skills} = json;
-      setEmail(email);
-      setName(name);
-      setPassword(password);
-      setLocation(location);
-      setEducation(education);
-      setSkills(skills);
+    const getProfile = async () => {
+      const response = await api.fetch('jobseeker/profile');
+      if (response) {
+        const {email, name, password, location, education, skills} = response;
+        setEmail(email);
+        setName(name);
+        setPassword(password);
+        setLocation(location);
+        setEducation(education);
+        setSkills(skills);
+      }
     };
-    getSkills();
+    getProfile();
   }, []);
 
   const updateProfile = async () => {
@@ -114,17 +110,10 @@ export default function JobseekerProfilePage() {
       location,
       skills,
     };
-    const options = {
-      body: JSON.stringify(data),
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
-      },
-    };
-    console.log(options);
-    const response = await fetch("http://localhost:8000/profile/update", options);
-    console.log(response);
+    const response = await api.fetch('profile/update', 'put', data);
+    if (response) {
+      console.log(response);
+    }
   };
 
   return (

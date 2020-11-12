@@ -6,7 +6,7 @@ import edit from '../assets/edit.svg'
 import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
 import { ListedJobRow } from '../components/Rows';
-
+import { StoreContext } from '../utils/store';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -90,21 +90,16 @@ const AboutRowContainer = styled.div`
 `;
 
 export default function EmployerProfilePage() {
+  const { api } = React.useContext(StoreContext);
   const [postJobModal, setPostJobModal] = React.useState(false);
   const [jobsToRender, setJobsToRender] = React.useState([]);
 
   React.useEffect(() => {
     const getJobs = async () => {
-      const options = {
-        headers: {
-          'token': localStorage.getItem('token')
-        },
-      };
-      const response = await fetch("http://localhost:8000/profile/jobs", options);
-      console.log(response, 'response');
-      const json = await response.json();
-      console.log(json, 'json');
-      setJobsToRender(json);
+      const response = await api.fetch('profile/jobs');
+      if (response) {
+        setJobsToRender(response);
+      }
     };
     getJobs();
   }, []);
@@ -118,20 +113,11 @@ export default function EmployerProfilePage() {
       "employment_type": employmentType,
       "closing_date": closingDate
     };
-    const options = {
-      body: JSON.stringify(data),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
-      },
-    };
-    const response = await fetch("http://localhost:8000/job", options);
-    console.log(response);
-    const json = await response.json();
-    setJobsToRender([...jobsToRender, { ...data, id:json.id }]);
-    console.log(jobsToRender, 'love');
-    setPostJobModal(false);
+    const response = await api.fetch('job', 'post', data);
+    if (response) {
+      setJobsToRender([...jobsToRender, { ...data, id: response.id }]);
+      setPostJobModal(false);
+    }
   };
 
   return (

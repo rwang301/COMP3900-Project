@@ -11,6 +11,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { StoreContext } from '../utils/store';
 
 const ModalContainer = styled.div`
   cursor: auto;
@@ -90,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function JobDetail({setShow, job}) {
   const classes = useStyles();
+  const { api } = React.useContext(StoreContext);
   const [employmentType, setEmploymentType] = React.useState('part-time');
   const [jobTitle, setJobTitle] = React.useState('');
   const [skillOne, setSkillOne] = React.useState(null);
@@ -137,15 +139,7 @@ export default function JobDetail({setShow, job}) {
       employment_type: employmentType,
       closing_date: closingDate
     };
-    const options = {
-      body: JSON.stringify(data),
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
-      },
-    };
-    const response = await fetch("http://localhost:8000/job", options);
+    const response = await api.fetch('/job', 'put', data);
     console.log(response);
     setShow(false);
   }

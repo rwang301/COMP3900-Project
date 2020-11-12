@@ -1,13 +1,14 @@
 import React from 'react';
 import { Main, Header, Form, Href, isEmailValid } from '../components/Form';
-import API_URL from '../index';
+import { API_URL } from '../utils/api';
 import Buttons from '../components/Buttons';
 import { ControlledInput } from '../components/Input';
+import { StoreContext } from '../utils/store';
 
 export default function Login(props) {
-
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const { setAlert } = React.useContext(StoreContext);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -19,11 +20,11 @@ export default function Login(props) {
 
   async function login() {
     if (!isEmailValid(email)) {
-      alert('Please enter a valid email');
+      setAlert({ open: true, severity: 'warning', message: 'Please enter a valid email' });
     } else if (!password) {
-      alert('Please enter your password');
+      setAlert({ open: true, severity: 'warning', message: 'Please enter your password' });
     } else if (password.length < 3) {
-      alert('Password must be at least 3 characters long');
+      setAlert({ open: true, severity: 'warning', message: 'Password must be at least 3 characters long' });
     } else {
       const data = {email: email, password: password};
       const options = {
@@ -41,9 +42,9 @@ export default function Login(props) {
           props.login(json.token);
           return json.employer ? 'employer' : 'jobseeker';
         } else if (response.status === 403) {
-          alert('Incorrect email or password');
+          setAlert({ open: true, severity: 'error', message: 'Incorrect email or password' });
         } else {
-          alert('Oops something went wrong');
+          setAlert({ open: true, severity: 'error', message: 'Oops something went wrong' });
         }
       } catch (error) {
         console.warn(error.message);
