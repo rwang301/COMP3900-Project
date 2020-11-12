@@ -71,7 +71,7 @@ export const deleteJob = (req, res) => {
                         });
                     }
                 });
-            sendResponse(res, 200, `${user.name} deleted job ${id}`);
+            sendResponse(res, 200, `${user.name} deleted job ${id}`, {});
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
@@ -95,6 +95,14 @@ ${jobs.map(job => job.job_title)}`,
                 }));
             }
         });
+    }).catch(({status, message}) => sendResponse(res, status, message));
+};
+
+export const updateEmployerProfile = (req, res) => {
+    verifyToken(req.header('token')).then(user => {
+        const { name, password, location, company } = req.body;
+        db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' where email = '${user.email}'`);
+        if (company) db.run(`update Employers set company = '${company}' where email = '${user.email}'`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 

@@ -126,18 +126,6 @@ export default function EmployerProfilePage() {
     }
   };
 
-  const updateProfile = async (email, company, location) => {
-    const data = {
-      "email": email,
-      "company": company,
-      "location": location
-    };
-    // const response = await api.fetch();
-    // if (response) {
-
-    // }
-  };
-
   return (
     <ProfileContainer >
       <AvatarContainer>
@@ -160,7 +148,18 @@ export default function EmployerProfilePage() {
         {jobsToRender.map((job) => <ListedJobRow key={job.id} job={job} />)}
         <AddButton src={add} onClick={() => setPostJobModal(true)}/>
       </AboutContainer>
-      {updateDetailsModal && <EmployerDetailModal closeModal={() => setUpdateDetailsModal(false)} updateProfile={() => updateProfile(email, company, location)} email={email} company={company} location={location} setEmail={setEmail} setCompany={setCompany} setLocation={setLocation}/>}
+      {updateDetailsModal &&
+        <EmployerDetailModal
+          email={email}
+          company={company}
+          location={location}
+          setEmail={setEmail}
+          setCompany={setCompany}
+          setLocation={setLocation}
+          closeModal={() => setUpdateDetailsModal(false)}
+          updateProfile={() => api.fetch('employer/profile', 'put', { email, company, location })}
+        />
+      }
       {postJobModal && <PostJobModal closeModal={() => setPostJobModal(false)} postJob={postJob}/>}
     </ProfileContainer>
   )
