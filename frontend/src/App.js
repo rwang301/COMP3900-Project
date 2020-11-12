@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Nav from './components/Nav'
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -11,8 +11,9 @@ import EmployerProfilePage from './pages/EmployerProfilePage';
 import JobseekerProfilePage from './pages/JobseekerProfilePage';
 import Swiping from './pages/Swiping';
 import Matches from './pages/Matches';
-import Footer from './components/Footer';
 import Alert from './components/Alert';
+import Footer from './components/Footer';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const Main = styled.main`
   padding: 5% 10%;
@@ -29,9 +30,10 @@ function App() {
     localStorage.clear();
     setIsLoggedIn(false);
   };
+  const theme = React.useMemo(() => createMuiTheme({ palette: { type: 'dark' } }), []);
 
   return (
-    <Router>
+    <ThemeProvider theme={theme}>
       <Main>
         <Nav login={isLoggedIn} logout={logout} />
         <Alert />
@@ -73,8 +75,8 @@ function App() {
           </Route>
         </Switch>
       </Main>
-      <Footer/>
-    </Router>
+      <Footer />
+    </ThemeProvider>
   )
 }
 

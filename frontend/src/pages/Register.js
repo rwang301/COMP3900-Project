@@ -67,7 +67,7 @@ export default function Register(props) {
           setAlert({ open: true, severity: 'error', message: 'Oops something went wrong' });
         }
       } catch (error) {
-        console.warn(error.message);
+        setAlert({ open: true, severity: 'warning', message: error.message });
       }
     }
     return '';
