@@ -110,7 +110,7 @@ export default function JobseekerProfilePage() {
       location,
       skills,
     };
-    const response = await api.fetch('profile/update', 'put', data);
+    const response = await api.fetch('jobseeker/profile', 'put', data);
     if (response) {
       console.log(response);
     }

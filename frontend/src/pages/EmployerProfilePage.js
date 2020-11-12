@@ -150,9 +150,9 @@ export default function EmployerProfilePage() {
           About
         </SubtitleText>
         <AboutRowContainer>
-          <AboutRow iconType={'email'} text={email ? email : 'Click edit to update Your Email'}/>
-          <AboutRow iconType={'company'} text={company ? company : 'Click edit to update Your Company'}/>
-          <AboutRow iconType={'location'} text={location ? location : 'Click edit to update Your Location' }/>
+          <AboutRow iconType={'email'} text={email || 'Click edit to update Your Email'}/>
+          <AboutRow iconType={'company'} text={company || 'Click edit to update Your Company'}/>
+          <AboutRow iconType={'location'} text={location || 'Click edit to update Your Location' }/>
         </AboutRowContainer>
         <SubtitleText>
           Listed Jobs
