@@ -7,6 +7,7 @@ import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
 import { ListedJobRow } from '../components/Rows';
 import { StoreContext } from '../utils/store';
+import EmployerDetailModal from '../components/EmployerDetailModal';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -92,13 +93,18 @@ const AboutRowContainer = styled.div`
 export default function EmployerProfilePage() {
   const { api } = React.useContext(StoreContext);
   const [postJobModal, setPostJobModal] = React.useState(false);
+  const [updateDetailsModal, setUpdateDetailsModal] = React.useState(false);
   const [jobsToRender, setJobsToRender] = React.useState([]);
+  const [email, setEmail] = React.useState();
+  const [company, setCompany] = React.useState();
+  const [location, setLocation] = React.useState();
 
   React.useEffect(() => {
     const getJobs = async () => {
       const response = await api.fetch('profile/jobs');
       if (response) {
         setJobsToRender(response);
+        //TODO: update email, company, location
       }
     };
     getJobs();
@@ -120,6 +126,18 @@ export default function EmployerProfilePage() {
     }
   };
 
+  const updateProfile = async (email, company, location) => {
+    const data = {
+      "email": email,
+      "company": company,
+      "location": location
+    };
+    // const response = await api.fetch();
+    // if (response) {
+
+    // }
+  };
+
   return (
     <ProfileContainer >
       <AvatarContainer>
@@ -127,14 +145,14 @@ export default function EmployerProfilePage() {
         <NameText>Kaiqi Liang</NameText>
       </AvatarContainer>
       <AboutContainer>
-        <EditButton src={edit} />
+        <EditButton src={edit} onClick={() => setUpdateDetailsModal(true)} />
         <SubtitleText>
           About
         </SubtitleText>
         <AboutRowContainer>
-          <AboutRow iconType={'email'} text={'kaiqi.liang@gmail.com'}/>
-          <AboutRow iconType={'company'} text={'Deloitte Recruiting'}/>
-          <AboutRow iconType={'location'} text={'Sydney, Australia'}/>
+          <AboutRow iconType={'email'} text={email ? email : 'Click edit to update Your Email'}/>
+          <AboutRow iconType={'company'} text={company ? company : 'Click edit to update Your Company'}/>
+          <AboutRow iconType={'location'} text={location ? location : 'Click edit to update Your Location' }/>
         </AboutRowContainer>
         <SubtitleText>
           Listed Jobs
@@ -142,7 +160,8 @@ export default function EmployerProfilePage() {
         {jobsToRender.map((job) => <ListedJobRow key={job.id} job={job} />)}
         <AddButton src={add} onClick={() => setPostJobModal(true)}/>
       </AboutContainer>
-      {postJobModal && <PostJobModal setShow={setPostJobModal} postJob={postJob}/>}
+      {updateDetailsModal && <EmployerDetailModal closeModal={() => setUpdateDetailsModal(false)} updateProfile={() => updateProfile(email, company, location)} email={email} company={company} location={location} setEmail={setEmail} setCompany={setCompany} setLocation={setLocation}/>}
+      {postJobModal && <PostJobModal closeModal={() => setPostJobModal(false)} postJob={postJob}/>}
     </ProfileContainer>
   )
 }

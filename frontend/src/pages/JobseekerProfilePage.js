@@ -79,11 +79,11 @@ const AboutRowContainer = styled.div`
 export default function JobseekerProfilePage() {
   const { api } = React.useContext(StoreContext);
   const [applicationModal, setApplicationModal] = React.useState(false);
-  const [email, setEmail] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [education, setEducation] = React.useState('');
+  const [email, setEmail] = React.useState();
+  const [name, setName] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [location, setLocation] = React.useState();
+  const [education, setEducation] = React.useState();
   const [skills, setSkills] = React.useState([]);
 
   React.useEffect(() => {
@@ -128,9 +128,9 @@ export default function JobseekerProfilePage() {
           About
         </SubtitleText>
         <AboutRowContainer>
-          <AboutRow iconType={'email'} text={email}/>
-          <AboutRow iconType={'education'} text={education}/>
-          <AboutRow iconType={'location'} text={location}/>
+          <AboutRow iconType={'email'} text={email ? email : 'Click edit to update Your Email'}/>
+          <AboutRow iconType={'education'} text={education ? education : 'Click edit to update Your Education'}/>
+          <AboutRow iconType={'location'} text={location ? location: 'Click edit to update Your Location'}/>
         </AboutRowContainer>
         <SubtitleText>
           Skills

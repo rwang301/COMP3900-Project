@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PostJobModal({setShow, postJob}) {
+export default function PostJobModal({closeModal, postJob}) {
   const classes = useStyles();
   const [employmentType, setEmploymentType] = React.useState('part-time');
   const [jobTitle, setJobTitle] = React.useState('');
@@ -141,7 +141,7 @@ export default function PostJobModal({setShow, postJob}) {
       <ModalContent>
         <CloseButton onClick={(e) => {
             e.stopPropagation();
-            setShow(false);
+            closeModal();
         }}/>
         <Header>Post a Job</Header>
         <Form id="register">
