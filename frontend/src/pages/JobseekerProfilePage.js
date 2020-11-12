@@ -137,7 +137,7 @@ export default function JobseekerProfilePage() {
         </SubtitleText>
         {skills.map((skill, idx) => skill && <SkillsRow key={idx} skillName={skill}/>)}
       </AboutContainer>
-      <ApplicationModal
+      {applicationModal && <ApplicationModal
         name={name}
         setName={setName}
         password={password}
@@ -151,7 +151,7 @@ export default function JobseekerProfilePage() {
         toShow={applicationModal}
         setShow={setApplicationModal}
         updateProfile={updateProfile}
-      />
+      />}
     </ProfileContainer>
   )
 }
