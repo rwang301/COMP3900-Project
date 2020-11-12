@@ -10,9 +10,10 @@ import EmployerProfilePage from './pages/EmployerProfilePage';
 import JobseekerProfilePage from './pages/JobseekerProfilePage';
 import Swiping from './pages/Swiping';
 import Matches from './pages/Matches';
+import Alert from './components/Alert';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(localStorage.getItem('token'));
 
   const login = (token) => {
     localStorage.setItem('token', token);
@@ -26,6 +27,7 @@ function App() {
   return (
     <Router>
       <Nav login={isLoggedIn} logout={logout} />
+      <Alert />
       <Switch>
         <Route exact path="/login">
           <Login login={login} />

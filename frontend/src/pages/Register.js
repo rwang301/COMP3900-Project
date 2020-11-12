@@ -1,9 +1,10 @@
 import React from 'react';
 import { Main, Header, Form, Href, isEmailValid } from '../components/Form';
-import API_URL from '../index';
+import { API_URL } from '../utils/api';
 import Buttons from '../components/Buttons';
-import { ControlledInput } from '../components/Input';
 import Radios from '../components/Radios';
+import { ControlledInput } from '../components/Input';
+import { StoreContext } from '../utils/store';
 
 export default function Register(props) {
 	const [name, setName] = React.useState('');
@@ -11,6 +12,7 @@ export default function Register(props) {
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [employer, setEmployer] = React.useState(true);
+  const { setAlert } = React.useContext(StoreContext);
 	
 	const handleNameChange = (event) => {
     setName(event.target.value);
@@ -34,15 +36,15 @@ export default function Register(props) {
 
 	async function register() {
     if (!/^([A-Z][a-z]{1,} ){1,}[A-Z][a-z]{1,}$/.test(name)) {
-      alert('Please enter a valid name');
+      setAlert({ open: true, severity: 'warning', message: 'Please enter a valid name' });
     } else if (!isEmailValid(email)) {
-      alert('Please enter a valid email');
+      setAlert({ open: true, severity: 'warning', message: 'Please enter a valid email' });
     } else if (!password) {
-      alert('Please enter your password');
+      setAlert({ open: true, severity: 'warning', message: 'Please enter your password' });
     } else if (password.length < 3) {
-      alert('Password must be at least 3 characters long');
+      setAlert({ open: true, severity: 'warning', message: 'Password must be at least 3 characters long' });
     } else if (password !== confirmPassword) {
-      alert('Password does not match');
+      setAlert({ open: true, severity: 'warning', message: 'Password does not match' });
     } else {
       const data = {name: name, email: email, password: password, employer: employer};
       const options = {
@@ -60,9 +62,9 @@ export default function Register(props) {
           props.login(json.token);
           return employer ? 'employer' : 'jobseeker';
         } else if (response.status === 409) {
-          alert('Email already exists');
+          setAlert({ open: true, severity: 'info', message: 'Email already exists' });
         } else {
-          alert('Oops something went wrong');
+          setAlert({ open: true, severity: 'error', message: 'Oops something went wrong' });
         }
       } catch (error) {
         console.warn(error.message);

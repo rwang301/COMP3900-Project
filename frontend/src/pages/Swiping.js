@@ -6,6 +6,7 @@ import tick from '../assets/tick.svg';
 import cancel from '../assets/cancel.svg';
 import swipeProfile from '../assets/swipeProfile.svg';
 import AboutRow from '../components/AboutRow';
+import { StoreContext } from '../utils/store';
 
 const Wrapper = styled.div`
   display: flex;
@@ -80,6 +81,7 @@ const HelperIcons = styled.img`
 `;
 
 export default function Swiping() {
+  const { api } = React.useContext(StoreContext);
   const [email, setEmail] = React.useState('');
   const [name, setName] = React.useState('');
   const [location, setLocation] = React.useState('');
@@ -90,15 +92,9 @@ export default function Swiping() {
 
   React.useEffect(() => {
     const getPotentialJobSeekers = async () => {
-      const options = {
-        headers: {
-          'token': localStorage.getItem('token')
-        },
-      };
-      const response = await fetch("http://localhost:8000/potential/jobseekers", options);
-      const json = await response.json();
-      if (json.length) {
-        const {email, name, location, education, skill1, skill2, skill3} = json[0];
+      const response = await api.fetch('potential/jobseekers');
+      if (response && response.length) {
+        const {email, name, location, education, skill1, skill2, skill3} = response[0];
         setEmail(email);
         setName(name);
         setLocation(location);

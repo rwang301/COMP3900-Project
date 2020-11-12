@@ -20,6 +20,7 @@ export const postJob = (req, res) => {
                             for (const skill of skills) {
                                 if (Object.values(jobSeeker).includes(skill)) {
                                     db.run(`insert into PotentialJobs values ('${jobSeeker.email}', '${job.id}', ${0})`);
+                                    db.run(`insert into PotentialJobSeekers values ('${user.email}', '${jobSeeker.email}', ${0})`);
                                     return;
                                 }
                             }
