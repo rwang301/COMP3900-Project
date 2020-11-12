@@ -20,11 +20,16 @@ export default (response, status, message, data) => {
 
 app.post('/auth/login', login);
 app.post('/auth/register', register);
+
 app.post('/job', postJob);
 app.put('/job', updateJob);
 app.delete('/job', deleteJob);
+
 app.get('/profile/jobs', getJobs);
-app.put('/profile/update', updateProfile);
+app.put('/employer/profile', updateProfile);
+
 app.get('/jobseeker/profile', getProfile);
+app.put('/jobseeker/profile', updateProfile);
+
 app.get('/potential/jobseekers', getPotentialJobSeekers);
 app.get('/potential/jobs');
