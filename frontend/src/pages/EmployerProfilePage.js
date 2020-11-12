@@ -95,6 +95,8 @@ export default function EmployerProfilePage() {
   const [postJobModal, setPostJobModal] = React.useState(false);
   const [updateDetailsModal, setUpdateDetailsModal] = React.useState(false);
   const [jobsToRender, setJobsToRender] = React.useState([]);
+  const [name, setName] = React.useState();
+  const [password, setPassword] = React.useState();
   const [email, setEmail] = React.useState();
   const [company, setCompany] = React.useState();
   const [location, setLocation] = React.useState();
@@ -155,14 +157,16 @@ export default function EmployerProfilePage() {
       </AboutContainer>
       {updateDetailsModal &&
         <EmployerDetailModal
-          email={email}
+          name={name}
+          password={password}
           company={company}
           location={location}
-          setEmail={setEmail}
+          setName={setName}
+          setPassword={setPassword}
           setCompany={setCompany}
           setLocation={setLocation}
           closeModal={() => setUpdateDetailsModal(false)}
-          updateProfile={() => api.fetch('employer/profile', 'put', { email, company, location })}
+          updateProfile={() => api.fetch('employer/profile', 'put', { name, password, company, location })}
         />
       }
       {postJobModal && <PostJobModal closeModal={() => setPostJobModal(false)} postJob={postJob}/>}
