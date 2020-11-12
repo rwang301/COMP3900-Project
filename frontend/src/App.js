@@ -11,7 +11,6 @@ import EmployerProfilePage from './pages/EmployerProfilePage';
 import JobseekerProfilePage from './pages/JobseekerProfilePage';
 import Swiping from './pages/Swiping';
 import Matches from './pages/Matches';
-import Footer from './components/Footer';
 import Alert from './components/Alert';
 
 const Main = styled.main`
@@ -73,7 +72,6 @@ function App() {
           </Route>
         </Switch>
       </Main>
-      <Footer/>
     </Router>
   )
 }

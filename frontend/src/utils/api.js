@@ -17,7 +17,7 @@ export default class API {
     try {
       const res = await fetch(`${this.url}/${path}`, options);
       const json = await res.json();
-      return res.ok ? json : this.setAlert({ open: true, message: json.error }); // implicit error
+      return res.ok ? json : this.setAlert({ open: true, severity: 'error', message: json.error }); // implicit error
     } catch (error) {
       // explicit error
       this.setAlert({ open: true, severity: 'error', message: error.message });

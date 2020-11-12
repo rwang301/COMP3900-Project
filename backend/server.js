@@ -22,7 +22,7 @@ app.post('/auth/login', login);
 app.post('/auth/register', register);
 app.post('/job', postJob);
 app.put('/job', updateJob);
-app.delete('/delete/job', deleteJob);
+app.delete('/job', deleteJob);
 app.get('/profile/jobs', getJobs);
 app.put('/profile/update', updateProfile);
 app.get('/jobseeker/profile', getProfile);
