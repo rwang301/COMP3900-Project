@@ -3,8 +3,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import { login, register } from './src/auth.js';
-import { postJob, updateJob, getJobs, deleteJob, updateEmployerProfile, getPotentialJobSeekers } from './src/employer.js';
-import { updateJobSeekerProfile, getProfile } from './src/jobseeker.js';
+import { postJob, updateJob, getEmployerProfile, deleteJob, updateEmployerProfile, getPotentialJobSeekers } from './src/employer.js';
+import { updateJobSeekerProfile, getJobSeekerProfile } from './src/jobseeker.js';
 
 const app = express();
 app.use(cors());
@@ -25,10 +25,10 @@ app.post('/job', postJob);
 app.put('/job', updateJob);
 app.delete('/job', deleteJob);
 
-app.get('/profile/jobs', getJobs);
+app.get('/employer/profile', getEmployerProfile);
 app.put('/employer/profile', updateEmployerProfile);
 
-app.get('/jobseeker/profile', getProfile);
+app.get('/jobseeker/profile', getJobSeekerProfile);
 app.put('/jobseeker/profile', updateJobSeekerProfile);
 
 app.get('/potential/jobseekers', getPotentialJobSeekers);

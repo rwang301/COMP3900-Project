@@ -52,7 +52,7 @@ export const updateJobSeekerProfile = (req, res) => {
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
-export const getProfile = (req, res) => {
+export const getJobSeekerProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         db.get(`select u.email, name, password, location, education, skill1, skill2, skill3 from JobSeekers as j left join Skills as s on j.email = s.email join Users as u on u.email = j.email where j.email = '${user.email}'`, [], (err, info) => {
             if (err) {

@@ -101,10 +101,15 @@ export default function EmployerProfilePage() {
 
   React.useEffect(() => {
     const getJobs = async () => {
-      const response = await api.fetch('profile/jobs');
+      const response = await api.fetch('employer/profile');
       if (response) {
-        setJobsToRender(response);
-        //TODO: update email, company, location
+        const {email, name, password, location, company, jobs} = response;
+        setEmail(email);
+        setName(name);
+        setPassword(password);
+        setLocation(location);
+        setEducation(education);
+        setJobsToRender(jobs);
       }
     };
     getJobs();
@@ -130,7 +135,7 @@ export default function EmployerProfilePage() {
     <ProfileContainer >
       <AvatarContainer>
         <KaiPic src={kai_dp}/>
-        <NameText>Kaiqi Liang</NameText>
+        <NameText>{name}</NameText>
       </AvatarContainer>
       <AboutContainer>
         <EditButton src={edit} onClick={() => setUpdateDetailsModal(true)} />

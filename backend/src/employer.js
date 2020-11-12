@@ -76,23 +76,26 @@ export const deleteJob = (req, res) => {
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
-export const getJobs = (req, res) => {
+export const getEmployerProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
+        const { email, name, location } = user;
         db.all('select j.id, job_title, location, description, employment_type, closing_date, skill1, skill2, skill3 from Jobs as j join Skills as s on j.id = s.job_id;', [], (err, jobs) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
                 sendResponse(res, 200,
-`Here are ${user.name}'s jobs
+`Here are ${name}'s jobs
 ${jobs.map(job => job.job_title)}`,
-                jobs.map((job) => {
-                    const newJob = job;
-                    newJob.skills = [job.skill1, job.skill2, job.skill3];
-                    delete newJob['skill1'];
-                    delete newJob['skill2'];
-                    delete newJob['skill3'];
-                    return newJob;
-                }));
+                {
+                    email,
+                    name,
+                    location,
+                    jobs: jobs.map((job) => {
+                        const { ...info, skill1, skill2, skill3, } = job;
+                        info.skills = [skill1, skill2, skill3];
+                        return info;
+                    }),
+                });
             }
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
@@ -103,6 +106,7 @@ export const updateEmployerProfile = (req, res) => {
         const { name, password, location, company } = req.body;
         db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' where email = '${user.email}'`);
         if (company) db.run(`update Employers set company = '${company}' where email = '${user.email}'`);
+        sendResponse(res, 200, `${user.name} updated profile`, {});
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
