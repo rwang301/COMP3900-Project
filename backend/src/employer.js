@@ -79,7 +79,13 @@ export const deleteJob = (req, res) => {
 export const getEmployerProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         const { email, name, location } = user;
-        db.all('select j.id, job_title, location, description, employment_type, closing_date, skill1, skill2, skill3 from Jobs as j join Skills as s on j.id = s.job_id;', [], (err, jobs) => {
+        db.all(`SELECT j.id, job_title, location, description, employment_type, closing_date, skill1, skill2, skill3,
+                company FROM Employers As e
+                LEFT JOIN Posts AS p ON e.email = p.email
+                LEFT JOIN Jobs AS j ON p.id = j.id
+                LEFT JOIN Skills AS s ON j.id = s.job_id
+                WHERE e.email = '${email}'`,
+                [], (err, jobs) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
@@ -90,8 +96,9 @@ ${jobs.map(job => job.job_title)}`,
                     email,
                     name,
                     location,
-                    jobs: jobs.map((job) => {
-                        const { ...info, skill1, skill2, skill3, } = job;
+                    company: jobs[0].company,
+                    jobs: jobs.filter((job) => job.id).map((job) => {
+                        const { skill1, skill2, skill3, ...info } = job;
                         info.skills = [skill1, skill2, skill3];
                         return info;
                     }),

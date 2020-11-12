@@ -110,7 +110,7 @@ export default function EmployerProfilePage() {
         setName(name);
         setPassword(password);
         setLocation(location);
-        setEducation(education);
+        setCompany(company);
         setJobsToRender(jobs);
       }
     };
