@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from "styled-components";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Nav from './components/Nav'
 import Home from './pages/Home';
@@ -10,9 +11,14 @@ import EmployerProfilePage from './pages/EmployerProfilePage';
 import JobseekerProfilePage from './pages/JobseekerProfilePage';
 import Swiping from './pages/Swiping';
 import Matches from './pages/Matches';
+import Footer from './components/Footer';
+
+const Main = styled.main`
+  padding: 5% 10%;
+`;
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(localStorage.getItem('token'));
 
   const login = (token) => {
     localStorage.setItem('token', token);
@@ -24,46 +30,51 @@ function App() {
   };
 
   return (
-    <Router>
-      <Nav login={isLoggedIn} logout={logout} />
-      <Switch>
-        <Route exact path="/login">
-          <Login login={login} />
-        </Route>
+    <>
+    <Main>
+      <Router>
+        <Nav login={isLoggedIn} logout={logout} />
+        <Switch>
+          <Route exact path="/login">
+            <Login login={login} />
+          </Route>
 
-        <Route exact path="/register">
-          <Register login={login} />
-        </Route>
+          <Route exact path="/register">
+            <Register login={login} />
+          </Route>
 
-        <Route exact path="/employer">
-          <Employer />
-        </Route>
+          <Route exact path="/employer">
+            <Employer />
+          </Route>
 
-        <Route exact path="/jobseeker">
-          <JobSeeker />
-        </Route>
+          <Route exact path="/jobseeker">
+            <JobSeeker />
+          </Route>
 
-        <Route exact path="/employer-profile">
-          <EmployerProfilePage />
-        </Route>
+          <Route exact path="/employer-profile">
+            <EmployerProfilePage />
+          </Route>
 
-        <Route exact path="/jobseeker-profile">
-          <JobseekerProfilePage />
-        </Route>
+          <Route exact path="/jobseeker-profile">
+            <JobseekerProfilePage />
+          </Route>
 
-        <Route exact path="/swiping">
-          <Swiping />
-        </Route>
+          <Route exact path="/swiping">
+            <Swiping />
+          </Route>
 
-        <Route exact path="/matches">
-          <Matches />
-        </Route>
+          <Route exact path="/matches">
+            <Matches />
+          </Route>
 
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </Router>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
+    </Main>
+    <Footer/>
+    </>
   )
 }
 
