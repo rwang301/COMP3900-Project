@@ -128,9 +128,9 @@ export default function JobseekerProfilePage() {
           About
         </SubtitleText>
         <AboutRowContainer>
-          <AboutRow iconType={'email'} text={email ? email : 'Click edit to update Your Email'}/>
-          <AboutRow iconType={'education'} text={education ? education : 'Click edit to update Your Education'}/>
-          <AboutRow iconType={'location'} text={location ? location: 'Click edit to update Your Location'}/>
+          <AboutRow iconType={'email'} text={email || 'Click edit to update Your Email'}/>
+          <AboutRow iconType={'education'} text={education || 'Click edit to update Your Education'}/>
+          <AboutRow iconType={'location'} text={location || 'Click edit to update Your Location'}/>
         </AboutRowContainer>
         <SubtitleText>
           Skills

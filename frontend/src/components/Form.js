@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import CloseIcon from '@material-ui/icons/Close';
 
 const Main = styled.main`
   display: flex;
@@ -18,6 +19,39 @@ const Anchor = styled(Link)`
   color: white;
 `;
 
+const ModalContainer = styled.div`
+  display: block;
+  cursor: auto;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding-top: 2vw;
+  background-color: rgba(0,0,0,0.2);
+`;
+
+const ModalContent = styled.div`
+  background-color: #72afd6;
+  margin: auto;
+  padding: 1.5vw;
+  border: 1px solid #888;
+  border-radius: 2vw;
+  width: 50%;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const CloseButton = styled(CloseIcon)`
+  position: absolute;
+  margin-left: 48vw;
+  cursor: pointer;
+`;
+
 function Href(props) {
   return (
     <Anchor to={props.route}>{props.children}</Anchor>
@@ -33,4 +67,4 @@ const isEmailValid = (email) => {// eslint-disable-next-line
   return pattern.test(email);
 }
 
-export { Main, Header, Form, Href, isEmailValid };
+export { Main, Header, Form, Href, isEmailValid, ModalContainer, ModalContent, CloseButton };

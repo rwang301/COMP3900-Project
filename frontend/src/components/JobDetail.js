@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import CloseIcon from '@material-ui/icons/Close';
-import { Header, Form } from './Form';
+import { Header, Form, ModalContainer, ModalContent, CloseButton } from './Form';
 import { ControlledInput, ControlledTextarea } from './Input';
 import JobRadios from './JobRadios';
 import DatePicker from "react-datepicker";
@@ -12,38 +11,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { StoreContext } from '../utils/store';
-
-const ModalContainer = styled.div`
-  cursor: auto;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  padding-top: 2vw;
-  background-color: rgba(0,0,0,0.2);
-`;
-
-const ModalContent = styled.div`
-  background-color: #d4fafa;
-  margin: auto;
-  padding: 1.5vw;
-  border: 1px solid #888;
-  border-radius: 2vw;
-  width: 50%;
-  color: black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const CloseButton = styled(CloseIcon)`
-  position: absolute;
-  margin-left: 48vw;
-  cursor: pointer;
-`;
 
 const DateText = styled.p`
   margin-top: 3vw;

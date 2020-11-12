@@ -67,7 +67,7 @@ export default function MatchRow({name, skills, jobApplied}) {
           {jobApplied}
         </AppliedJob>
       </AppliedContainer>
-      <ApplicationDetail toShow={showDetails} setShow={setShowDetails}/>
+      {showDetails && <ApplicationDetail setShow={setShowDetails}/>}
     </MatchContainer>
   )
 }

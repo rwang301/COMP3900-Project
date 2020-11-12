@@ -91,7 +91,7 @@ export function SkillsRow({skillName}) {
   return (
     <RowContainer>
       <JobName>
-        {skillName}
+        {skillName || 'Click Edit to Add Skill'}
       </JobName>
       <Actions>
         {/* <IconAndText>

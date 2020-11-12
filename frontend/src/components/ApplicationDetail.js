@@ -3,40 +3,7 @@ import styled from "styled-components";
 import ExperienceRow from './ExperienceRow';
 import kai_dp from '../assets/kai_dp.jpg'
 import SkillPoint from './SkillPoint';
-import CloseIcon from '@material-ui/icons/Close';
-
-const ModalContainer = styled.div`
-  display: ${props => props.toShow ? 'block' : 'none'};
-  cursor: auto;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  padding-top: 2vw;
-  background-color: rgba(0,0,0,0.2);
-`;
-
-const ModalContent = styled.div`
-  background-color: #d4fafa;
-  margin: auto;
-  padding: 1.5vw;
-  border: 1px solid #888;
-  border-radius: 2vw;
-  width: 50%;
-  color: black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const CloseButton = styled(CloseIcon)`
-  position: absolute;
-  margin-left: 48vw;
-  cursor: pointer;
-`;
+import { ModalContainer, ModalContent, CloseButton } from './Form';
 
 const ProfileHeader = styled.div`
   display: flex;
@@ -173,7 +140,7 @@ const DeclineButton = styled(Button)`
 
 export default function ApplicationDetail({toShow, setShow}) {
   return (
-    <ModalContainer toShow={toShow}>
+    <ModalContainer>
       <ModalContent>
         <CloseButton onClick={(e) => {
             e.stopPropagation();
