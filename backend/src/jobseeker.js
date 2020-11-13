@@ -34,8 +34,6 @@ export const updateJobSeekerProfile = (req, res) => {
                                                     if (Object.values(job).includes(skill)) {// if the skill matches with one of the job's required skills
                                                         db.run(`insert into PotentialJobs values ('${user.email}', '${job.job_id}', ${0})`);
                                                         db.run(`insert into PotentialJobSeekers (employer_email, job_seeker_email, has_swiped) select '${email.email}', '${user.email}', ${0} where not exists (select 1 from PotentialJobseekers where employer_email = '${email.email}' and job_seeker_email = '${user.email}')`);
-                                                        sendResponse(res, 200, `${user.name} updated profile`, {});
-                                                        return;
                                                     }
                                                 }
                                             }
