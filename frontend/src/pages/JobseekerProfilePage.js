@@ -71,6 +71,7 @@ export default function JobseekerProfilePage() {
   const [name, setName] = React.useState();
   const [password, setPassword] = React.useState();
   const [location, setLocation] = React.useState();
+  const [profile, setProfile] = React.useState();
   const [education, setEducation] = React.useState();
   const [skills, setSkills] = React.useState([]);
 
@@ -78,11 +79,12 @@ export default function JobseekerProfilePage() {
     const getProfile = async () => {
       const response = await api.fetch('jobseeker/profile');
       if (response) {
-        const {email, name, password, location, education, skills} = response;
+        const {email, name, password, location, profile, education, skills} = response;
         setEmail(email);
         setName(name);
         setPassword(password);
         setLocation(location);
+        setProfile(profile);
         setEducation(education);
         setSkills(skills);
       }
@@ -96,6 +98,7 @@ export default function JobseekerProfilePage() {
       password,
       education,
       location,
+      profile,
       skills,
     };
     const response = await api.fetch('jobseeker/profile', 'put', data);
@@ -107,7 +110,7 @@ export default function JobseekerProfilePage() {
   return (
     <ProfileContainer >
       <AvatarContainer>
-        <ProfilePic src="/broken-image.jpg" />
+        <ProfilePic src={profile || '/broken-image.jpg'} />
         <NameText>{name}</NameText>
       </AvatarContainer>
       <AboutContainer>
@@ -133,11 +136,12 @@ export default function JobseekerProfilePage() {
           setPassword={setPassword}
           location={location}
           setLocation={setLocation}
+          profile={profile}
+          setProfile={setProfile}
           education={education}
           setEducation={setEducation}
           skills={skills}
           setSkills={setSkills}
-          toShow={applicationModal}
           setShow={setApplicationModal}
           updateProfile={updateProfile}
         />

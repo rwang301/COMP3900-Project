@@ -78,7 +78,7 @@ export const deleteJob = (req, res) => {
 
 export const getEmployerProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        const { email, name, location } = user;
+        const { email, name, location, profile } = user;
         db.all(`SELECT j.id, job_title, location, description, employment_type, closing_date, skill1, skill2, skill3,
                 company FROM Employers As e
                 LEFT JOIN Posts AS p ON e.email = p.email
@@ -95,6 +95,7 @@ export const getEmployerProfile = (req, res) => {
                         email,
                         name,
                         location,
+                        profile,
                         company: jobs[0].company,
                         jobs: jobs.filter((job) => job.id).map((job) => {
                             const { skill1, skill2, skill3, ...info } = job;
@@ -110,8 +111,8 @@ export const getEmployerProfile = (req, res) => {
 
 export const updateEmployerProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        const { name, password, location, company } = req.body;
-        db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' where email = '${user.email}'`);
+        const { name, password, location, profile, company } = req.body;
+        db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' profile = '${profile} where email = '${user.email}'`);
         if (company) db.run(`update Employers set company = '${company}' where email = '${user.email}'`);
         sendResponse(res, 200, `${user.name} updated profile`);
     }).catch(({status, message}) => sendResponse(res, status, message));

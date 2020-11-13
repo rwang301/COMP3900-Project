@@ -90,16 +90,18 @@ export default function EmployerProfilePage() {
   const [email, setEmail] = React.useState();
   const [company, setCompany] = React.useState();
   const [location, setLocation] = React.useState();
+  const [profile, setProfile] = React.useState();
 
   React.useEffect(() => {
     const getJobs = async () => {
       const response = await api.fetch('employer/profile');
       if (response) {
-        const {email, name, password, location, company, jobs} = response;
+        const {email, name, password, location, profile, company, jobs} = response;
         setEmail(email);
         setName(name);
         setPassword(password);
         setLocation(location);
+        setProfile(profile);
         setCompany(company);
         setJobsToRender(jobs);
       }
@@ -109,12 +111,12 @@ export default function EmployerProfilePage() {
   
   const postJob = async (jobTitle, location, description, skillOne, skillTwo, skillThree, closingDate, employmentType) => {
     const data = {
-      "job_title": jobTitle,
-      "location": location,
-      "description": description,
-      "skills": [skillOne, skillTwo, skillThree],
-      "employment_type": employmentType,
-      "closing_date": closingDate
+      job_title: jobTitle,
+      location: location,
+      description: description,
+      skills: [skillOne, skillTwo, skillThree],
+      employment_type: employmentType,
+      closing_date: closingDate
     };
     const response = await api.fetch('job', 'post', data);
     if (response) {
@@ -126,7 +128,7 @@ export default function EmployerProfilePage() {
   return (
     <ProfileContainer >
       <AvatarContainer>
-        <ProfilePic src="/broken-image.jpg" />
+        <ProfilePic src={profile || '/broken-image.jpg'} />
         <NameText>{name}</NameText>
       </AvatarContainer>
       <AboutContainer>
@@ -148,13 +150,15 @@ export default function EmployerProfilePage() {
       {updateDetailsModal &&
         <EmployerDetailModal
           name={name}
-          password={password}
-          company={company}
-          location={location}
           setName={setName}
+          password={password}
           setPassword={setPassword}
-          setCompany={setCompany}
+          location={location}
           setLocation={setLocation}
+          profile={profile}
+          setProfile={setProfile}
+          company={company}
+          setCompany={setCompany}
           closeModal={() => setUpdateDetailsModal(false)}
           updateProfile={() => api.fetch('employer/profile', 'put', { name, password, company, location })}
         />

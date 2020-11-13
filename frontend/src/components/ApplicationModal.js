@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ApplicationModal({
-  name, setName, password, setPassword, location, setLocation, education, setEducation, skills, setSkills, toShow, setShow, updateProfile,
+  name, setName, password, setPassword, location, setLocation, profile, setProfile, education, setEducation, skills, setSkills, setShow, updateProfile,
 }) {
   const classes = useStyles();
   const handleSave = () => {
@@ -61,7 +61,7 @@ export default function ApplicationModal({
             setShow(false);
         }}/>
         <Header>Edit Profile</Header>
-        <EditAvatar />
+        <EditAvatar profile={profile} setProfile={setProfile} />
         <Form id="updateProfile">
           <ControlledInput value={name} type="text" id="Name" handleChange={(event) => setName(event.target.value)}/>
           <ControlledInput value={password} type="password" id="Password" handleChange={(event) => setPassword(event.target.value)}/>

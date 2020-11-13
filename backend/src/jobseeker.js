@@ -4,8 +4,8 @@ import { verifyToken } from './token.js';
 
 export const updateJobSeekerProfile = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
-        const { name, password, location, education, skills } = req.body;
-        db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' where email = '${user.email}'`);
+        const { name, password, location, profile, education, skills } = req.body;
+        db.run(`update Users set name = '${name}', password = '${password}', location = '${location}', profile = '${profile}' where email = '${user.email}'`);
         if (education) db.run(`UPDATE JobSeekers SET education = '${education}' WHERE email = '${user.email}'`);
         db.get(`SELECT email FROM Skills WHERE email = '${user.email}'`, [], (err, email) => {
             if (err) {
@@ -56,7 +56,7 @@ export const updateJobSeekerProfile = (req, res) => {
 
 export const getJobSeekerProfile = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
-        db.get(`SELECT u.email, name, password, location, education, skill1, skill2, skill3
+        db.get(`SELECT u.email, name, password, location, profile, education, skill1, skill2, skill3
                 FROM JobSeekers AS j
                 LEFT JOIN Skills AS s ON j.email = s.email
                 JOIN Users AS u ON u.email = j.email
