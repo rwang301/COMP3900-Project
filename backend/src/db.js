@@ -11,6 +11,7 @@ const db = new sqlite.Database('./db/database.db', err => {
                 password text not null,
                 token text,
                 location text,
+                profile text,
                 primary key (email)
             );
         `);

@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from "styled-components";
-import kai_dp2 from '../assets/kai_dp2.jpg'
 import edit from '../assets/edit.svg'
-// import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
 import { SkillsRow } from '../components/Rows';
 import ApplicationModal from '../components/ApplicationModal';
-// import skillEdit from '../assets/jobEdit.svg';
 import { StoreContext } from '../utils/store';
+import { ProfilePic } from '../components/Form';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -21,16 +19,6 @@ const AvatarContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`;
-
-const ProfilePic = styled.img`
-  height: 10vw;
-  width: 10vw;
-  max-width: 20vw;
-`;
-
-const KaiPic = styled(ProfilePic)`
-  border-radius: 10vw;
 `;
 
 const NameText = styled.p`
@@ -119,7 +107,7 @@ export default function JobseekerProfilePage() {
   return (
     <ProfileContainer >
       <AvatarContainer>
-        <KaiPic src={kai_dp2}/>
+        <ProfilePic src="/broken-image.jpg" />
         <NameText>{name}</NameText>
       </AvatarContainer>
       <AboutContainer>
@@ -137,21 +125,23 @@ export default function JobseekerProfilePage() {
         </SubtitleText>
         {skills.map((skill, idx) => skill && <SkillsRow key={idx} skillName={skill}/>)}
       </AboutContainer>
-      {applicationModal && <ApplicationModal
-        name={name}
-        setName={setName}
-        password={password}
-        setPassword={setPassword}
-        location={location}
-        setLocation={setLocation}
-        education={education}
-        setEducation={setEducation}
-        skills={skills}
-        setSkills={setSkills}
-        toShow={applicationModal}
-        setShow={setApplicationModal}
-        updateProfile={updateProfile}
-      />}
+      {applicationModal &&
+        <ApplicationModal
+          name={name}
+          setName={setName}
+          password={password}
+          setPassword={setPassword}
+          location={location}
+          setLocation={setLocation}
+          education={education}
+          setEducation={setEducation}
+          skills={skills}
+          setSkills={setSkills}
+          toShow={applicationModal}
+          setShow={setApplicationModal}
+          updateProfile={updateProfile}
+        />
+      }
     </ProfileContainer>
   )
 }

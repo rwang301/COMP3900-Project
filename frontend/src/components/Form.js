@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { styled as withStyled } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
+import Avatar from '@material-ui/core/Avatar';
+import CreateIcon from '@material-ui/icons/Create';
+import ReactCrop from 'react-image-crop';
+import "react-image-crop/dist/ReactCrop.css";
 
 const Main = styled.main`
   display: flex;
@@ -67,4 +72,52 @@ const isEmailValid = (email) => {// eslint-disable-next-line
   return pattern.test(email);
 }
 
-export { Main, Header, Form, Href, isEmailValid, ModalContainer, ModalContent, CloseButton };
+const ProfilePic = withStyled(Avatar)({
+  height: '10vw',
+  width: '10vw',
+  maxWidth: '20vw',
+});
+
+const Edit = withStyled(CreateIcon)({
+  cursor: 'pointer',
+});
+
+const AvatarContainer = styled.div`
+  position: relative;
+`;
+
+const EditContainer = styled.div`
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  display: none;
+`;
+
+const EditAvatar = ({ src, onClick }) => {
+  const [crop, setCrop] = React.useState({ aspect: 16 / 9 });
+  const [image, setImage] = React.useState();
+  return (
+  <AvatarContainer>
+    <ReactCrop src={image} crop={crop} onChange={newCrop => setCrop(newCrop)} />
+    <ProfilePic src={src} />
+    <EditContainer onClick={onClick}>
+      <label for="imageUpload">
+        <Edit />
+      </label>
+      <Input id="imageUpload" type="file"/>
+    </EditContainer>
+  </AvatarContainer>
+  )
+};
+
+export { Main, Header, Form, Href, isEmailValid, ModalContainer, ModalContent, CloseButton, ProfilePic, EditAvatar };

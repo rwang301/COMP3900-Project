@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { Header, Form, ModalContainer, ModalContent, CloseButton } from './Form';
+import { Header, Form, ModalContainer, ModalContent, CloseButton, EditAvatar } from './Form';
 import { ControlledInput } from './Input';
 
 const Button = styled.button`
@@ -30,6 +30,7 @@ export default function EmployerDetailModal({closeModal, updateProfile, email, c
             closeModal();
         }}/>
         <Header>Update Details</Header>
+        <EditAvatar />
         <Form id="register">
           <ControlledInput value={email} type="text" id="Name" handleChange={(e) => setName(e.target.value)} />
           <ControlledInput value={email} type="password" id="Password" handleChange={(e) => setPassword(e.target.value)} />
