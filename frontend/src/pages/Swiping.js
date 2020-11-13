@@ -61,39 +61,28 @@ const NoSwipeText = styled.p`
 
 export default function Swiping() {
   const { api } = React.useContext(StoreContext);
-  const [email, setEmail] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [education, setEducation] = React.useState('');
-  const [skill1, setSkill1] = React.useState('');
-  const [skill2, setSkill2] = React.useState('');
-  const [skill3, setSkill3] = React.useState('');
-  const [potentials, setPotentials] = React.useState([
-    {"email": "test@gmail.com", "name": "Richard Wang", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "not comp3900", "skill3": "THE BOYS"},
-    {"email": "test@gmail.com", "name": "Kaiqi Liang", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "comp3900", "skill3": "THE BOYS"},
-    {"email": "test@gmail.com", "name": "William Huang", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "woolies for the boys", "skill3": "THE BOYS"},
-    {"email": "test@gmail.com", "name": "Tony Lu", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "investing", "skill3": "THE BOYS"},
-  ]);
+  const [potentials, setPotentials] = React.useState(null);
+  // const [potentials, setPotentials] = React.useState([
+  //   {"email": "test@gmail.com", "name": "Richard Wang", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "not comp3900", "skill3": "THE BOYS"},
+  //   {"email": "test@gmail.com", "name": "Kaiqi Liang", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "comp3900", "skill3": "THE BOYS"},
+  //   {"email": "test@gmail.com", "name": "William Huang", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "woolies for the boys", "skill3": "THE BOYS"},
+  //   {"email": "test@gmail.com", "name": "Tony Lu", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "investing", "skill3": "THE BOYS"},
+  // ]);
   const [index, setIndex] = React.useState(0);
   const [noSwipes, setNoSwipes] = React.useState(false);
 
-  // React.useEffect(() => {
-  //   const getPotentialJobSeekers = async () => {
-  //     const response = await api.fetch('potential/jobseekers');
-  //     if (response && response.length) {
-  //       const {email, name, location, education, skill1, skill2, skill3} = response[0];
-  //       setEmail(email);
-  //       setName(name);
-  //       setLocation(location);
-  //       setEducation(education);
-  //       setSkill1(skill1);
-  //       setSkill2(skill2);
-  //       setSkill3(skill3);
-  //     }
-  //   }
-  //   getPotentialJobSeekers();
-  //   if (potentials.length === 0) setNoSwipes(true);
-  // }, []);
+  React.useEffect(() => {
+    const getPotentialJobSeekers = async () => {
+      const response = await api.fetch('potential/jobseekers');
+      if (response && response.length) {
+        setPotentials(response);
+        console.log(response, 'POTENTIAL JOBSEEKERS OKAAAAAAAY');
+      } else {
+        setNoSwipes(true);
+      }
+    }
+    getPotentialJobSeekers();
+  }, []);
 
   const accept = () => {
     console.log('i want you!');
@@ -112,15 +101,7 @@ export default function Swiping() {
       setIndex(index + 1);
     }
   }
-
-  let curr_email = potentials[index].email;
-  let curr_name = potentials[index].name;
-  let curr_location = potentials[index].location;
-  let curr_education = potentials[index].education;
-  let curr_skill1 = potentials[index].skill1;
-  let curr_skill2 = potentials[index].skill2;
-  let curr_skill3 = potentials[index].skill3;
-
+  
   return (
     <Wrapper>
       {noSwipes ? 
@@ -138,13 +119,13 @@ export default function Swiping() {
           <SwipingContainer>
             <ArrowIcon src={leftArrow} onClick={decline} />
             <SwipingCard 
-              email={curr_email} 
-              name={curr_name} 
-              location={curr_location} 
-              education={curr_education} 
-              skill1={curr_skill1} 
-              skill2={curr_skill2} 
-              skill3={curr_skill3} 
+              email={potentials ? potentials[index].email : "Email"} 
+              name={potentials ? potentials[index].name : "Name"} 
+              location={potentials ? potentials[index].location : "Location"} 
+              education={potentials ? potentials[index].education : "Education"} 
+              skill1={potentials ? potentials[index].skill1 : "Skill 1"} 
+              skill2={potentials ? potentials[index].skill2 : "Skill 2"} 
+              skill3={potentials ? potentials[index].skill3 : "Skill 3"} 
             />
             <ArrowIcon src={rightArrow} onClick={accept} />
           </SwipingContainer>
