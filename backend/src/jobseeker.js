@@ -104,3 +104,8 @@ export const jobSeekerSwipeRight = (req, res) => {
         sendResponse(res, 200, `${user.name} has swiped right on job ${id}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
+
+export const jobSeekerSwipeLeft = (req, res) => {
+    verifyToken(req.header('token')).then((user) => {
+    }).catch(({status, message}) => sendResponse(res, status, message));
+};

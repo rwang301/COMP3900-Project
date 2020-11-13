@@ -137,10 +137,15 @@ export const getPotentialJobSeekers = (req, res) => {
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
-export const EmployerSwipeRight = (req, res) => {
+export const employerSwipeRight = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         const { id } = req.body;
         db.run(`UPDATE PotentialJobs SET has_swiped = 1 WHERE email = '${user.email}' AND id = ${id}`);
         sendResponse(res, 200, `${user.name} has swiped right on job ${id}`);
+    }).catch(({status, message}) => sendResponse(res, status, message));
+};
+
+export const employerSwipeLeft = (req, res) => {
+    verifyToken(req.header('token')).then((user) => {
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
