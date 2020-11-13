@@ -119,11 +119,12 @@ export const updateEmployerProfile = (req, res) => {
 
 export const getPotentialJobSeekers = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        db.all(`select u.email, name, location, education, skill1, skill2, skill3, has_swiped
-                from PotentialJobSeekers as p
-                join Skills as s on p.job_seeker_email = s.email
-                join JobSeekers as j on s.email = j.email
-                join Users as u on j.email = u.email;`,
+        db.all(`SELECT u.email, name, location, education, skill1, skill2, skill3, has_swiped
+                from PotentialJobSeekers AS p
+                JOIN Skills AS s ON p.job_seeker_email = s.email
+                JOIN JobSeekers AS j ON s.email = j.email
+                JOIN Users AS u ON j.email = u.email
+                WHERE has_swiped = 0 AND p.employer_email = '${user.email}'`,
         [], (err, jobSeekers) => {
             if (err) {
                 sendResponse(res, 500, err.message);
@@ -139,13 +140,16 @@ export const getPotentialJobSeekers = (req, res) => {
 
 export const employerSwipeRight = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        const { id } = req.body;
-        db.run(`UPDATE PotentialJobs SET has_swiped = 1 WHERE email = '${user.email}' AND id = ${id}`);
+        const { email } = req.body;
+        db.run(`UPDATE PotentialJobseekers SET has_swiped = 1 WHERE employer_email = '${user.email}' AND job_seeker_email = '${email}'`);
         sendResponse(res, 200, `${user.name} has swiped right on job ${id}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
 export const employerSwipeLeft = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
+        const { email } = req.body;
+        db.run(`DELETE FROM PotentialJobseekers WHERE job_seeker_email = '${email}'`);
+        sendResponse(res, 200, `${user.name} has swiped left on job ${id}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };

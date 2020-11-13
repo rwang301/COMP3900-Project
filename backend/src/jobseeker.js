@@ -78,12 +78,12 @@ export const getJobSeekerProfile = (req, res) => {
 
 export const getPotentialJobs = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
-        db.all(`SELECT job_title, employment_type, closing_date, location, company, skill1, skill2, skill3, has_swiped
+        db.all(`SELECT j.id, job_title, employment_type, closing_date, location, company, skill1, skill2, skill3, has_swiped
                 FROM PotentialJobs AS pj JOIN Jobs AS j on pj.id = j.id
                 JOIN Skills AS s ON j.id = s.job_id
                 JOIN Posts AS p ON j.id = p.id
                 JOIN Employers AS e ON p.email = e.email
-                WHERE pj.email = '${user.email}'`,
+                WHERE has_swiped = 0 AND pj.email = '${user.email}'`,
         [], (err, jobs) => {
             if (err) {
                 sendResponse(res, 500, err.message);
@@ -107,5 +107,8 @@ export const jobSeekerSwipeRight = (req, res) => {
 
 export const jobSeekerSwipeLeft = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
+        const { id } = req.body;
+        db.run(`DELETE FROM PotentialJobs WHERE id = ${id}`);
+        sendResponse(res, 200, `${user.name} has swiped left on job ${id}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
