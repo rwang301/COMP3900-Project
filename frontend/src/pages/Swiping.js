@@ -6,7 +6,8 @@ import tick from '../assets/tick.svg';
 import cancel from '../assets/cancel.svg';
 import nomoreswipes from '../assets/nomoreswipes.svg';
 import { StoreContext } from '../utils/store';
-import SwipingCard from '../components/SwipingCard';
+import EmployerSwipingCard from '../components/EmployerSwipingCard';
+import JobseekerSwipingCard from '../components/JobseekerSwipingCard';
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,32 +61,38 @@ const NoSwipeText = styled.p`
 
 
 export default function Swiping() {
-  const { api } = React.useContext(StoreContext);
+  const { api, employer } = React.useContext(StoreContext);
   const [potentials, setPotentials] = React.useState(null);
-  // const [potentials, setPotentials] = React.useState([
-  //   {"email": "test@gmail.com", "name": "Richard Wang", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "not comp3900", "skill3": "THE BOYS"},
-  //   {"email": "test@gmail.com", "name": "Kaiqi Liang", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "comp3900", "skill3": "THE BOYS"},
-  //   {"email": "test@gmail.com", "name": "William Huang", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "woolies for the boys", "skill3": "THE BOYS"},
-  //   {"email": "test@gmail.com", "name": "Tony Lu", "location": "Dee Why", "education": "UNSW", "skill1": "procastinating", "skill2": "investing", "skill3": "THE BOYS"},
-  // ]);
   const [index, setIndex] = React.useState(0);
   const [noSwipes, setNoSwipes] = React.useState(false);
 
   React.useEffect(() => {
-    const getPotentialJobSeekers = async () => {
-      const response = await api.fetch('potential/jobseekers');
-      if (response && response.length) {
-        setPotentials(response);
-        console.log(response, 'POTENTIAL JOBSEEKERS OKAAAAAAAY');
+    const getPotentials = async () => {
+      if (employer) {
+        const response = await api.fetch('potential/jobseekers');
+        if (response && response.length) {
+          setPotentials(response);
+        } else {
+          setNoSwipes(true);
+        }
       } else {
-        setNoSwipes(true);
+        const response = await api.fetch('potential/jobs');
+        if (response && response.length) {
+            setPotentials(response);
+        } else {
+          setNoSwipes(true);
+        }
       }
     }
-    getPotentialJobSeekers();
+    getPotentials();
   }, []);
 
   const accept = () => {
-    console.log('i want you!');
+    if (employer) {
+      api.fetch('employer/swipe/right', 'post', {email: potentials[index].email});
+    } else {
+      api.fetch('jobseeker/swipe/right', 'post', {id: potentials[index].id});
+    }
     if (index + 1 === potentials.length) {
       setNoSwipes(true);
     } else {
@@ -93,8 +100,13 @@ export default function Swiping() {
     }
   }
 
-  const decline = () => {
-    console.log('i dont want you!');
+  const decline = async () => {
+    if (employer) {
+      const response = await api.fetch('employer/swipe/left', 'post', {email: potentials[index].email});
+      console.log(response);
+    } else {
+      api.fetch('jobseeker/swipe/left', 'post', {id: potentials[index].id});
+    }
     if (index + 1 === potentials.length) {
       setNoSwipes(true);
     } else {
@@ -118,15 +130,28 @@ export default function Swiping() {
         <>
           <SwipingContainer>
             <ArrowIcon src={leftArrow} onClick={decline} />
-            <SwipingCard 
-              email={potentials ? potentials[index].email : "Email"} 
-              name={potentials ? potentials[index].name : "Name"} 
-              location={potentials ? potentials[index].location : "Location"} 
-              education={potentials ? potentials[index].education : "Education"} 
-              skill1={potentials ? potentials[index].skill1 : "Skill 1"} 
-              skill2={potentials ? potentials[index].skill2 : "Skill 2"} 
-              skill3={potentials ? potentials[index].skill3 : "Skill 3"} 
-            />
+            {employer ? 
+              <EmployerSwipingCard 
+                email={potentials ? potentials[index].email : "Email"} 
+                name={potentials ? potentials[index].name : "Name"} 
+                location={potentials ? potentials[index].location : "Location"} 
+                education={potentials ? potentials[index].education : "Education"} 
+                skill1={potentials ? potentials[index].skill1 : "Skill 1"} 
+                skill2={potentials ? potentials[index].skill2 : "Skill 2"} 
+                skill3={potentials ? potentials[index].skill3 : "Skill 3"} 
+              />
+              :
+              <JobseekerSwipingCard
+                company={potentials ? potentials[index].company: "Company"}
+                job_title={potentials ? potentials[index].job_title: "Job Title"}
+                employment_type={potentials ? potentials[index].employment_type: "Employment Type"}
+                location={potentials ? potentials[index].location: "Location"}
+                closing_date={potentials ? potentials[index].closing_date: "Closing Date"}
+                skill1={potentials ? potentials[index].skill1 : "Skill 1"} 
+                skill2={potentials ? potentials[index].skill2 : "Skill 2"} 
+                skill3={potentials ? potentials[index].skill3 : "Skill 3"} 
+              />
+            }
             <ArrowIcon src={rightArrow} onClick={accept} />
           </SwipingContainer>
           <HelperIconsContainer>
@@ -134,8 +159,6 @@ export default function Swiping() {
             <HelperIcons src={tick}/>
           </HelperIconsContainer>
       </>
-      
-      
       }
 
     </Wrapper>

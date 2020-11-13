@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import swipeProfile from '../assets/swipeProfile.svg';
-import AboutRow from '../components/AboutRow';
+import AboutRow from './AboutRow';
 
 const UserContainer = styled.div`
   border: 0.5vw white solid;
@@ -18,7 +18,6 @@ const UserHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* justify-content: center; */
 `;
 
 const UserIcon = styled.img`
@@ -41,7 +40,7 @@ const SubtitleText = styled.p`
   text-decoration: underline;
 `;
 
-export default function SwipingCard({email, name, location, education, skill1, skill2, skill3}) {
+export default function EmployerSwipingCard({email, name, location, education, skill1, skill2, skill3}) {
 
   return (
     <UserContainer>
