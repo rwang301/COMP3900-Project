@@ -4,6 +4,9 @@ import email from '../assets/email.svg'
 import company from '../assets/company.svg'
 import location from '../assets/location.svg'
 import education from '../assets/education.svg'
+import jobname from '../assets/jobname.svg'
+import time from '../assets/time.svg'
+import closingtime from '../assets/closingtime.svg'
 import one from '../assets/one.svg'
 import two from '../assets/two.svg'
 import three from '../assets/three.svg'
@@ -34,8 +37,17 @@ export default function AboutRow({iconType, text}) {
     case 'company':
       icon = <RowIcon src={company}/>;
       break;
+    case 'jobname':
+      icon = <RowIcon src={jobname}/>;
+      break;
+    case 'time':
+      icon = <RowIcon src={time}/>;
+      break;
     case 'location':
       icon = <RowIcon src={location}/>;
+      break;
+    case 'closingtime':
+      icon = <RowIcon src={closingtime}/>;
       break;
     case 'education':
       icon = <RowIcon src={education}/>;
