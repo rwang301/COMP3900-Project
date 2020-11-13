@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
 import PostJobModal from '../components/PostJobModal';
-import kai_dp from '../assets/kai_dp.jpg'
 import edit from '../assets/edit.svg'
 import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
 import { ListedJobRow } from '../components/Rows';
 import { StoreContext } from '../utils/store';
 import EmployerDetailModal from '../components/EmployerDetailModal';
+import { ProfilePic } from '../components/Form';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -39,16 +39,6 @@ const AvatarContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`;
-
-const ProfilePic = styled.img`
-  height: 10vw;
-  width: 10vw;
-  max-width: 20vw;
-`;
-
-const KaiPic = styled(ProfilePic)`
-  border-radius: 10vw;
 `;
 
 const NameText = styled.p`
@@ -136,7 +126,7 @@ export default function EmployerProfilePage() {
   return (
     <ProfileContainer >
       <AvatarContainer>
-        <KaiPic src={kai_dp}/>
+        <ProfilePic src="/broken-image.jpg" />
         <NameText>{name}</NameText>
       </AvatarContainer>
       <AboutContainer>

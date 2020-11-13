@@ -4,6 +4,7 @@ create table if not exists Users (
     password text not null,
     token text,
     location text,
+    profile text,
     primary key (email)
 );
 

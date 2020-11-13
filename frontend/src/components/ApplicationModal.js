@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import CloseIcon from '@material-ui/icons/Close';
-import { Header, Form, ModalContainer, ModalContent, CloseButton } from './Form';
+import { Header, Form, ModalContainer, ModalContent, CloseButton, EditAvatar } from './Form';
 import { ControlledInput } from './Input';
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -61,6 +61,7 @@ export default function ApplicationModal({
             setShow(false);
         }}/>
         <Header>Edit Profile</Header>
+        <EditAvatar />
         <Form id="updateProfile">
           <ControlledInput value={name} type="text" id="Name" handleChange={(event) => setName(event.target.value)}/>
           <ControlledInput value={password} type="password" id="Password" handleChange={(event) => setPassword(event.target.value)}/>
