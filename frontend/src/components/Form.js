@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
 import Avatar from '@material-ui/core/Avatar';
 import CreateIcon from '@material-ui/icons/Create';
+import ReactCrop from 'react-image-crop';
+import "react-image-crop/dist/ReactCrop.css";
 
 const Main = styled.main`
   display: flex;
@@ -76,6 +78,10 @@ const ProfilePic = withStyled(Avatar)({
   maxWidth: '20vw',
 });
 
+const Edit = withStyled(CreateIcon)({
+  cursor: 'pointer',
+});
+
 const AvatarContainer = styled.div`
   position: relative;
 `;
@@ -91,16 +97,27 @@ const EditContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 `;
 
-const EditAvatar = ({ src, onClick }) => (
+const Input = styled.input`
+  display: none;
+`;
+
+const EditAvatar = ({ src, onClick }) => {
+  const [crop, setCrop] = React.useState({ aspect: 16 / 9 });
+  const [image, setImage] = React.useState();
+  return (
   <AvatarContainer>
+    <ReactCrop src={image} crop={crop} onChange={newCrop => setCrop(newCrop)} />
     <ProfilePic src={src} />
     <EditContainer onClick={onClick}>
-      <CreateIcon />
+      <label for="imageUpload">
+        <Edit />
+      </label>
+      <Input id="imageUpload" type="file"/>
     </EditContainer>
   </AvatarContainer>
-);
+  )
+};
 
 export { Main, Header, Form, Href, isEmailValid, ModalContainer, ModalContent, CloseButton, ProfilePic, EditAvatar };

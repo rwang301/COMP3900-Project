@@ -29,8 +29,8 @@ export default function EmployerDetailModal({closeModal, updateProfile, email, c
             e.stopPropagation();
             closeModal();
         }}/>
-        <EditAvatar />
         <Header>Update Details</Header>
+        <EditAvatar />
         <Form id="register">
           <ControlledInput value={email} type="text" id="Name" handleChange={(e) => setName(e.target.value)} />
           <ControlledInput value={email} type="password" id="Password" handleChange={(e) => setPassword(e.target.value)} />
