@@ -1,5 +1,5 @@
 import sqlite from 'sqlite3';
-const db = new sqlite.Database('./db/database.db', err => {
+const db = new sqlite.Database('./db/database.db', (err) => {
     if (err) {
         throw Error(err.message);
     } else {

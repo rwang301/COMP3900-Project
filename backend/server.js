@@ -3,8 +3,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import { login, register } from './src/auth.js';
-import { postJob, updateJob, getEmployerProfile, deleteJob, updateEmployerProfile, getPotentialJobSeekers } from './src/employer.js';
-import { updateJobSeekerProfile, getJobSeekerProfile } from './src/jobseeker.js';
+import { postJob, updateJob, getEmployerProfile, deleteJob, updateEmployerProfile, getPotentialJobSeekers, employerSwipeLeft, employerSwipeRight } from './src/employer.js';
+import { updateJobSeekerProfile, getJobSeekerProfile, getPotentialJobs, jobSeekerSwipeLeft, jobSeekerSwipeRight } from './src/jobseeker.js';
 
 const app = express();
 app.use(cors());
@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 const port = 8000;
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
 
-export default (response, status, message, data) => {
+export default (response, status, message, data = {}) => {
     response.status(status).send(data);
     console.log(message);
 };
@@ -32,4 +32,10 @@ app.get('/jobseeker/profile', getJobSeekerProfile);
 app.put('/jobseeker/profile', updateJobSeekerProfile);
 
 app.get('/potential/jobseekers', getPotentialJobSeekers);
-app.get('/potential/jobs');
+app.get('/potential/jobs', getPotentialJobs);
+
+app.post('/employer/swipe/left', employerSwipeLeft);
+app.post('/employer/swipe/right', employerSwipeRight);
+
+app.post('/jobseeker/swipe/left', jobSeekerSwipeLeft);
+app.post('/jobseeker/swipe/right', jobSeekerSwipeRight);
