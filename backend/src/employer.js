@@ -112,7 +112,7 @@ export const getEmployerProfile = (req, res) => {
 export const updateEmployerProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         const { name, password, location, profile, company } = req.body;
-        db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' profile = '${profile} where email = '${user.email}'`);
+        db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' profile = '${profile}' where email = '${user.email}'`);
         if (company) db.run(`update Employers set company = '${company}' where email = '${user.email}'`);
         sendResponse(res, 200, `${user.name} updated profile`);
     }).catch(({status, message}) => sendResponse(res, status, message));
@@ -143,7 +143,7 @@ export const employerSwipeRight = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         const { email } = req.body;
         db.run(`UPDATE PotentialJobseekers SET has_swiped = 1 WHERE employer_email = '${user.email}' AND job_seeker_email = '${email}'`);
-        sendResponse(res, 200, `${user.name} has swiped right on job ${id}`);
+        sendResponse(res, 200, `${user.name} has swiped right on jobseeker ${email}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
@@ -151,6 +151,6 @@ export const employerSwipeLeft = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
         const { email } = req.body;
         db.run(`DELETE FROM PotentialJobseekers WHERE job_seeker_email = '${email}'`);
-        sendResponse(res, 200, `${user.name} has swiped left on job ${id}`);
+        sendResponse(res, 200, `${user.name} has swiped left on jobseeker ${email}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
