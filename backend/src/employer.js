@@ -25,10 +25,10 @@ export const postJob = (req, res) => {
                                 }
                             }
                         }
-                        sendResponse(res, 200, `${user.name} posted a job`, {id: job.id});
                     }
                 });
             }
+            sendResponse(res, 200, `${user.name} posted a job`, {id: job.id});
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
