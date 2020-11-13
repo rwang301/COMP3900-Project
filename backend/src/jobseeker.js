@@ -3,11 +3,11 @@ import sendResponse from '../server.js';
 import { verifyToken } from './token.js';
 
 export const updateJobSeekerProfile = (req, res) => {
-    verifyToken(req.header('token')).then(user => {
+    verifyToken(req.header('token')).then((user) => {
         const { name, password, location, education, skills } = req.body;
         db.run(`update Users set name = '${name}', password = '${password}', location = '${location}' where email = '${user.email}'`);
-        if (education) db.run(`update JobSeekers set education = '${education}' where email = '${user.email}'`);
-        db.get(`select email from Skills where email = '${user.email}'`, [], (err, email) => {
+        if (education) db.run(`UPDATE JobSeekers SET education = '${education}' WHERE email = '${user.email}'`);
+        db.get(`SELECT email FROM Skills WHERE email = '${user.email}'`, [], (err, email) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
@@ -17,23 +17,27 @@ export const updateJobSeekerProfile = (req, res) => {
                     db.run(`insert into Skills (email, skill1, skill2, skill3) values ('${user.email}', '${skills[0]}', '${skills[1]}', '${skills[2]}')`);
                 }
                 db.parallelize(() => {
-                    db.run(`delete from PotentialJobs where email = '${user.email}'`).run(`delete from PotentialJobseekers where job_seeker_email = '${user.email}'`, (err) => {
+                    db.run(`DELETE FROM PotentialJobs WHERE email = '${user.email}'`).run(`delete from PotentialJobseekers where job_seeker_email = '${user.email}'`, (err) => {
                         if (err) {
                             sendResponse(res, 500, err.message);
                         } else {
-                            db.all('select job_id, skill1, skill2, skill3 from Skills where email is null and job_id is not null', [], (err, jobs) => {
+                            db.all('SELECT job_id, skill1, skill2, skill3 FROM Skills WHERE email IS NULL AND job_id IS NOT NULL', [], (err, jobs) => {
                                 if (err) {
                                     sendResponse(res, 500, err.message);
                                 } else {
                                     for (const job of jobs) {// loop through all the jobs in the database
-                                        db.get(`select email from Posts where id = ${job.job_id}`, [], (err, email) => {// get the email of the employer who posted the job
+                                        db.get(`SELECT email FROM Posts WHERE id = ${job.job_id}`, [], (err, email) => {// get the email of the employer who posted the job
                                             if (err) {
                                                 sendResponse(res, 500, err.message);
                                             } else {
                                                 for (const skill of skills) {// loop through the skills the job seeker just updated
                                                     if (Object.values(job).includes(skill)) {// if the skill matches with one of the job's required skills
-                                                        db.run(`insert into PotentialJobs values ('${user.email}', '${job.job_id}', ${0})`);
-                                                        db.run(`insert into PotentialJobSeekers (employer_email, job_seeker_email, has_swiped) select '${email.email}', '${user.email}', ${0} where not exists (select 1 from PotentialJobseekers where employer_email = '${email.email}' and job_seeker_email = '${user.email}')`);
+                                                        db.run(`INSERT INTO PotentialJobs VALUES ('${user.email}', '${job.job_id}', ${0})`);
+                                                        db.run(`INSERT INTO PotentialJobSeekers (employer_email, job_seeker_email, has_swiped)
+                                                                SELECT '${email.email}', '${user.email}', ${0} WHERE NOT EXISTS (SELECT 1
+                                                                    FROM PotentialJobseekers WHERE employer_email = '${email.email}'
+                                                                    AND job_seeker_email = '${user.email}'
+                                                                )`);
                                                     }
                                                 }
                                             }
@@ -45,14 +49,19 @@ export const updateJobSeekerProfile = (req, res) => {
                     });
                 });
             }
-            sendResponse(res, 200, `${user.name} updated profile`, {});
+            sendResponse(res, 200, `${user.name} updated profile`);
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
 export const getJobSeekerProfile = (req, res) => {
-    verifyToken(req.header('token')).then(user => {
-        db.get(`select u.email, name, password, location, education, skill1, skill2, skill3 from JobSeekers as j left join Skills as s on j.email = s.email join Users as u on u.email = j.email where j.email = '${user.email}'`, [], (err, info) => {
+    verifyToken(req.header('token')).then((user) => {
+        db.get(`SELECT u.email, name, password, location, education, skill1, skill2, skill3
+                FROM JobSeekers AS j
+                LEFT JOIN Skills AS s ON j.email = s.email
+                JOIN Users AS u ON u.email = j.email
+                WHERE j.email = '${user.email}'`,
+        [], (err, info) => {
             if (err) {
                 sendResponse(res, 500, err.message);
             } else {
@@ -64,5 +73,34 @@ export const getJobSeekerProfile = (req, res) => {
                 }
             }
         });
+    }).catch(({status, message}) => sendResponse(res, status, message));
+};
+
+export const getPotentialJobs = (req, res) => {
+    verifyToken(req.header('token')).then((user) => {
+        db.all(`SELECT job_title, employment_type, closing_date, location, company, skill1, skill2, skill3, has_swiped
+                FROM PotentialJobs AS pj JOIN Jobs AS j on pj.id = j.id
+                JOIN Skills AS s ON j.id = s.job_id
+                JOIN Posts AS p ON j.id = p.id
+                JOIN Employers AS e ON p.email = e.email
+                WHERE pj.email = '${user.email}'`,
+        [], (err, jobs) => {
+            if (err) {
+                sendResponse(res, 500, err.message);
+            } else {
+                sendResponse(res, 200,
+                    `All the jobs that match with ${user.name}'s skills: ${jobs.map((job) => job.job_title).join(', ')}`,
+                    jobs,
+                );
+            }
+        });
+    }).catch(({status, message}) => sendResponse(res, status, message));
+};
+
+export const jobSeekerSwipeRight = (req, res) => {
+    verifyToken(req.header('token')).then((user) => {
+        const { id } = req.body;
+        db.run(`UPDATE PotentialJobs SET has_swiped = 1 WHERE email = '${user.email}' AND id = ${id}`);
+        sendResponse(res, 200, `${user.name} has swiped right on job ${id}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
