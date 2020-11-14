@@ -92,6 +92,7 @@ export default function Register(props) {
         secondaryRoute='/'
         primaryInnerText='Register'
         secondaryInnerText='Back'
+        login={props.login}
       />
     </Main>
   )
