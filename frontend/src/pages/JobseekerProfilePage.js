@@ -95,7 +95,7 @@ export default function JobseekerProfilePage() {
     const getProfile = async () => {
       const response = await api.fetch('jobseeker/profile');
       if (response) {
-        const {email, name, password, location, profile, education, skills} = response;
+        const { email, name, password, location, profile, education, skills } = response;
         setEmail(email);
         setName(name);
         setPassword(password);
@@ -112,16 +112,16 @@ export default function JobseekerProfilePage() {
   const updateProfile = async () => {
     if (!/^([A-Z][a-z]{1,} ){1,}[A-Z][a-z]{1,}$/.test(name)) {
       setAlert({ open: true, severity: 'warning', message: 'Please enter a valid name' });
-    } else if (!password) {
-      password = response.password;
-    } else if (!location) {
-      password = response.location;
-    } else if (!education) {
-      password = response.education;
     } else {
       setApplicationModal(false);
-      console.log({ name, password, education, location, profile, skills });
-      api.fetch('jobseeker/profile', 'put', { name, password, education, location, profile, skills });
+      api.fetch('jobseeker/profile', 'put', {
+        name: name || response.name,
+        password: password || response.password,
+        location: location || response.location,
+        education: education || response.education,
+        profile,
+        skills,
+      });
     }
   };
 

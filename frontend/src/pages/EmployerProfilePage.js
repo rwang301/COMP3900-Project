@@ -100,6 +100,7 @@ export default function EmployerProfilePage() {
   const [company, setCompany] = React.useState();
   const [location, setLocation] = React.useState();
   const [profile, setProfile] = React.useState();
+  const [response, setResponse] = React.useState();
 
   React.useEffect(() => {
     const getJobs = async () => {
@@ -113,6 +114,7 @@ export default function EmployerProfilePage() {
         setProfile(profile);
         setCompany(company);
         setJobsToRender(jobs);
+        setResponse(response);
       }
     };
     getJobs();
@@ -169,7 +171,13 @@ export default function EmployerProfilePage() {
           company={company}
           setCompany={setCompany}
           closeModal={() => setUpdateDetailsModal(false)}
-          updateProfile={() => api.fetch('employer/profile', 'put', { name, password, location, profile, company })}
+          updateProfile={() => api.fetch('employer/profile', 'put', {
+            name: name || response.name,
+            password: password || response.password,
+            location: location || response.location,
+            company: company || response.company,
+            profile,
+          })}
         />
       }
       {postJobModal && <PostJobModal closeModal={() => setPostJobModal(false)} postJob={postJob}/>}

@@ -2,9 +2,9 @@ create table if not exists Users (
     email text,
     name text not null,
     password text not null,
-    token text,
     location text,
     profile text,
+    token text,
     primary key (email)
 );
 

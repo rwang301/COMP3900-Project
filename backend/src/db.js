@@ -9,9 +9,9 @@ const db = new sqlite.Database('./db/database.db', (err) => {
                 email text,
                 name text not null,
                 password text not null,
-                token text,
                 location text,
                 profile text,
+                token text,
                 primary key (email)
             );
         `);
