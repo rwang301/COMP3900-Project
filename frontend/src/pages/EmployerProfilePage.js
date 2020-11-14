@@ -160,7 +160,7 @@ export default function EmployerProfilePage() {
           company={company}
           setCompany={setCompany}
           closeModal={() => setUpdateDetailsModal(false)}
-          updateProfile={() => api.fetch('employer/profile', 'put', { name, password, company, location })}
+          updateProfile={() => api.fetch('employer/profile', 'put', { name, password, location, profile, company })}
         />
       }
       {postJobModal && <PostJobModal closeModal={() => setPostJobModal(false)} postJob={postJob}/>}

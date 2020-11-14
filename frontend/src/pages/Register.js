@@ -46,7 +46,7 @@ export default function Register(props) {
     } else if (password !== confirmPassword) {
       setAlert({ open: true, severity: 'warning', message: 'Password does not match' });
     } else {
-      const data = {name: name, email: email, password: password, employer: employer};
+      const data = { name, email, password, employer };
       const options = {
         method: 'POST',
         headers: {

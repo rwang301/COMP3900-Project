@@ -26,7 +26,7 @@ export default function Login(props) {
     } else if (password.length < 3) {
       setAlert({ open: true, severity: 'warning', message: 'Password must be at least 3 characters long' });
     } else {
-      const data = {email: email, password: password};
+      const data = { email, password };
       const options = {
         method: 'POST',
         headers: {

@@ -65,7 +65,7 @@ const AboutRowContainer = styled.div`
 `;
 
 export default function JobseekerProfilePage() {
-  const { api } = React.useContext(StoreContext);
+  const { api, setAlert } = React.useContext(StoreContext);
   const [applicationModal, setApplicationModal] = React.useState(false);
   const [email, setEmail] = React.useState();
   const [name, setName] = React.useState();
@@ -74,6 +74,7 @@ export default function JobseekerProfilePage() {
   const [profile, setProfile] = React.useState();
   const [education, setEducation] = React.useState();
   const [skills, setSkills] = React.useState([]);
+  const [response, setResponse] = React.useState();
 
   React.useEffect(() => {
     const getProfile = async () => {
@@ -87,23 +88,25 @@ export default function JobseekerProfilePage() {
         setProfile(profile);
         setEducation(education);
         setSkills(skills);
+        setResponse(response);
       }
     };
     getProfile();
   }, []);
 
   const updateProfile = async () => {
-    const data = {
-      name,
-      password,
-      education,
-      location,
-      profile,
-      skills,
-    };
-    const response = await api.fetch('jobseeker/profile', 'put', data);
-    if (response) {
-      console.log(response);
+    if (!/^([A-Z][a-z]{1,} ){1,}[A-Z][a-z]{1,}$/.test(name)) {
+      setAlert({ open: true, severity: 'warning', message: 'Please enter a valid name' });
+    } else if (!password) {
+      password = response.password;
+    } else if (!location) {
+      password = response.location;
+    } else if (!education) {
+      password = response.education;
+    } else {
+      setApplicationModal(false);
+      console.log({ name, password, education, location, profile, skills });
+      api.fetch('jobseeker/profile', 'put', { name, password, education, location, profile, skills });
     }
   };
 

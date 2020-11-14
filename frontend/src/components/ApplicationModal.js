@@ -48,11 +48,6 @@ export default function ApplicationModal({
   name, setName, password, setPassword, location, setLocation, profile, setProfile, education, setEducation, skills, setSkills, setShow, updateProfile,
 }) {
   const classes = useStyles();
-  const handleSave = () => {
-    updateProfile();
-    setShow(false);
-  };
-
   return (
     <ModalContainer>
       <ModalContent>
@@ -126,7 +121,7 @@ export default function ApplicationModal({
             </Select>
             </FormControl>
         </Form>
-        <Button onClick={handleSave}>Save</Button>
+        <Button onClick={() => updateProfile()}>Save</Button>
       </ModalContent>
     </ModalContainer>
   )
