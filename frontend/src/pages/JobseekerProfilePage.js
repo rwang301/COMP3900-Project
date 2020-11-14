@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import edit from '../assets/edit.svg'
 import AboutRow from '../components/AboutRow';
-// import { SkillsRow } from '../components/Rows';
 import ApplicationModal from '../components/ApplicationModal';
 import { StoreContext } from '../utils/store';
 import { ProfilePic } from '../components/Form';
@@ -38,14 +37,6 @@ const EditButton = styled(SideButton)`
   margin-top: 1.15vw;
 `;
 
-const AddButton = styled(SideButton)`
-  margin-top: 19.75vw;
-`;
-
-const SkillEditButton = styled(SideButton)`
-  margin-top: 19.75vw;
-`;
-
 const AboutContainer = styled.div`
   border: 3px solid white;
   border-radius: 1vw;
@@ -58,6 +49,13 @@ const AboutContainer = styled.div`
 const SubtitleText = styled.p`
   font-size: 1.5vw;
   font-weight: bold;
+  width: 100%;
+  text-align: center;
+`;
+
+const AboutTitle = styled(SubtitleText)`
+  padding-bottom: 1.5vh;
+  border-bottom: 1px white solid;
 `;
 
 const AboutRowContainer = styled.div`
@@ -65,11 +63,16 @@ const AboutRowContainer = styled.div`
   flex-direction: column;
 `;
 
+const SkillsTitle = styled(SubtitleText)`
+
+`;
+
 const SkillsRow = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: space-evenly;
+  border-top: 1px white solid;
 `;
 
 const Skill = styled.p`
@@ -127,18 +130,17 @@ export default function JobseekerProfilePage() {
       </AvatarContainer>
       <AboutContainer>
         <EditButton src={edit} onClick={() => setApplicationModal(true)}/>
-        <SubtitleText>
+        <AboutTitle>
           About
-        </SubtitleText>
+        </AboutTitle>
         <AboutRowContainer>
           <AboutRow iconType={'email'} text={email || 'Click edit to update Your Email'}/>
           <AboutRow iconType={'education'} text={education || 'Click edit to update Your Education'}/>
           <AboutRow iconType={'location'} text={location || 'Click edit to update Your Location'}/>
         </AboutRowContainer>
-        <SubtitleText>
+        <SkillsTitle>
           Skills
-        </SubtitleText>
-        {/* {skills.map((skill, idx) => skill && <SkillsRow key={idx} skillName={skill}/>)} */}
+        </SkillsTitle>
         <SkillsRow>
           <Skill>
             {skills[0]}
