@@ -54,11 +54,11 @@ const SideButton = styled.img`
 `;
 
 const EditButton = styled(SideButton)`
-  margin-top: 1.15vw;
+  margin-top: 1.4vw;
 `;
 
 const AddButton = styled(SideButton)`
-  margin-top: 19.75vw;
+  margin-top: 21.75vw;
 `;
 
 const AboutContainer = styled.div`
@@ -73,7 +73,16 @@ const AboutContainer = styled.div`
 const SubtitleText = styled.p`
   font-size: 1.5vw;
   font-weight: bold;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 1.75vw;
+  border-bottom: 0.1vw white solid;
 `;
+
+// const AboutTitle = styled(SubtitleText)`
+//   padding-bottom: 1.5vh;
+//   border-bottom: 1px white solid;
+// `;
 
 const AboutRowContainer = styled.div`
   display: flex;
