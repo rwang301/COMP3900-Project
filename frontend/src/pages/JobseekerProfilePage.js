@@ -2,10 +2,11 @@ import React from 'react';
 import styled from "styled-components";
 import edit from '../assets/edit.svg'
 import AboutRow from '../components/AboutRow';
-import { SkillsRow } from '../components/Rows';
+// import { SkillsRow } from '../components/Rows';
 import ApplicationModal from '../components/ApplicationModal';
 import { StoreContext } from '../utils/store';
 import { ProfilePic } from '../components/Form';
+import Divider from '@material-ui/core/Divider';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -62,6 +63,17 @@ const SubtitleText = styled.p`
 const AboutRowContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const SkillsRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+`;
+
+const Skill = styled.p`
+  font-size: 1.25vw;
 `;
 
 export default function JobseekerProfilePage() {
@@ -126,7 +138,20 @@ export default function JobseekerProfilePage() {
         <SubtitleText>
           Skills
         </SubtitleText>
-        {skills.map((skill, idx) => skill && <SkillsRow key={idx} skillName={skill}/>)}
+        {/* {skills.map((skill, idx) => skill && <SkillsRow key={idx} skillName={skill}/>)} */}
+        <SkillsRow>
+          <Skill>
+            {skills[0]}
+          </Skill>
+          <Divider orientation="vertical" flexItem />
+          <Skill>
+            {skills[1]}
+          </Skill>
+          <Divider orientation="vertical" flexItem />
+          <Skill>
+            {skills[2]}
+          </Skill>
+        </SkillsRow>
       </AboutContainer>
       {applicationModal &&
         <ApplicationModal
