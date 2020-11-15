@@ -154,6 +154,14 @@ export const employerSwipeRight = (req, res) => {
     verifyToken(req.header('token')).then(user => {
         const { email } = req.body;
         db.run(`UPDATE PotentialJobseekers SET has_swiped = 1 WHERE employer_email = '${user.email}' AND job_seeker_email = '${email}'`);
+        db.all(`SELECT j.id, has_swiped FROM Posts AS p
+                JOIN PotentialJobs AS j ON p.id = j.id
+                WHERE p.email = '${user.email}'`,
+        [], (_, jobs) => {
+            jobs.forEach((job) => {
+                if (job.has_swiped) db.run(`INSERT INTO Matches VALUES ('${email}', ${job.id})`);
+            })
+        })
         sendResponse(res, 200, `${user.name} has swiped right on jobseeker ${email}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };

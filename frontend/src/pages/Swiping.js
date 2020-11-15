@@ -158,7 +158,7 @@ export default function Swiping() {
             <HelperIcons src={cancel}/>
             <HelperIcons src={tick}/>
           </HelperIconsContainer>
-      </>
+        </>
       }
 
     </Wrapper>
