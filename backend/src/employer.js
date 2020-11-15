@@ -103,6 +103,7 @@ export const getEmployerProfile = (req, res) => {
                     {
                         email,
                         name,
+                        password,
                         location,
                         profile,
                         company: jobs[0].company,
@@ -129,7 +130,7 @@ export const updateEmployerProfile = (req, res) => {
 
 export const getPotentialJobSeekers = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        db.all(`SELECT u.email, name, password, location, education, skill1, skill2, skill3, has_swiped
+        db.all(`SELECT u.email, name, location, education, skill1, skill2, skill3, has_swiped
                 from PotentialJobSeekers AS p
                 JOIN Skills AS s ON p.job_seeker_email = s.email
                 JOIN JobSeekers AS j ON s.email = j.email
