@@ -58,7 +58,7 @@ export default function Nav({login, logout}) {
   const tabs = (
     <>
       <PlainLink to='/jobseeker'>
-        <Paragraph className={(pathname === '/jobseeker' || pathname === '/employer') && 'active'} login={login}>Home</Paragraph>
+        <Paragraph className={(pathname === '/jobseeker' || pathname === '/employer') && 'active'} login={login}>Dashboard</Paragraph>
       </PlainLink>
       <PlainLink to='/matches'>
         <Paragraph className={(pathname === '/matches') && 'active'} login={login}>My Matches</Paragraph>

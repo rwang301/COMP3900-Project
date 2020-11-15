@@ -1,7 +1,7 @@
 import React from 'react';
 import NewMatches from '../components/NewMatches'
-import AppsTable from '../components/AppsTable'
 import styled from "styled-components";
+import JobseekerApps from '../components/JobseekerApps';
 
 const PageContainer = styled.div`
   display: flex;
@@ -14,8 +14,8 @@ const PageContainer = styled.div`
 export default function JobSeeker() {
   return (
     <PageContainer>
-      <NewMatches />
-      <AppsTable employer={false} />
+      {/* <NewMatches /> */}
+      <JobseekerApps />
     </PageContainer>
   )
 }

@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
-import MatchRow from '../components/MatchRow';
+import EmployerMatchRow from '../components/EmployerMatchRow';
 import SearchBar from "material-ui-search-bar";
+import { StoreContext } from '../utils/store';
+import JobseekerMatchRow from '../components/JobseekerMatchRow';
 
 const PageContainer = styled.div`
   padding-top: 2vh;
@@ -32,23 +34,8 @@ const TitleText = styled.p`
   font-weight: bold;
 `;
 
-
 export default function Matches() {
-
-  // React.useEffect(() => {
-  //   const getMatches = async () => {
-  //     const options = {
-  //       headers: {
-  //         'token': localStorage.getItem('token')
-  //       },
-  //     };
-  //     const response = await fetch("http://localhost:8000/", options);
-  //     const json = await response.json();
-  //     setAllData(json);
-  //   };
-  //   getMatches();
-  // }, []);
- 
+  const { api, employer } = React.useContext(StoreContext);
   const [searchInput, setSearchInput] = React.useState('');
   const [allData, setAllData] = React.useState([
     {"name": "Kaiqi Liang", "skills": ["Reactjs", "CSS", "SQL"], "jobApplied": "Software Developer at Apple"}, 
@@ -62,6 +49,17 @@ export default function Matches() {
   const skillsCheck = (skills) => skills.filter(searchCheck).length > 0;
   const search = () => setFilteredData(allData.filter((match) => searchCheck(match.name) || skillsCheck(match.skills) || searchCheck(match.jobApplied)));
   
+  // React.useEffect(() => {
+  //   const getMatches = async () => {
+  //     const response = await api.fetch('jobseeker/matches');
+  //     if (response) {
+
+  //     }
+  //   };
+  //   getMatches();
+  // }, []);
+ 
+
   return (  
     <PageContainer>
       <MatchesContainer>
@@ -73,7 +71,13 @@ export default function Matches() {
           onRequestSearch={search}
           onCancelSearch={() => setFilteredData(allData)}
         />
-        {filteredData.map((match, index) => <MatchRow key={index} name={match.name} skills={match.skills} jobApplied={match.jobApplied}/>)}
+        {employer ? 
+          <>
+            {filteredData.map((match, index) => <EmployerMatchRow key={index} name={match.name} skills={match.skills} jobApplied={match.jobApplied}/>)} 
+          </>
+          :
+          <JobseekerMatchRow/>
+        }
       </MatchesContainer>
     </PageContainer>
   )

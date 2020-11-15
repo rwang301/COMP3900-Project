@@ -1,22 +1,22 @@
 import React from 'react';
 import styled from "styled-components";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import BusinessIcon from '@material-ui/icons/Business';
 import ApplicationDetail from './ApplicationDetail';
 
 
-const Avatar = styled(AccountCircleIcon)`
+const Avatar = styled(BusinessIcon)`
   flex: 1;
 `;
 
-const PersonalDetails = styled.div`
+const JobDescription = styled.div`
   flex: 2;
 `;
 
-const FullNameText = styled.p`
+const CompanyName = styled.p`
   font-weight: bold;
 `;
 
-const ExperienceText = styled.p`
+const JobName = styled.p`
   font-style: italic;
 `;
 
@@ -24,13 +24,13 @@ const AppliedContainer = styled.div`
   flex: 2;
 `
 
-const AppliedText = styled.p`
-  
+const SkillsReqText = styled.p`
+    font-style: italic;
 `;
 
-const AppliedJob = styled.p`
+const SkillsText = styled.p`
   /* font-size: 3vw; */
-  text-decoration: underline;
+  /* text-decoration: underline; */
 `;
 
 const MatchContainer = styled.div`
@@ -45,27 +45,27 @@ const MatchContainer = styled.div`
 `;
 
 
-export default function MatchRow({name, skills, jobApplied}) {
+export default function JobseekerMatchRow({companyName, jobName, skills}) {
   const [showDetails, setShowDetails] = React.useState(false);
 
   return (
     <MatchContainer onClick={() => setShowDetails(true)}>
       <Avatar fontSize="large"/>
-      <PersonalDetails>
-        <FullNameText>
-          {name}
-        </FullNameText>
-        <ExperienceText>
-          {skills.join(", ")}
-        </ExperienceText>
-      </PersonalDetails>
+      <JobDescription>
+        <CompanyName>
+          Atlassian
+        </CompanyName>
+        <JobName>
+          Frontend Developer
+        </JobName>
+      </JobDescription>
       <AppliedContainer>
-        <AppliedText>
-          Applied to your listing: 
-        </AppliedText>
-        <AppliedJob>
-          {jobApplied}
-        </AppliedJob>
+        <SkillsReqText>
+          Skills Required: 
+        </SkillsReqText>
+        <SkillsText>
+          React, HTML, CSS
+        </SkillsText>
       </AppliedContainer>
       {showDetails && <ApplicationDetail setShow={setShowDetails}/>}
     </MatchContainer>
