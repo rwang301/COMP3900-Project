@@ -21,13 +21,13 @@ const Button = styled.button`
   }
 `;
 
-export default function EmployerDetailModal({closeModal, updateProfile, email, company, location, profile, setProfile, setName, setPassword, setCompany, setLocation}) {
+export default function EmployerDetailModal({cancel, updateProfile, email, company, location, profile, setProfile, setName, setPassword, setCompany, setLocation}) {
   return (
     <ModalContainer>
       <ModalContent>
         <CloseButton onClick={(e) => {
             e.stopPropagation();
-            closeModal();
+            cancel();
         }}/>
         <Header>Update Details</Header>
         <EditAvatar profile={profile} setProfile={setProfile} />
@@ -37,14 +37,7 @@ export default function EmployerDetailModal({closeModal, updateProfile, email, c
           <ControlledInput value={company} type="text" id="Company" handleChange={(e) => setCompany(e.target.value)} />
           <ControlledInput value={location} type="text" id="Location" handleChange={(e) => setLocation(e.target.value)} />
         </Form>
-        <Button
-          onClick={() => {
-            updateProfile();
-            closeModal();
-          }}
-        >
-          Save
-        </Button>
+        <Button onClick={() => updateProfile()}>Save</Button>
       </ModalContent>
     </ModalContainer>
   )

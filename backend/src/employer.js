@@ -18,8 +18,7 @@ export const deleteJob = (req, res) => {
 
 export const updateJob = (req, res) => {
     verifyToken(req.header('token'))
-        .then(user => remove(user, req.body))
-        .then(() => post(user, req.body))
+        .then(user => remove(user, req.body).then(() => post(user, req.body)))
         .then(({ status }) => sendResponse(res, status, message, data))
         .catch(({ status, message }) => sendResponse(res, status, message));
 };
@@ -31,15 +30,24 @@ const post = (user, { job_title, location, description, employment_type, closing
             db.run(`insert into Posts values ('${user.email}', '${job.id}')`);
             db.run(`insert into Skills (job_id, skill1, skill2, skill3) values ('${job.id}', '${skills[0]}', '${skills[1]}', '${skills[2]}')`);
             db.all('select email, skill1, skill2, skill3 from Skills where email is not null and job_id is null', [], (_, jobSeekers) => {
-                    for (const jobSeeker of jobSeekers) {
-                        for (const skill of skills) {
-                            if (Object.values(jobSeeker).includes(skill)) {
-                                db.run(`insert into PotentialJobs values ('${jobSeeker.email}', '${job.id}', ${0})`);
-                                db.run(`insert into PotentialJobSeekers (employer_email, job_seeker_email, has_swiped) select '${user.email}', '${jobSeeker.email}', ${0} where not exists (select 1 from PotentialJobseekers where employer_email = '${user.email}' and job_seeker_email = '${jobSeeker.email}')`);
-                                break;
-                            }
+                for (const jobSeeker of jobSeekers) {
+                    let matches = 0;
+                    for (const skill of skills) {
+                        if (Object.values(jobSeeker).includes(skill)) {
+                            matches++;
                         }
                     }
+                    if (matches > 0) {
+                        db.run(`INSERT INTO PotentialJobs (email, id, has_swiped, matches) VALUES ('${jobSeeker.email}', '${job.id}', ${0}, ${matches})`);
+                        db.get(`SELECT count(j.id) FROM PotentialJobs AS j JOIN Posts AS p ON j.id = p.id WHERE p.email = '${user.email}' AND j.email = '${jobSeeker.email}'`, (_, count) => {
+                            if (count['count(j.id)'] > 1) {
+                                db.run(`UPDATE PotentialJobSeekers SET matches = ${count['count(j.id)']} WHERE employer_email = '${user.email}' AND job_seeker_email = '${jobSeeker.email}'`);
+                            } else {
+                                db.run(`INSERT INTO PotentialJobSeekers (employer_email, job_seeker_email, has_swiped, matches) VALUES ('${user.email}', '${jobSeeker.email}', ${0}, ${count['count(j.id)']})`);
+                            }
+                        })
+                    }
+                }
             });
             resolve({ status: 200, message: `${user.name} posted a job`, data: {id: job.id} });
         });
@@ -65,7 +73,9 @@ const remove = (user, { id }) => {
                         const skills = jobs.reduce((a, c) => a.concat(Object.values(c)), []);
                         if (jobseekers && jobs) {
                             jobseekers.forEach(({ email, ...jobseeker }) => {
-                                if (!Object.values(jobseeker).some((skill) => skills.includes(skill))) db.run(`DELETE FROM PotentialJobSeekers WHERE job_seeker_email = '${email}'`);
+                                if (!Object.values(jobseeker).some((skill) => skills.includes(skill))) {
+                                    db.run(`DELETE FROM PotentialJobSeekers WHERE job_seeker_email = '${email}'`);
+                                }
                             });
                         }
                     });
@@ -124,7 +134,8 @@ export const getPotentialJobSeekers = (req, res) => {
                 JOIN Skills AS s ON p.job_seeker_email = s.email
                 JOIN JobSeekers AS j ON s.email = j.email
                 JOIN Users AS u ON j.email = u.email
-                WHERE has_swiped = 0 AND p.employer_email = '${user.email}'`,
+                WHERE has_swiped = 0 AND p.employer_email = '${user.email}'
+                ORDER BY p.matches DESC`,
         [], (err, jobSeekers) => {
             if (err) {
                 sendResponse(res, 500, err.message);

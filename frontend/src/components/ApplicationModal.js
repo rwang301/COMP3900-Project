@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from "styled-components";
-import CloseIcon from '@material-ui/icons/Close';
 import { Header, Form, ModalContainer, ModalContent, CloseButton, EditAvatar } from './Form';
 import { ControlledInput } from './Input';
 import { makeStyles } from "@material-ui/core/styles";
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ApplicationModal({
-  name, setName, password, setPassword, location, setLocation, profile, setProfile, education, setEducation, skills, setSkills, setShow, updateProfile,
+  name, setName, password, setPassword, location, setLocation, profile, setProfile, education, setEducation, skills, setSkills, cancel, updateProfile,
 }) {
   const classes = useStyles();
   return (
@@ -53,7 +52,7 @@ export default function ApplicationModal({
       <ModalContent>
         <CloseButton onClick={(e) => {
             e.stopPropagation();
-            setShow(false);
+            cancel();
         }}/>
         <Header>Edit Profile</Header>
         <EditAvatar profile={profile} setProfile={setProfile} />

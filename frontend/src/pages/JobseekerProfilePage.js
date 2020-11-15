@@ -91,19 +91,23 @@ export default function JobseekerProfilePage() {
   const [skills, setSkills] = React.useState([]);
   const [response, setResponse] = React.useState();
 
+  const initial = (response) => {
+    const { email, name, password, location, profile, education, skills } = response;
+    setEmail(email);
+    setName(name);
+    setPassword(password);
+    setLocation(location);
+    setProfile(profile);
+    setEducation(education);
+    setSkills(skills);
+    setResponse(response);
+  };
+
   React.useEffect(() => {
     const getProfile = async () => {
       const response = await api.fetch('jobseeker/profile');
       if (response) {
-        const { email, name, password, location, profile, education, skills } = response;
-        setEmail(email);
-        setName(name);
-        setPassword(password);
-        setLocation(location);
-        setProfile(profile);
-        setEducation(education);
-        setSkills(skills);
-        setResponse(response);
+        initial(response);
       }
     };
     getProfile();
@@ -127,6 +131,11 @@ export default function JobseekerProfilePage() {
         skills,
       });
     }
+  };
+
+  const cancel = () => {
+    setApplicationModal(false);
+    initial(response);
   };
 
   return (
@@ -176,7 +185,7 @@ export default function JobseekerProfilePage() {
           setEducation={setEducation}
           skills={skills}
           setSkills={setSkills}
-          setShow={setApplicationModal}
+          cancel={cancel}
           updateProfile={updateProfile}
         />
       }

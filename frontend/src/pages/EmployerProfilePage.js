@@ -102,19 +102,23 @@ export default function EmployerProfilePage() {
   const [profile, setProfile] = React.useState();
   const [response, setResponse] = React.useState();
 
+  const initial = (response) => {
+    const {email, name, password, location, profile, company, jobs} = response;
+    setEmail(email);
+    setName(name);
+    setPassword(password);
+    setLocation(location);
+    setProfile(profile);
+    setCompany(company);
+    setJobsToRender(jobs);
+    setResponse(response);
+  };
+
   React.useEffect(() => {
     const getJobs = async () => {
       const response = await api.fetch('employer/profile');
       if (response) {
-        const {email, name, password, location, profile, company, jobs} = response;
-        setEmail(email);
-        setName(name);
-        setPassword(password);
-        setLocation(location);
-        setProfile(profile);
-        setCompany(company);
-        setJobsToRender(jobs);
-        setResponse(response);
+        initial(response);
       }
     };
     getJobs();
@@ -131,6 +135,7 @@ export default function EmployerProfilePage() {
     };
     const response = await api.fetch('job', 'post', data);
     if (response) {
+      setUpdateDetailsModal(false);
       setJobsToRender([...jobsToRender, { ...data, id: response.id }]);
       setPostJobModal(false);
     }
@@ -153,6 +158,11 @@ export default function EmployerProfilePage() {
         profile,
       });
     }
+  };
+
+  const cancel = () => {
+    setUpdateDetailsModal(false);
+    initial(response);
   };
 
   return (
@@ -189,7 +199,7 @@ export default function EmployerProfilePage() {
           setProfile={setProfile}
           company={company}
           setCompany={setCompany}
-          closeModal={() => setUpdateDetailsModal(false)}
+          cancel={cancel}
           updateProfile={updateProfile}
         />
       }

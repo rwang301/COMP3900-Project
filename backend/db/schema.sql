@@ -40,6 +40,7 @@ create table if not exists PotentialJobs (
     email text references JobSeekers(email),
     id integer references Jobs(id),
     has_swiped integer not null check (has_swiped in (1, 0)),
+    matches integer not null check (matches in (1, 2, 3)),
     primary key(email, id)
 );
 
@@ -47,6 +48,7 @@ create table if not exists PotentialJobSeekers (
     employer_email text references Employers(email),
     job_seeker_email text references JobSeekers(email),
     has_swiped integer not null check (has_swiped in (1, 0)),
+    matches integer not null check (matches > 0),
     primary key(employer_email, job_seeker_email)
 );
 

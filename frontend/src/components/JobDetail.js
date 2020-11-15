@@ -106,8 +106,7 @@ export default function JobDetail({setShow, job}) {
       employment_type: employmentType,
       closing_date: closingDate
     };
-    const response = await api.fetch('job', 'put', data);
-    console.log(response);
+    api.fetch('job', 'put', data);
     setShow(false);
   }
 
