@@ -21,7 +21,7 @@ const Main = styled.main`
   }
 `;
 
-export default function Home() {
+export default function Home({login}) {
   return (
     <Main>
       <h1>Recruit Assistant</h1>
@@ -31,6 +31,7 @@ export default function Home() {
         secondaryRoute='login'
         primaryInnerText='Register'
         secondaryInnerText='Login'
+        login={login}
       />
     </Main>
   )

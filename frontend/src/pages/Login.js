@@ -66,6 +66,7 @@ export default function Login(props) {
         secondaryRoute="/"
         primaryInnerText="Login"
         secondaryInnerText="Back"
+        login={props.login}
       />
     </Main>
   )

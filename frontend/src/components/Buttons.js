@@ -2,9 +2,10 @@ import React from 'react';
 import styled from "styled-components";
 import { Link, Redirect } from 'react-router-dom';
 import { StoreContext } from '../utils/store';
+import GoogleSignBtn from './GoogleSignBtn';
 
 const Section = styled.section`
-  width: 50vmin;
+  width: 75vmin;
   display: flex;
   justify-content: space-between;
 `;
@@ -27,7 +28,7 @@ const Button = styled.button`
   }
 `;
 
-export default function Buttons({primaryRoute, secondaryRoute, primaryInnerText, secondaryInnerText}) {
+export default function Buttons({primaryRoute, secondaryRoute, primaryInnerText, secondaryInnerText, login}) {
   const [success, setSuccess] = React.useState('');
   const { setEmployer } = React.useContext(StoreContext);
   async function onClickHandler() {
@@ -58,6 +59,7 @@ export default function Buttons({primaryRoute, secondaryRoute, primaryInnerText,
           {secondaryInnerText}
         </Button>
       </Link>
+      <GoogleSignBtn login={login}/>
     </Section>
   )
 }
