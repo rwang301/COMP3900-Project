@@ -4,21 +4,21 @@ import { verifyToken } from './token.js';
 
 export const postJob = (req, res) => {
     verifyToken(req.header('token'))
-        .then(user => post(user, req.body))
+        .then((user) => post(user, req.body))
         .then(({ status, message, data }) => sendResponse(res, status, message, data))
         .catch(({ status, message }) => sendResponse(res, status, message));
 };
 
 export const deleteJob = (req, res) => {
     verifyToken(req.header('token'))
-        .then(user => remove(user, req.body))
+        .then((user) => remove(user, req.body))
         .then(({ status, message, data }) => sendResponse(res, status, message, data))
         .catch(({ status, message }) => sendResponse(res, status, message));
 };
 
 export const updateJob = (req, res) => {
     verifyToken(req.header('token'))
-        .then(user => remove(user, req.body).then(() => post(user, req.body)))
+        .then((user) => remove(user, req.body).then(() => post(user, req.body)))
         .then(({ status }) => sendResponse(res, status, message, data))
         .catch(({ status, message }) => sendResponse(res, status, message));
 };
@@ -45,7 +45,7 @@ const post = (user, { job_title, location, description, employment_type, closing
                             } else {
                                 db.run(`INSERT INTO PotentialJobSeekers (employer_email, job_seeker_email, has_swiped, matches) VALUES ('${user.email}', '${jobSeeker.email}', ${0}, ${count['count(j.id)']})`);
                             }
-                        })
+                        });
                     }
                 }
             });
@@ -86,7 +86,7 @@ const remove = (user, { id }) => {
 };
 
 export const getEmployerProfile = (req, res) => {
-    verifyToken(req.header('token')).then(user => {
+    verifyToken(req.header('token')).then((user) => {
         const { email, name, password, location, profile } = user;
         db.all(`SELECT j.id, job_title, location, description, employment_type, closing_date, skill1, skill2, skill3,
                 company FROM Employers As e
@@ -94,33 +94,29 @@ export const getEmployerProfile = (req, res) => {
                 LEFT JOIN Jobs AS j ON p.id = j.id
                 LEFT JOIN Skills AS s ON j.id = s.job_id
                 WHERE e.email = '${email}'`,
-        [], (err, jobs) => {
-            if (err) {
-                sendResponse(res, 500, err.message);
-            } else {
-                sendResponse(res, 200,
-                    `Here are ${name}'s jobs: ${jobs.map(job => job.job_title)}`,
-                    {
-                        email,
-                        name,
-                        password,
-                        location,
-                        profile,
-                        company: jobs[0].company,
-                        jobs: jobs.filter((job) => job.id).map((job) => {
-                            const { skill1, skill2, skill3, ...info } = job;
-                            info.skills = [skill1, skill2, skill3];
-                            return info;
-                        }),
-                    },
-                );
-            }
+        [], (_, jobs) => {
+            sendResponse(res, 200,
+                `Here are ${name}'s jobs: ${jobs.map((job) => job.job_title)}`,
+                {
+                    email,
+                    name,
+                    password,
+                    location,
+                    profile,
+                    company: jobs[0].company,
+                    jobs: jobs.filter((job) => job.id).map((job) => {
+                        const { skill1, skill2, skill3, ...info } = job;
+                        info.skills = [skill1, skill2, skill3];
+                        return info;
+                    }),
+                },
+            );
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
 export const updateEmployerProfile = (req, res) => {
-    verifyToken(req.header('token')).then(user => {
+    verifyToken(req.header('token')).then((user) => {
         const { name, password, location, profile, company } = req.body;
         db.run(`update Users set name = '${name}', password = '${password}', location = '${location}', profile = '${profile}' where email = '${user.email}'`);
         if (company) db.run(`update Employers set company = '${company}' where email = '${user.email}'`);
@@ -129,29 +125,25 @@ export const updateEmployerProfile = (req, res) => {
 };
 
 export const getPotentialJobSeekers = (req, res) => {
-    verifyToken(req.header('token')).then(user => {
-        db.all(`SELECT u.email, name, location, education, skill1, skill2, skill3, has_swiped
-                from PotentialJobSeekers AS p
+    verifyToken(req.header('token')).then((user) => {
+        db.all(`SELECT u.email, name, location, education, skill1, skill2, skill3
+                FROM PotentialJobSeekers AS p
                 JOIN Skills AS s ON p.job_seeker_email = s.email
                 JOIN JobSeekers AS j ON s.email = j.email
                 JOIN Users AS u ON j.email = u.email
                 WHERE has_swiped = 0 AND p.employer_email = '${user.email}'
                 ORDER BY p.matches DESC`,
-        [], (err, jobSeekers) => {
-            if (err) {
-                sendResponse(res, 500, err.message);
-            } else {
-                sendResponse(res, 200,
-                    `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map(jobSeeker => jobSeeker.name).join(', ')}`,
-                    jobSeekers,
-                );
-            }
+        [], (_, jobSeekers) => {
+            sendResponse(res, 200,
+                `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map((jobSeeker) => jobSeeker.name).join(', ')}`,
+                jobSeekers,
+            );
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
 
 export const employerSwipeRight = (req, res) => {
-    verifyToken(req.header('token')).then(user => {
+    verifyToken(req.header('token')).then((user) => {
         const { email } = req.body;
         db.run(`UPDATE PotentialJobseekers SET has_swiped = 1 WHERE employer_email = '${user.email}' AND job_seeker_email = '${email}'`);
         db.all(`SELECT j.id, has_swiped FROM Posts AS p
@@ -160,8 +152,8 @@ export const employerSwipeRight = (req, res) => {
         [], (_, jobs) => {
             jobs.forEach((job) => {
                 if (job.has_swiped) db.run(`INSERT INTO Matches VALUES ('${email}', ${job.id})`);
-            })
-        })
+            });
+        });
         sendResponse(res, 200, `${user.name} has swiped right on jobseeker ${email}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
@@ -171,5 +163,24 @@ export const employerSwipeLeft = (req, res) => {
         const { email } = req.body;
         db.run(`DELETE FROM PotentialJobseekers WHERE job_seeker_email = '${email}'`);
         sendResponse(res, 200, `${user.name} has swiped left on jobseeker ${email}`);
+    }).catch(({status, message}) => sendResponse(res, status, message));
+};
+
+export const getEmployerMatches = (req, res) => {
+    verifyToken(req.header('token')).then((user) => {
+        db.all(`SELECT u.email, name, u.location, education, skill1, skill2, skill3, job_title
+                FROM Matches AS m
+                JOIN Jobs AS j ON m.id = j.id
+                JOIN Skills AS s ON m.email = s.email
+                JOIN JobSeekers AS js ON s.email = js.email
+                JOIN Users AS u ON js.email = u.email
+                JOIN Posts AS p ON m.id = p.id
+                WHERE p.email = '${user.email}'`,
+        [], (_, jobSeekers) => {
+            sendResponse(res, 200,
+                `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map((jobSeeker) => jobSeeker.name).join(', ')}`,
+                jobSeekers,
+            );
+        });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };

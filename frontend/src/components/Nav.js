@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from "styled-components";
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../utils/store';
 import { useLocation } from 'react-router-dom';

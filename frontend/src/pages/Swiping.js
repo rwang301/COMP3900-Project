@@ -62,7 +62,7 @@ const NoSwipeText = styled.p`
 
 export default function Swiping() {
   const { api, employer } = React.useContext(StoreContext);
-  const [potentials, setPotentials] = React.useState(null);
+  const [potentials, setPotentials] = React.useState();
   const [index, setIndex] = React.useState(0);
   const [noSwipes, setNoSwipes] = React.useState(false);
 
