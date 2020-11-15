@@ -90,7 +90,7 @@ const AboutRowContainer = styled.div`
 `;
 
 export default function EmployerProfilePage() {
-  const { api } = React.useContext(StoreContext);
+  const { api, setAlert } = React.useContext(StoreContext);
   const [postJobModal, setPostJobModal] = React.useState(false);
   const [updateDetailsModal, setUpdateDetailsModal] = React.useState(false);
   const [jobsToRender, setJobsToRender] = React.useState([]);
@@ -136,6 +136,25 @@ export default function EmployerProfilePage() {
     }
   };
 
+  const updateProfile = async () => {
+    if (name && !/^([A-Z][a-z]{1,} ){1,}[A-Z][a-z]{1,}$/.test(name)) {
+      setAlert({ open: true, severity: 'warning', message: 'Please enter a valid name' });
+    } else {
+      setUpdateDetailsModal(false);
+      setName(name || response.name);
+      setPassword(password || response.password);
+      setLocation(location || response.location);
+      setCompany(company || response.company);
+      api.fetch('employer/profile', 'put', {
+        name: name || response.name,
+        password: password || response.password,
+        location: location || response.location,
+        company: company || response.company,
+        profile,
+      });
+    }
+  };
+
   return (
     <ProfileContainer >
       <AvatarContainer>
@@ -171,13 +190,7 @@ export default function EmployerProfilePage() {
           company={company}
           setCompany={setCompany}
           closeModal={() => setUpdateDetailsModal(false)}
-          updateProfile={() => api.fetch('employer/profile', 'put', {
-            name: name || response.name,
-            password: password || response.password,
-            location: location || response.location,
-            company: company || response.company,
-            profile,
-          })}
+          updateProfile={updateProfile}
         />
       }
       {postJobModal && <PostJobModal closeModal={() => setPostJobModal(false)} postJob={postJob}/>}

@@ -110,10 +110,14 @@ export default function JobseekerProfilePage() {
   }, []);
 
   const updateProfile = async () => {
-    if (!/^([A-Z][a-z]{1,} ){1,}[A-Z][a-z]{1,}$/.test(name)) {
+    if (name && !/^([A-Z][a-z]{1,} ){1,}[A-Z][a-z]{1,}$/.test(name)) {
       setAlert({ open: true, severity: 'warning', message: 'Please enter a valid name' });
     } else {
       setApplicationModal(false);
+      setName(name || response.name);
+      setPassword(password || response.password);
+      setLocation(location || response.location);
+      setEducation(education || response.education);
       api.fetch('jobseeker/profile', 'put', {
         name: name || response.name,
         password: password || response.password,
