@@ -87,7 +87,7 @@ const remove = (user, { id }) => {
 
 export const getEmployerProfile = (req, res) => {
     verifyToken(req.header('token')).then(user => {
-        const { email, name, location, profile } = user;
+        const { email, name, password, location, profile } = user;
         db.all(`SELECT j.id, job_title, location, description, employment_type, closing_date, skill1, skill2, skill3,
                 company FROM Employers As e
                 LEFT JOIN Posts AS p ON e.email = p.email
