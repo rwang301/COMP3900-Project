@@ -68,7 +68,7 @@ export const getJobSeekerProfile = (req, res) => {
 
 export const getPotentialJobs = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
-        db.all(`SELECT j.id, job_title, employment_type, closing_date, location, company, skill1, skill2, skill3, has_swiped
+        db.all(`SELECT j.id, job_title, employment_type, closing_date, location, company, skill1, skill2, skill3
                 FROM PotentialJobs AS pj JOIN Jobs AS j on pj.id = j.id
                 JOIN Skills AS s ON j.id = s.job_id
                 JOIN Posts AS p ON j.id = p.id
@@ -107,5 +107,24 @@ export const jobSeekerSwipeLeft = (req, res) => {
         const { id } = req.body;
         db.run(`DELETE FROM PotentialJobs WHERE id = ${id}`);
         sendResponse(res, 200, `${user.name} has swiped left on job ${id}`);
+    }).catch(({status, message}) => sendResponse(res, status, message));
+};
+
+export const getJobSeekerMatches = (req, res) => {
+    verifyToken(req.header('token')).then((user) => {
+        db.all(`SELECT u.email, name, u.location, education, skill1, skill2, skill3, job_title
+                FROM Matches AS m
+                JOIN Jobs AS j ON m.id = j.id
+                JOIN Skills AS s ON m.email = s.email
+                JOIN JobSeekers AS js ON s.email = js.email
+                JOIN Users AS u ON js.email = u.email
+                JOIN Posts AS p ON m.id = p.id
+                WHERE p.email = '${user.email}'`,
+        [], (_, jobSeekers) => {
+            sendResponse(res, 200,
+                `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map(jobSeeker => jobSeeker.name).join(', ')}`,
+                jobSeekers,
+            );
+        });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };

@@ -85,9 +85,9 @@ const db = new sqlite.Database('./db/database.db', (err) => {
 
         db.run(`
             create table if not exists Matches (
-                job_seeker_email integer references JobSeekers(email),
-                job_id integer references Jobs(id),
-                primary key (job_seeker_email, job_id)
+                email integer references JobSeekers(email),
+                id integer references Jobs(id),
+                primary key (email, id)
             );
         `);
 
