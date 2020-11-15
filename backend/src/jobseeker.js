@@ -51,16 +51,12 @@ export const getJobSeekerProfile = (req, res) => {
                 LEFT JOIN Skills AS s ON j.email = s.email
                 JOIN Users AS u ON u.email = j.email
                 WHERE j.email = '${user.email}'`,
-        [], (err, info) => {
-            if (err) {
-                sendResponse(res, 500, err.message);
+        [], (_, info) => {
+            if (info) {
+                const { email, name, password, location, education, skill1, skill2, skill3} = info;
+                sendResponse(res, 200, `${user.name}'s skills are ${skill1}, ${skill2}, ${skill3}`, { email, name, password, location, education, skills: [skill1, skill2, skill3] });
             } else {
-                if (info) {
-                    const { email, name, password, location, education, skill1, skill2, skill3} = info;
-                    sendResponse(res, 200, `${user.name}'s skills are ${skill1}, ${skill2}, ${skill3}`, { email, name, password, location, education, skills: [skill1, skill2, skill3] });
-                } else {
-                    sendResponse(res, 400, 'No such user');
-                }
+                sendResponse(res, 400, 'No such user');
             }
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
@@ -75,15 +71,11 @@ export const getPotentialJobs = (req, res) => {
                 JOIN Employers AS e ON p.email = e.email
                 WHERE has_swiped = 0 AND pj.email = '${user.email}'
                 ORDER BY pj.matches DESC`,
-        [], (err, jobs) => {
-            if (err) {
-                sendResponse(res, 500, err.message);
-            } else {
-                sendResponse(res, 200,
-                    `All the jobs that match with ${user.name}'s skills: ${jobs.map((job) => job.job_title).join(', ')}`,
-                    jobs,
-                );
-            }
+        [], (_, jobs) => {
+            sendResponse(res, 200,
+                `All the jobs that match with ${user.name}'s skills: ${jobs.map((job) => job.job_title).join(', ')}`,
+                jobs,
+            );
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };
@@ -122,7 +114,7 @@ export const getJobSeekerMatches = (req, res) => {
                 WHERE p.email = '${user.email}'`,
         [], (_, jobSeekers) => {
             sendResponse(res, 200,
-                `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map(jobSeeker => jobSeeker.name).join(', ')}`,
+                `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map((jobSeeker) => jobSeeker.name).join(', ')}`,
                 jobSeekers,
             );
         });
