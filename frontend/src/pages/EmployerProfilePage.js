@@ -104,6 +104,7 @@ export default function EmployerProfilePage() {
 
   const initial = (response) => {
     const {email, name, password, location, profile, company, jobs} = response;
+    console.log(response)
     setEmail(email);
     setName(name);
     setPassword(password);

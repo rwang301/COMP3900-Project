@@ -21,7 +21,9 @@ const Button = styled.button`
   }
 `;
 
-export default function EmployerDetailModal({cancel, updateProfile, email, company, location, profile, setProfile, setName, setPassword, setCompany, setLocation}) {
+export default function EmployerDetailModal({
+  name, setName, password, setPassword, location, setLocation, profile, setProfile, company, setCompany, cancel, updateProfile,
+}) {
   return (
     <ModalContainer>
       <ModalContent>
@@ -32,8 +34,8 @@ export default function EmployerDetailModal({cancel, updateProfile, email, compa
         <Header>Update Details</Header>
         <EditAvatar profile={profile} setProfile={setProfile} />
         <Form id="register">
-          <ControlledInput value={email} type="text" id="Name" handleChange={(e) => setName(e.target.value)} />
-          <ControlledInput value={email} type="password" id="Password" handleChange={(e) => setPassword(e.target.value)} />
+          <ControlledInput value={name} type="text" id="Name" handleChange={(e) => setName(e.target.value)} />
+          <ControlledInput value={password} type="password" id="Password" handleChange={(e) => setPassword(e.target.value)} />
           <ControlledInput value={company} type="text" id="Company" handleChange={(e) => setCompany(e.target.value)} />
           <ControlledInput value={location} type="text" id="Location" handleChange={(e) => setLocation(e.target.value)} />
         </Form>
