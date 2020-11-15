@@ -12,6 +12,17 @@ const GoogleButton = styled(GoogleLogin)`
   max-width: 20vmin;
   width: 20vmin;
   height: 8vmin;
+  border-radius: 5px !important;
+  background: whitesmoke !important;
+  color: black !important;
+  border: 3px solid darkcyan !important;
+
+  &:hover {
+    font-weight: bold !important;
+    background: black !important;
+    color: whitesmoke !important;
+    border: 1px solid whitesmoke !important;
+  }
 `;
 
 export default function GoogleSignBtn(props) {
@@ -54,6 +65,7 @@ export default function GoogleSignBtn(props) {
 	}
 
   const login = async (res) => {
+    console.log(res);
     setOpenRegisterModal(true);
     setEmail(res.tt.$t);
     setName(res.tt.Ad);

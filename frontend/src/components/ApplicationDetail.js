@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import ExperienceRow from './ExperienceRow';
-import kai_dp from '../assets/kai_dp.jpg'
+import { ProfilePic } from '../components/Form';
 import SkillPoint from './SkillPoint';
 import { ModalContainer, ModalContent, CloseButton } from './Form';
 
@@ -18,16 +18,6 @@ const HeaderText = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 50vw;
-`;
-
-const ProfilePic = styled.img`
-  height: 10vw;
-  width: 10vw;
-  max-width: 20vw;
-`;
-
-const KaiPic = styled(ProfilePic)`
-  border-radius: 10vw;
 `;
 
 const FullNameText = styled.p`
@@ -148,7 +138,7 @@ export default function ApplicationDetail({toShow, setShow}) {
         }}/>
         <ProfileHeader>
           {/* <ProfilePic src={AccountCircleBig}/> */}
-          <KaiPic src={kai_dp}/>
+          <ProfilePic src={'/broken-image.jpg'} />
           <HeaderText>
             <FullNameText>Kaiqi Liang</FullNameText>
             <AppliedContainer>
