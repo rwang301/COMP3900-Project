@@ -12,13 +12,13 @@ export default function ApplicantDetail({ info, skills, setShow }) {
             setShow(false);
         }}/>
         <EmployerSwipingCard
-          email={"rich@wang.com"}
-          name={"Richard Wang"} 
-          location={"Sydney, Australia"}
-          education={"UNSW Sydney"}
-          skill1={"React"}
-          skill2={"HTML"}
-          skill3={"CSS"}
+          email={info.email}
+          name={info.name} 
+          location={info.location}
+          education={info.education}
+          skill1={(skills[0] !== "null") && skills[0]}
+          skill2={(skills[1] !== "null") && skills[1]}
+          skill3={(skills[2] !== "null") && skills[2]}
         />
       </ModalContent>
     </ModalContainer>

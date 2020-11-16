@@ -44,7 +44,6 @@ const MatchContainer = styled.div`
 
 export default function EmployerMatchRow({ info, skills }) {
   const [showDetails, setShowDetails] = React.useState(false);
-
   return (
     <MatchContainer onClick={() => setShowDetails(true)}>
       <Avatar fontSize="large"/>
@@ -53,7 +52,7 @@ export default function EmployerMatchRow({ info, skills }) {
           {info.name}
         </FullNameText>
         <ExperienceText>
-          {skills.join(", ")}
+          {skills.filter((skill) => skill !== 'null').join(", ")}
         </ExperienceText>
       </PersonalDetails>
       <AppliedContainer>
