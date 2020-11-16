@@ -7,7 +7,6 @@ import Avatar from '@material-ui/core/Avatar';
 import CreateIcon from '@material-ui/icons/Create';
 import { StoreContext } from '../utils/store';
 import fileToDataUrl from '../utils/file';
-import MenuItem from "@material-ui/core/MenuItem";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
