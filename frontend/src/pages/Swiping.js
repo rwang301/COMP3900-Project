@@ -41,6 +41,7 @@ const HelperIcons = styled.img`
   height: 5vw;
   width: 5vw;
   margin: 1vw;
+  cursor: pointer;
 `;
 
 const NoSwipesContainer = styled.div`
@@ -147,8 +148,8 @@ export default function Swiping() {
             <ArrowIcon src={rightArrow} onClick={accept} />
           </SwipingContainer>
           <HelperIconsContainer>
-            <HelperIcons src={cancel}/>
-            <HelperIcons src={tick}/>
+            <HelperIcons src={cancel} onClick={decline}/>
+            <HelperIcons src={tick} onClick={accept}/>
           </HelperIconsContainer>
         </>
       }
