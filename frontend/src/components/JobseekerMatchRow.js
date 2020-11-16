@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import BusinessIcon from '@material-ui/icons/Business';
-import ApplicantDetail from './ApplicantDetail';
+import ApplicationDetail from './ApplicationDetail';
 
 const Avatar = styled(BusinessIcon)`
   flex: 1;
@@ -66,7 +66,7 @@ export default function JobseekerMatchRow({companyName, jobName, skills}) {
           React, HTML, CSS
         </SkillsText>
       </AppliedContainer>
-      {showDetails && <ApplicantDetail setShow={setShowDetails}/>}
+      {showDetails && <ApplicationDetail setShow={setShowDetails}/>}
     </MatchContainer>
   )
 }

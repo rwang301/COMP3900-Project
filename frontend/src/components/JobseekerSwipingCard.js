@@ -63,9 +63,9 @@ export default function JobseekerSwipingCard({company, job_title, employment_typ
         <SubtitleText>
             Skills Required
         </SubtitleText>
-        <AboutRow iconType={"one"} text={skill1}/>
-        <AboutRow iconType={"two"} text={skill2}/>
-        <AboutRow iconType={"three"} text={skill3}/>
+        <AboutRow iconType={"one"} text={(skill1 !== "null") && skill1}/>
+        <AboutRow iconType={"two"} text={(skill2 !== "null") && skill2}/>
+        <AboutRow iconType={"three"} text={(skill3 !== "null") && skill3}/>
       </SubContainer>
     </UserContainer>
   )
