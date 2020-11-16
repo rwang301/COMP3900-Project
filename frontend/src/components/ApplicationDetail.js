@@ -12,14 +12,14 @@ export default function ApplicationDetail({ info, skills, setShow }) {
             setShow(false);
         }}/>
         <JobseekerSwipingCard
-          company={"Atlassian"}
-          job_title={"Frontend Developer"}
-          employment_type={"Part Time"}
-          location={"Sydney, Australia"}
-          closing_date={"24th December 2020"}
-          skill1={"React"}
-          skill2={"HTML"}
-          skill3={"CSS"}
+          company={info.company}
+          job_title={info.job_title}
+          employment_type={info.employment_type}
+          location={(info.location !== "null") && info.location}
+          closing_date={info.closing_date}
+          skill1={(skills[0] !== "null") && skills[0]}
+          skill2={(skills[1] !== "null") && skills[1]}
+          skill3={(skills[2] !== "null") && skills[2]}
         />
       </ModalContent>
     </ModalContainer>

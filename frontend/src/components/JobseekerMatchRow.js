@@ -44,7 +44,7 @@ const MatchContainer = styled.div`
 `;
 
 
-export default function JobseekerMatchRow({companyName, jobName, skills}) {
+export default function JobseekerMatchRow({ info, skills }) {
   const [showDetails, setShowDetails] = React.useState(false);
 
   return (
@@ -66,7 +66,7 @@ export default function JobseekerMatchRow({companyName, jobName, skills}) {
           React, HTML, CSS
         </SkillsText>
       </AppliedContainer>
-      {showDetails && <ApplicationDetail setShow={setShowDetails}/>}
+      {showDetails && <ApplicationDetail setShow={setShowDetails} info={info} skills={skills} />}
     </MatchContainer>
   )
 }
