@@ -1,5 +1,4 @@
 import React from 'react';
-import NewMatches from '../components/NewMatches'
 import styled from "styled-components";
 import JobseekerApps from '../components/JobseekerApps';
 

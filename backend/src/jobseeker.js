@@ -88,7 +88,7 @@ export const jobSeekerSwipeRight = (req, res) => {
                 WHERE job_seeker_email = '${user.email}'
                 AND employer_email = (SELECT email FROM Posts WHERE id = ${id})`,
         [], (_, { has_swiped }) => {
-            if (has_swiped) db.run(`INSERT INTO Matches VALUES ('${user.email}', ${id})`);
+            if (has_swiped) db.run(`INSERT OR REPLACE INTO Matches VALUES ('${user.email}', ${id})`);
         });
         sendResponse(res, 200, `${user.name} has swiped right on job ${id}`);
     }).catch(({status, message}) => sendResponse(res, status, message));
@@ -115,10 +115,10 @@ export const getJobSeekerMatches = (req, res) => {
         [], (_, matches) => {
             sendResponse(res, 200,
                 `All the jobs that match with ${user.name}: ${matches.map((match) => match.job_title).join(', ')}`,
-                matches.map((match => {
+                matches.map((match) => {
                     const { skill1, skill2, skill3, ...info } = match;
                     return { info, skills: [skill1, skill2, skill3] };
-                })),
+                }),
             );
         });
     }).catch(({status, message}) => sendResponse(res, status, message));

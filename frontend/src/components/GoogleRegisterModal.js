@@ -4,7 +4,6 @@ import { Header, Form, ModalContainer, ModalContent, CloseButton } from './Form'
 import { ControlledInput } from './Input';
 import Radios from '../components/Radios';
 import { Redirect } from 'react-router-dom';
-import { StoreContext } from '../utils/store';
 
 const Button = styled.button`
   width: 13vmin;
