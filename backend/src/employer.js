@@ -27,7 +27,7 @@ const post = (user, { job_title, location, description, employment_type, closing
     return new Promise((_, resolve) => {
         db.run(`insert into Jobs (job_title, location, description, employment_type, closing_date) values ('${job_title}', '${location}', '${description}', '${employment_type}', '${closing_date}')`);
         db.get('select id from Jobs order by id desc', [], (_, job) => {
-            db.run(`insert into Posts values ('${user.email}', '${job.id}')`);
+            db.run(`insert or replace into Posts values ('${user.email}', '${job.id}')`);
             db.run(`insert into Skills (job_id, skill1, skill2, skill3) values ('${job.id}', '${skills[0]}', '${skills[1]}', '${skills[2]}')`);
             db.all('select email, skill1, skill2, skill3 from Skills where email is not null and job_id is null', [], (_, jobSeekers) => {
                 for (const jobSeeker of jobSeekers) {
