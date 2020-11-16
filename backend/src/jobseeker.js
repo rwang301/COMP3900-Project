@@ -26,12 +26,12 @@ export const updateJobSeekerProfile = (req, res) => {
                             }
                             if (matches > 0) {
                                 db.get(`SELECT email FROM Posts WHERE id = ${job.job_id}`, [], (_, email) => {// get the email of the employer who posted the job
-                                    db.run(`INSERT INTO PotentialJobs VALUES ('${user.email}', '${job.job_id}', ${0}, ${matches})`);
+                                    db.run(`INSERT OR REPLACE INTO PotentialJobs VALUES ('${user.email}', '${job.job_id}', ${0}, ${matches})`);
                                     db.get(`SELECT count(j.id) AS count FROM PotentialJobs AS j JOIN Posts AS p ON j.id = p.id WHERE p.email = '${email.email}' AND j.email = '${user.email}'`, (_, { count }) => {
                                         if (count > 1) {
                                             db.run(`UPDATE PotentialJobSeekers SET matches = ${count} WHERE employer_email = '${email.email}' AND job_seeker_email = '${user.email}'`);
                                         } else {
-                                            db.run(`INSERT INTO PotentialJobSeekers (employer_email, job_seeker_email, has_swiped, matches) VALUES ('${email.email}', '${user.email}', ${0}, ${count})`);
+                                            db.run(`INSERT OR REPLACE INTO PotentialJobSeekers (employer_email, job_seeker_email, has_swiped, matches) VALUES ('${email.email}', '${user.email}', ${0}, ${count})`);
                                         }
                                     });
                                 });
