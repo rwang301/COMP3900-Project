@@ -14,7 +14,8 @@ export default function ApplicantDetail({ info, skills, setShow }) {
         <EmployerSwipingCard
           email={info.email}
           name={info.name} 
-          location={info.location}
+          profile={info.profile}
+          location={(info.location !== "null") && info.location}
           education={info.education}
           skill1={(skills[0] !== "null") && skills[0]}
           skill2={(skills[1] !== "null") && skills[1]}

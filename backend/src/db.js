@@ -125,7 +125,7 @@ const db = new sqlite.Database('./db/database.db', (err) => {
                     primary key(skill)
                 );
             `)
-                .run('insert or replace into SkillsList values ('Python'), ('JavaScript'), ('Java'), ('C (Programming Language)'), ('C#'), ('C++'), ('Go'), 
+                .run(`insert or replace into SkillsList values ('Python'), ('JavaScript'), ('Java'), ('C (Programming Language)'), ('C#'), ('C++'), ('Go'), 
                     ('R (Programming Language)'), ('Swift'), ('PHP'), ('Dart'), ('Kotlin'), ('MATLAB'), ('Perl'), ('Ruby'), ('Rust'), ('Scala'), ('Objective-C'), 
                     ('TypeScript'), ('Visual Basic for Applications (VBA)'), ('Ada'), ('Lua'), ('Elm'), ('Abap'), ('Groovy'), ('Julia'), ('Cobol'), ('Haskell'), ('Delphi'), 
                     ('SQL'), ('HTML'), ('CSS'), ('Assembly Language'), ('Git'), ('Tableau'), ('Microsoft Excel'), ('Microsoft PowerPoint'), ('Microsoft Word'), 
@@ -137,8 +137,7 @@ const db = new sqlite.Database('./db/database.db', (err) => {
                     ('QuickBooks'), ('Xero'), ('MYOB'), ('Adobe Animate'), ('Adobe Illustrator'), ('Adobe Lightroom'), ('Adobe Premier Pro'), ('Adobe XD'), ('After Effects'),
                     ('Autodesk Inventor'), ('Autodesk Maya'), ('Avid Media Composer'), ('Final Cut Pro'), ('iMovie'), ('inDesign'), ('Keynote'), ('Logic Pro'),
                     ('Pro Tools'), ('Revit'), ('SketchUp'), ('SOLIDWORKS'), ('Data Wrangling'), ('QlikView'), ('DevOps'), ('Dafny'), ('SOAP API'), ('JSON'), ('NoSQL')
-                ')
-                
+                `);               
         });
     }
 });

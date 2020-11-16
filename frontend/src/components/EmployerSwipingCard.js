@@ -40,11 +40,11 @@ const SubtitleText = styled.p`
   text-decoration: underline;
 `;
 
-export default function EmployerSwipingCard({email, name, location, education, skill1, skill2, skill3}) {
+export default function EmployerSwipingCard({email, name, location, profile, education, skill1, skill2, skill3}) {
   return (
     <UserContainer>
       <UserHeader>
-        <UserIcon src={swipeProfile}/>
+        <UserIcon src={profile || swipeProfile}/>
         <UserNames>
           {name}
         </UserNames>
@@ -54,7 +54,7 @@ export default function EmployerSwipingCard({email, name, location, education, s
           Details
         </SubtitleText>
           <AboutRow iconType={"email"} text={email}/>
-          <AboutRow iconType={"location"} text={location}/>
+          <AboutRow iconType={"location"} text={(location !== "null") && location}/>
           <AboutRow iconType={"education"} text={education}/>
       </SubContainer>
       <SubContainer>

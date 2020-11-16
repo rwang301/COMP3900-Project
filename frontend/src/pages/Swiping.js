@@ -71,6 +71,7 @@ export default function Swiping() {
       const response = employer ? await api.fetch('potential/jobseekers') : await api.fetch('potential/jobs');
       if (response && response.length) {
           setPotentials(response);
+          console.log(response)
       } else {
         setNoSwipes(true);
       }
@@ -125,6 +126,7 @@ export default function Swiping() {
                 email={potentials ? potentials[index].email : "Email"} 
                 name={potentials ? potentials[index].name : "Name"} 
                 location={potentials ? potentials[index].location : "Location"} 
+                profile={potentials && potentials[index].profile}
                 education={potentials ? potentials[index].education : "Education"} 
                 skill1={potentials ? potentials[index].skill1 : "Skill 1"} 
                 skill2={potentials ? potentials[index].skill2 : "Skill 2"} 
