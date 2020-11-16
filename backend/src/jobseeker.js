@@ -104,13 +104,14 @@ export const jobSeekerSwipeLeft = (req, res) => {
 
 export const getJobSeekerMatches = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
-        db.all(`SELECT e.email, company, skill1, skill2, skill3, job_title, employment_type, closing_date, location
+        db.all(`SELECT e.email, company, skill1, skill2, skill3,
+                job_title, employment_type, closing_date, location
                 FROM Matches AS m
                 JOIN Jobs AS j on m.id = j.id
                 JOIN Skills AS s ON j.id = s.id
                 JOIN Posts AS p ON s.id = p.id
                 JOIN Employers AS e ON p.email = e.email
-                WHERE m.email = '${user.email}';`,
+                WHERE m.email = '${user.email}'`,
         [], (_, matches) => {
             sendResponse(res, 200,
                 `All the jobs that match with ${user.name}: ${matches.map((match) => match.job_title).join(', ')}`,

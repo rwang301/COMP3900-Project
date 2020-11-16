@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from "styled-components";
-import logo from '../assets/logo.png';
+import logo from '../assets/logo.svg';
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../utils/store';
 import { useLocation } from 'react-router-dom';
@@ -26,8 +26,8 @@ const spin = keyframes`
 
 const Img = styled.img`
   flex: 1;
-  height: 20vmin;
-  width: 20vmin;
+  height: 10vw;
+  width: 10vw;
   pointer-events: none;
 
   @media (prefers-reduced-motion: no-preference) {
@@ -43,7 +43,7 @@ const Section = styled.section`
 
 const Paragraph = styled.p`
   font-size: 2vw;
-  visibility: ${props => props.login || props.visible ? 'unset' : 'hidden'};
+  display: ${props => props.login || props.visible ? 'block' : 'none'};
   cursor: pointer;
 `;
 

@@ -5,6 +5,7 @@ import GoogleRegisterModal from './GoogleRegisterModal';
 import { isEmailValid } from '../components/Form';
 import { API_URL } from '../utils/api';
 import { StoreContext } from '../utils/store';
+import { useHistory } from 'react-router-dom';
 
 const CLIENT_ID = '836356102465-7majqspmjajgqhpoevi5mlmu8mdkmbsh.apps.googleusercontent.com';
 
@@ -30,23 +31,26 @@ export default function GoogleSignBtn(props) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const { setAlert, employer, setEmployer } = React.useContext(StoreContext);
+  const history = useHistory();
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
 
-  async function register() {
+  const register = async () => {
     if (!/^([A-Z][a-z]{1,} ){1,}[A-Z][a-z]{1,}$/.test(name)) {
       setAlert({ open: true, severity: 'warning', message: 'Please enter a valid name' });
     } else if (!isEmailValid(email)) {
       setAlert({ open: true, severity: 'warning', message: 'Please enter a valid email' });
     } else {
       const data = { name, email, password: '', employer };
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      }
       try {
-        const response = await fetch(`${API_URL}/auth/register`, options);
+        const response = await fetch(`${API_URL}/auth/register`, {
+          ...options,
+          body: JSON.stringify(data),
+        });
         if (response.status === 200) {
           const json = await response.json();
           props.login(json.token);
@@ -61,12 +65,29 @@ export default function GoogleSignBtn(props) {
       }
     }
     return '';
-	}
+  }
 
   const login = async (res) => {
-    setOpenRegisterModal(true);
-    setEmail(res.profileObj.email);
-    setName(res.profileObj.name);
+    const { name, email } = res.profileObj;
+    const data = { name, email, password: '', employer };
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        ...options,
+        body: JSON.stringify(data),
+      });
+      if (response.status === 200) {
+        const json = await response.json();
+        props.login(json.token);
+        history.push(json.employer ? 'employer' : 'jobseeker');
+        setEmployer(json.employer ? 'employer' : 'jobseeker')
+      } else if (response.status === 403) {
+        setEmail(email);
+        setName(name);
+        setOpenRegisterModal(true);
+      }
+    } catch (error) {
+      setAlert({ open: true, severity: 'warning', message: error.message });
+    }
   }
 
   const handleLoginFailure = (res) => {
@@ -84,13 +105,13 @@ export default function GoogleSignBtn(props) {
           cookiePolicy={'single_host_origin'}
           responseType='code,token'
       />
-      {openRegisterModal && 
-        <GoogleRegisterModal 
-          closeModal={() => setOpenRegisterModal(false)} 
-          email={email} setEmail={(e) => setEmail(e.target.value)} 
-          name={name} setName={(e) => setName(e.target.value)} 
-          employer={employer} updateEmployer={() => setEmployer(!employer)} 
-          register={register} 
+      {openRegisterModal &&
+        <GoogleRegisterModal
+          closeModal={() => setOpenRegisterModal(false)}
+          email={email} setEmail={(e) => setEmail(e.target.value)}
+          name={name} setName={(e) => setName(e.target.value)}
+          employer={employer} updateEmployer={() => setEmployer(!employer)}
+          register={register}
         />
       }
     </>
