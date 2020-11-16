@@ -138,14 +138,9 @@ export const getPotentialJobSeekers = (req, res) => {
                 `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map((jobSeeker) => jobSeeker.name).join(', ')}`,
                 jobSeekers.map((jobSeeker) => {
                   const { profile, ...info } = jobSeeker;
-                  return { profile: profile || '', ...info };
+                  return { profile: profile === 'undefined' ? '' : profile, ...info };
                 }),
             );
-            console.log(jobSeekers[0]);
-            console.log(jobSeekers.map((jobSeeker) => {
-              const { profile, ...info } = jobSeeker;
-              return { profile: profile || '', ...info };
-            }));
         });
     }).catch(({status, message}) => sendResponse(res, status, message));
 };

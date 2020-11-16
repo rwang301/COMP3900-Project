@@ -137,7 +137,7 @@ const db = new sqlite.Database('./db/database.db', (err) => {
                     ('QuickBooks'), ('Xero'), ('MYOB'), ('Adobe Animate'), ('Illustrator'), ('Lightroom'), ('Premier Pro'), ('Adobe XD'), ('After Effects'),
                     ('Inventor'), ('Maya'), ('Media Composer'), ('Final Cut Pro'), ('iMovie'), ('inDesign'), ('Keynote'), ('Logic Pro'),
                     ('Pro Tools'), ('Revit'), ('SketchUp'), ('SOLIDWORKS'), ('Data Wrangling'), ('QlikView'), ('DevOps'), ('Dafny'), ('SOAP API'), ('JSON'), ('NoSQL')
-                `);               
+                `);
         });
     }
 });
