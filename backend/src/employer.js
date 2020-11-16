@@ -183,8 +183,8 @@ export const getEmployerMatches = (req, res) => {
             sendResponse(res, 200,
                 `All the job seekers that match with ${user.name}'s jobs: ${matches.map((match) => match.name).join(', ')}`,
                 matches.map((match => {
-                    const { skill1, skill2, skill3, ...info } = match;
-                    return { info, skills: [skill1, skill2, skill3] };
+                    const { skill1, skill2, skill3, profile, ...info } = match;
+                    return { skills: [skill1, skill2, skill3], profile: profile === 'undefined' ? '' : profile, info };
                 })),
             );
         });
