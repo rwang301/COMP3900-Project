@@ -106,6 +106,25 @@ const db = new sqlite.Database('./db/database.db', (err) => {
                 primary key(employer_email, offer_id)
             );
         `);
+
+        db.serialize(() => {
+            db.run(`
+                create table if not exists SkillsList (
+                    skill text not null check (skill in ('Python', 'JavaScript', 'Java', 'C', 'C#', 'C++', 'Go', 'R', 
+                    'Swift', 'PHP', 'Dart', 'Kotlin', 'MATLAB', 'Perl')),
+                    primary key(skill)
+                );
+            `)
+                .run(`
+                    insert into SkillsList values ('Python');
+                `)
+                .run(`
+                    insert into SkillsList values ('JavaScript');
+                `)
+                .run(`
+                    insert into SkillsList values ('Java');
+                `)
+        });
     }
 });
 

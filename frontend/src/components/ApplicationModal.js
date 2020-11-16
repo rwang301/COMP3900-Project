@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
-import { Header, Form, ModalContainer, ModalContent, CloseButton, EditAvatar } from './Form';
+import { Header, Form, ModalContainer, ModalContent, CloseButton, EditAvatar, Skills } from './Form';
 import { ControlledInput } from './Input';
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
@@ -73,12 +72,7 @@ export default function ApplicationModal({
                 setSkills(skills);
               }}
             >
-              <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-              <MenuItem value={'CSS'}>CSS</MenuItem>
-              <MenuItem value={'HTML'}>HTML</MenuItem>
-              <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-              <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-              <MenuItem value={'C Programming'}>C Programming</MenuItem>
+              <Skills />
             </Select>
           </FormControl>
           <FormControl className={classes.formControl}>
@@ -92,12 +86,7 @@ export default function ApplicationModal({
                 setSkills(skills);
               }}
               >
-              <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-              <MenuItem value={'CSS'}>CSS</MenuItem>
-              <MenuItem value={'HTML'}>HTML</MenuItem>
-              <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-              <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-              <MenuItem value={'C Programming'}>C Programming</MenuItem>
+                <Skills />
             </Select>
           </FormControl>
           <FormControl className={classes.formControl}>
@@ -111,12 +100,7 @@ export default function ApplicationModal({
                 setSkills(skills);
               }}
               >
-              <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-              <MenuItem value={'CSS'}>CSS</MenuItem>
-              <MenuItem value={'HTML'}>HTML</MenuItem>
-              <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-              <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-              <MenuItem value={'C Programming'}>C Programming</MenuItem>
+                <Skills />
             </Select>
             </FormControl>
         </Form>

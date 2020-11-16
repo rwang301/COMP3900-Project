@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from "styled-components";
-import { Header, Form, ModalContainer, ModalContent, CloseButton } from './Form';
+import { Header, Form, ModalContainer, ModalContent, CloseButton, Skills } from './Form';
 import { ControlledInput } from './Input';
 import JobRadios from './JobRadios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
@@ -124,12 +123,7 @@ export default function PostJobModal({closeModal, postJob}) {
                 value={skillOne}
                 onChange={handleSkillOneChange}
               >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
+                <Skills />
               </Select>
           </FormControl>
           <FormControl className={classes.formControl}>
@@ -140,12 +134,7 @@ export default function PostJobModal({closeModal, postJob}) {
                 value={skillTwo}
                 onChange={handleSkillTwoChange}
               >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
+                <Skills />
               </Select>
           </FormControl>
           <FormControl className={classes.formControl}>
@@ -156,12 +145,7 @@ export default function PostJobModal({closeModal, postJob}) {
                 value={skillThree}
                 onChange={handleSkillThreeChange}
               >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
+                <Skills />
               </Select>
           </FormControl>
           <DateText>Application Closing Date:</DateText>

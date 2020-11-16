@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 const port = 8000;
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
 
-app.get('/getSkills', getSkills);
+app.get('/skills', getSkills);
 
 app.post('/auth/login', login);
 app.post('/auth/register', register);

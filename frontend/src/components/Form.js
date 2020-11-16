@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CreateIcon from '@material-ui/icons/Create';
 import { StoreContext } from '../utils/store';
 import fileToDataUrl from '../utils/file';
+import MenuItem from "@material-ui/core/MenuItem";
 
 const Main = styled.main`
   display: flex;
@@ -126,4 +127,24 @@ const EditAvatar = ({ profile, setProfile }) => {
   );
 };
 
-export { Main, Header, Form, Href, isEmailValid, ModalContainer, ModalContent, CloseButton, ProfilePic, EditAvatar };
+const Skills = () => {
+  const { api } = React.useContext(StoreContext);
+  const [skills, setSkills] = React.useState([]);
+  React.useEffect(() => {
+    const getSkills = async () => {
+      const response = await api.fetch('skills');
+      console.log(response);
+      if (response) setSkills(response);
+    };
+    getSkills();
+  }, []);
+  return (
+    <>
+      {
+        skills.map((skill) => <MenuItem key={skill} value={skill}>{skill}</MenuItem>)
+      }
+    </>
+  );
+};
+
+export { Main, Header, Form, Href, isEmailValid, ModalContainer, ModalContent, CloseButton, ProfilePic, EditAvatar, Skills };
