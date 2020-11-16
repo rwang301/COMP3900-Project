@@ -1,3 +1,4 @@
+Set up:
 1. Ensure all the necessary software is installed
     - Node.js v14 or above
     - GitHub Desktop/Git Bash 
@@ -16,3 +17,5 @@
 Note: This should open the website automatically in the browser. 
 To empty and restart the backend database, run the command 'npm run reset' in the backend directory.
 
+Link to GitHub submission:
+https://github.com/unsw-cse-capstone-project/capstone-project-comp3900-w17a-kai-will-make-tony-rich/tree/master/documentation
