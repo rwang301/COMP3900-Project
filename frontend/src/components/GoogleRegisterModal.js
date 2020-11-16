@@ -4,6 +4,7 @@ import { Header, Form, ModalContainer, ModalContent, CloseButton } from './Form'
 import { ControlledInput } from './Input';
 import Radios from '../components/Radios';
 import { Redirect } from 'react-router-dom';
+import { StoreContext } from '../utils/store';
 
 const Button = styled.button`
   width: 13vmin;
@@ -22,7 +23,6 @@ const Button = styled.button`
     border: 1px solid whitesmoke;
   };
 `;
-
 
 export default function GoogleRegisterModal({closeModal, email, setEmail, name, setName, employer, updateEmployer, register}) {
   const [success, setSuccess] = React.useState();
