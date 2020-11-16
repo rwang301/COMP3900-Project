@@ -46,16 +46,16 @@ const MatchContainer = styled.div`
 
 export default function JobseekerMatchRow({ info, skills }) {
   const [showDetails, setShowDetails] = React.useState(false);
-
+  console.log(info, skills)
   return (
     <MatchContainer onClick={() => setShowDetails(true)}>
       <Avatar fontSize="large"/>
       <JobDescription>
         <CompanyName>
-          Atlassian
+          {info.company}
         </CompanyName>
         <JobName>
-          Frontend Developer
+          {info.job_title}
         </JobName>
       </JobDescription>
       <AppliedContainer>
@@ -63,7 +63,7 @@ export default function JobseekerMatchRow({ info, skills }) {
           Skills Required: 
         </SkillsReqText>
         <SkillsText>
-          React, HTML, CSS
+          {skills.filter((skill) => skill !== 'null' && skill !== '').join(", ")}
         </SkillsText>
       </AppliedContainer>
       {showDetails && <ApplicationDetail setShow={setShowDetails} info={info} skills={skills} />}
