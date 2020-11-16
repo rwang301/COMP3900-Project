@@ -68,20 +68,11 @@ export default function Swiping() {
 
   React.useEffect(() => {
     const getPotentials = async () => {
-      if (employer) {
-        const response = await api.fetch('potential/jobseekers');
-        if (response && response.length) {
+      const response = employer ? await api.fetch('potential/jobseekers') : await api.fetch('potential/jobs');
+      if (response && response.length) {
           setPotentials(response);
-        } else {
-          setNoSwipes(true);
-        }
       } else {
-        const response = await api.fetch('potential/jobs');
-        if (response && response.length) {
-            setPotentials(response);
-        } else {
-          setNoSwipes(true);
-        }
+        setNoSwipes(true);
       }
     }
     getPotentials();

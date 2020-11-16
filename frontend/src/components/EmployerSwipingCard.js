@@ -41,7 +41,6 @@ const SubtitleText = styled.p`
 `;
 
 export default function EmployerSwipingCard({email, name, location, education, skill1, skill2, skill3}) {
-
   return (
     <UserContainer>
       <UserHeader>

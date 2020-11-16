@@ -179,7 +179,10 @@ export const getEmployerMatches = (req, res) => {
         [], (_, jobSeekers) => {
             sendResponse(res, 200,
                 `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map((jobSeeker) => jobSeeker.name).join(', ')}`,
-                jobSeekers,
+                jobSeekers.map((jobSeeker => {
+                    const { skill1, skill2, skill3, ...info } = jobSeeker;
+                    return { info, skills: [skill1, skill2, skill3] };
+                })),
             );
         });
     }).catch(({status, message}) => sendResponse(res, status, message));

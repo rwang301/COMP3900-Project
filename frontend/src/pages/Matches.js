@@ -37,30 +37,26 @@ const TitleText = styled.p`
 export default function Matches() {
   const { api, employer } = React.useContext(StoreContext);
   const [searchInput, setSearchInput] = React.useState('');
-  const [allData, setAllData] = React.useState([
-    {"name": "Kaiqi Liang", "skills": ["Reactjs", "CSS", "SQL"], "jobApplied": "Software Developer at Apple"}, 
-    {"name": "Richard Wang", "skills": ["C++", "AWS", "SQL"], "jobApplied": "Game Engineer at Riot Games"}, 
-    {"name": "Tony Lu", "skills": ["Python", "Linear Regression", "Tableau"], "jobApplied": "Data Analyst at Quantium"}, 
-    {"name": "William Huang", "skills": ["C++", "Mechatronics", "MIPS"], "jobApplied": "Robot Developer at Google"} 
-  ]);
+  const [allData, setAllData] = React.useState([]);
   const [filteredData, setFilteredData] = React.useState(allData);
   
   const searchCheck = (data) => data.toLowerCase().includes(searchInput.toLowerCase()); 
   const skillsCheck = (skills) => skills.filter(searchCheck).length > 0;
-  const search = () => setFilteredData(allData.filter((match) => searchCheck(match.name) || skillsCheck(match.skills) || searchCheck(match.jobApplied)));
+  const search = () => setFilteredData(allData.filter((match) => searchCheck(match.name) || skillsCheck(match.skills) || searchCheck(match.job_title)));
   
-  // React.useEffect(() => {
-  //   const getMatches = async () => {
-  //     const response = await api.fetch('jobseeker/matches');
-  //     if (response) {
-
-  //     }
-  //   };
-  //   getMatches();
-  // }, []);
+  React.useEffect(() => {
+    const getMatches = async () => {
+      const response = employer ? await api.fetch('employer/matches') : await api.fetch('jobseeker/matches');
+      if (response) {
+        console.log(response);
+        setAllData(response);
+        setFilteredData(response);
+      }
+    };
+    getMatches();
+  }, []);
  
-
-  return (  
+  return (
     <PageContainer>
       <MatchesContainer>
         <TitleText>All Matches</TitleText>
@@ -71,9 +67,9 @@ export default function Matches() {
           onRequestSearch={search}
           onCancelSearch={() => setFilteredData(allData)}
         />
-        {employer ? 
+        {employer ?
           <>
-            {filteredData.map((match, index) => <EmployerMatchRow key={index} name={match.name} skills={match.skills} jobApplied={match.jobApplied}/>)} 
+            {filteredData.map((match, index) => <EmployerMatchRow key={index} info={match.info} skills={match.skills} />)}
           </>
           :
           <JobseekerMatchRow/>

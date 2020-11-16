@@ -1,9 +1,8 @@
 import React from 'react';
-import styled from "styled-components";
 import { ModalContainer, ModalContent, CloseButton } from './Form';
 import JobseekerSwipingCard from './JobseekerSwipingCard';
 
-export default function ApplicantDetail({setShow}) {
+export default function ApplicantDetail({ info, skills, setShow }) {
 
   return (
     <ModalContainer>
