@@ -67,11 +67,11 @@ export default function Matches() {
           onRequestSearch={search}
           onCancelSearch={() => setFilteredData(allData)}
         />
-        {employer
-        ?
-          filteredData.map((match, index) => <EmployerMatchRow key={index} info={match.info} skills={match.skills} />)
-        :
-          filteredData.map((match, index) => <JobSeekerMatchRow key={index} info={match.info} skills={match.skills} />)
+        {
+          employer ?
+            filteredData.map((match, index) => <EmployerMatchRow key={index} info={match.info} skills={match.skills} />)
+          :
+            filteredData.map((match, index) => <JobSeekerMatchRow key={index} info={match.info} skills={match.skills} />)
         }
       </MatchesContainer>
     </PageContainer>
