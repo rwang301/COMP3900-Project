@@ -4,7 +4,7 @@ import leftArrow from '../assets/left-arrow.svg';
 import rightArrow from '../assets/right-arrow.svg';
 import tick from '../assets/tick.svg';
 import cancel from '../assets/cancel.svg';
-import nomoreswipes from '../assets/nomoreswipes.svg';
+import noMoreSwipes from '../assets/no_more_swipes.svg';
 import { StoreContext } from '../utils/store';
 import EmployerSwipingCard from '../components/EmployerSwipingCard';
 import JobseekerSwipingCard from '../components/JobseekerSwipingCard';
@@ -108,7 +108,7 @@ export default function Swiping() {
     <Wrapper>
       {noSwipes ? 
         <NoSwipesContainer>
-          <NoSwipesIcon src={nomoreswipes} />
+          <NoSwipesIcon src={noMoreSwipes} />
           <NoSwipeText>
             There are currently no profiles to swipe...
           </NoSwipeText>
