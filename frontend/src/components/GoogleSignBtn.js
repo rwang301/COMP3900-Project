@@ -69,7 +69,7 @@ export default function GoogleSignBtn(props) {
 
   const login = async (res) => {
     const { name, email } = res.profileObj;
-    const data = { name, email, password: '', employer };
+    const data = { email, password: '' };
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
         ...options,
@@ -78,8 +78,8 @@ export default function GoogleSignBtn(props) {
       if (response.status === 200) {
         const json = await response.json();
         props.login(json.token);
+        setEmployer(json.employer);
         history.push(json.employer ? 'employer' : 'jobseeker');
-        setEmployer(json.employer ? 'employer' : 'jobseeker')
       } else if (response.status === 403) {
         setEmail(email);
         setName(name);

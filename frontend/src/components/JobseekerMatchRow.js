@@ -60,7 +60,7 @@ export default function JobseekerMatchRow({ info, skills }) {
       </JobDescription>
       <AppliedContainer>
         <SkillsReqText>
-          Skills Required: 
+          Skills Required:
         </SkillsReqText>
         <SkillsText>
           {skills.filter((skill) => skill !== 'null' && skill !== '').join(", ")}
