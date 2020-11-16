@@ -42,7 +42,7 @@ export default function Matches() {
   
   const searchCheck = (data) => data.toLowerCase().includes(searchInput.toLowerCase()); 
   const skillsCheck = (skills) => skills.filter(searchCheck).length > 0;
-  const search = () => setFilteredData(allData.filter((match) => searchCheck(match.name) || skillsCheck(match.skills) || searchCheck(match.job_title)));
+  const search = () => setFilteredData(allData.filter((match) => searchCheck(match.info.name) || skillsCheck(match.skills) || searchCheck(match.info.job_title)));
   
   React.useEffect(() => {
     const getMatches = async () => {
