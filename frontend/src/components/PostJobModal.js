@@ -79,18 +79,6 @@ export default function PostJobModal({closeModal, postJob}) {
     setEmploymentType(event.target.value);
   }
 
-  const handleSkillOneChange = (event) => {
-    setSkillOne(event.target.value);
-  };
-
-  const handleSkillTwoChange = (event) => {
-    setSkillTwo(event.target.value);
-  };
-
-  const handleSkillThreeChange = (event) => {
-    setSkillThree(event.target.value);
-  };
-
   const resetFields = () => {
     setJobTitle('');
     setLocation('');
@@ -116,37 +104,25 @@ export default function PostJobModal({closeModal, postJob}) {
           <ControlledInput value={description} type="text" large={true} id="Description" handleChange={handleDescriptionChange}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={skillOne}
-                onChange={handleSkillOneChange}
-              >
-                <Skills />
-              </Select>
+            <Skills
+              label="Skill 1"
+              value={skillOne}
+              onChange={(value) => setSkillOne(value)}
+            />
           </FormControl>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Skill 2</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={skillTwo}
-                onChange={handleSkillTwoChange}
-              >
-                <Skills />
-              </Select>
+            <Skills
+              label="Skill 2"
+              value={skillTwo}
+              onChange={(value) => setSkillTwo(value)}
+           />
           </FormControl>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Skill 3</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={skillThree}
-                onChange={handleSkillThreeChange}
-              >
-                <Skills />
-              </Select>
+            <Skills
+              label="Skill 3"
+              value={skillThree}
+              onChange={(value) => setSkillThree(value)}
+            />
           </FormControl>
           <DateText>Application Closing Date:</DateText>
           <DateContainer width={200} showTimeSelect timeFormat="HH:mm" dateFormat={"dd/MM/yyyy HH:mm:ss"} selected={closingDate} onChange={date => {

@@ -62,46 +62,34 @@ export default function ApplicationModal({
           <ControlledInput value={location} type="text" id="Location" handleChange={(event) => setLocation(event.target.value)}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+            <Skills
+              label="Skill 1"
               value={skills[0]}
-              onChange={(event) => {
-                skills[0] = event.target.value;
+              onChange={(value) => {
+                skills[0] = value;
                 setSkills(skills);
               }}
-            >
-              <Skills />
-            </Select>
+            />
           </FormControl>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Skill 2</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+            <Skills
+              label="Skill 2"
               value={skills[1]}
-              onChange={(event) => {
-                skills[1] = event.target.value;
+              onChange={(value) => {
+                skills[1] = value;
                 setSkills(skills);
               }}
-              >
-                <Skills />
-            </Select>
+            />
           </FormControl>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Skill 3</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+            <Skills
+              label="Skill 3"
               value={skills[2]}
-              onChange={(event) => {
-                skills[2] = event.target.value;
+              onChange={(value) => {
+                skills[2] = value;
                 setSkills(skills);
               }}
-              >
-                <Skills />
-            </Select>
+            />
             </FormControl>
         </Form>
         <Button onClick={() => updateProfile()}>Save</Button>

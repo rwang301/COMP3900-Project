@@ -93,8 +93,7 @@ export default function Swiping() {
 
   const decline = async () => {
     if (employer) {
-      const response = await api.fetch('employer/swipe/left', 'post', {email: potentials[index].email});
-      console.log(response);
+      api.fetch('employer/swipe/left', 'post', {email: potentials[index].email});
     } else {
       api.fetch('jobseeker/swipe/left', 'post', {id: potentials[index].id});
     }

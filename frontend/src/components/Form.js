@@ -8,6 +8,8 @@ import CreateIcon from '@material-ui/icons/Create';
 import { StoreContext } from '../utils/store';
 import fileToDataUrl from '../utils/file';
 import MenuItem from "@material-ui/core/MenuItem";
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const Main = styled.main`
   display: flex;
@@ -127,23 +129,26 @@ const EditAvatar = ({ profile, setProfile }) => {
   );
 };
 
-const Skills = () => {
+const Skills = ({ label, value, onChange }) => {
   const { api } = React.useContext(StoreContext);
   const [skills, setSkills] = React.useState([]);
   React.useEffect(() => {
     const getSkills = async () => {
       const response = await api.fetch('skills');
-      console.log(response);
       if (response) setSkills(response);
     };
     getSkills();
   }, []);
   return (
-    <>
-      {
-        skills.map((skill) => <MenuItem key={skill} value={skill}>{skill}</MenuItem>)
-      }
-    </>
+    <Autocomplete
+      id="combo-box-demo"
+      options={skills}
+      value={value}
+      onChange={(event) => onChange(event.target.innerText)}
+      getOptionLabel={(option) => option}
+      style={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label={label} variant="outlined" />}
+    />
   );
 };
 
