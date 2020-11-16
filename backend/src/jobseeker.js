@@ -104,18 +104,20 @@ export const jobSeekerSwipeLeft = (req, res) => {
 
 export const getJobSeekerMatches = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
-        db.all(`SELECT u.email, name, u.location, education, skill1, skill2, skill3, job_title, employment_type, closing_date, location, company
+        db.all(`SELECT e.email, company, skill1, skill2, skill3, job_title, employment_type, closing_date, location
                 FROM Matches AS m
-                JOIN Jobs AS j ON m.id = j.id
-                JOIN Skills AS s ON m.email = s.email
-                JOIN Employers AS e ON s.email = e.email
-                JOIN Users AS u ON e.email = u.email
-                JOIN Posts AS p ON m.id = p.id
-                WHERE p.email = '${user.email}'`,
-        [], (_, jobSeekers) => {
+                JOIN Jobs AS j on m.id = j.id
+                JOIN Skills AS s ON j.id = s.id
+                JOIN Posts AS p ON s.id = p.id
+                JOIN Employers AS e ON p.email = e.email
+                WHERE m.email = '${user.email}';`,
+        [], (_, matches) => {
             sendResponse(res, 200,
-                `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map((jobSeeker) => jobSeeker.name).join(', ')}`,
-                jobSeekers,
+                `All the jobs that match with ${user.name}: ${matches.map((match) => match.job_title).join(', ')}`,
+                matches.map((match => {
+                    const { skill1, skill2, skill3, ...info } = match;
+                    return { info, skills: [skill1, skill2, skill3] };
+                })),
             );
         });
     }).catch(({status, message}) => sendResponse(res, status, message));

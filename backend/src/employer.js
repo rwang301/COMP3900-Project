@@ -184,11 +184,11 @@ export const getEmployerMatches = (req, res) => {
                 JOIN Users AS u ON js.email = u.email
                 JOIN Posts AS p ON m.id = p.id
                 WHERE p.email = '${user.email}'`,
-        [], (_, jobSeekers) => {
+        [], (_, matches) => {
             sendResponse(res, 200,
-                `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map((jobSeeker) => jobSeeker.name).join(', ')}`,
-                jobSeekers.map((jobSeeker => {
-                    const { skill1, skill2, skill3, ...info } = jobSeeker;
+                `All the job seekers that match with ${user.name}'s jobs: ${matches.map((match) => match.name).join(', ')}`,
+                matches.map((match => {
+                    const { skill1, skill2, skill3, ...info } = match;
                     return { info, skills: [skill1, skill2, skill3] };
                 })),
             );
