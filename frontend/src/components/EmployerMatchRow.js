@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ApplicationDetail from './ApplicationDetail';
+import ApplicantDetail from './ApplicantDetail';
 
 const Avatar = styled(AccountCircleIcon)`
   flex: 1;
@@ -64,7 +64,7 @@ export default function EmployerMatchRow({ info, skills }) {
           {info.job_title}
         </AppliedJob>
       </AppliedContainer>
-      {showDetails && <ApplicationDetail setShow={setShowDetails} info={info} skills={skills} />}
+      {showDetails && <ApplicantDetail setShow={setShowDetails} info={info} skills={skills} />}
     </MatchContainer>
   )
 }

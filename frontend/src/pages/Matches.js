@@ -71,7 +71,7 @@ export default function Matches() {
           employer ?
             filteredData.map((match, index) => <EmployerMatchRow key={index} info={match.info} skills={match.skills} />)
           :
-            filteredData.map((match, index) => <JobSeekerMatchRow key={index} info={match.info} skills={match.skills} />)
+            filteredData.map((match, index) => <JobseekerMatchRow key={index} info={match.info} skills={match.skills} />)
         }
       </MatchesContainer>
     </PageContainer>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ModalContainer, ModalContent, CloseButton } from './Form';
-import JobseekerSwipingCard from './JobseekerSwipingCard';
+import EmployerSwipingCard from './EmployerSwipingCard';
 
 export default function ApplicantDetail({ info, skills, setShow }) {
 
@@ -11,12 +11,11 @@ export default function ApplicantDetail({ info, skills, setShow }) {
             e.stopPropagation();
             setShow(false);
         }}/>
-        <JobseekerSwipingCard
-          company={"Atlassian"}
-          job_title={"Frontend Developer"}
-          employment_type={"Part Time"}
+        <EmployerSwipingCard
+          email={"rich@wang.com"}
+          name={"Richard Wang"} 
           location={"Sydney, Australia"}
-          closing_date={"24th December 2020"}
+          education={"UNSW Sydney"}
           skill1={"React"}
           skill2={"HTML"}
           skill3={"CSS"}

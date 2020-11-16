@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
+import getSkills from './src/skills.js';
 import { login, register } from './src/auth.js';
 import {
     postJob,
@@ -30,10 +31,7 @@ app.use(bodyParser.json());
 const port = 8000;
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
 
-export default (response, status, message, data = {}) => {
-    response.status(status).send(data);
-    console.log(message);
-};
+app.get('/getSkills', getSkills);
 
 app.post('/auth/login', login);
 app.post('/auth/register', register);
@@ -59,3 +57,8 @@ app.post('/jobseeker/swipe/right', jobSeekerSwipeRight);
 
 app.get('/jobseeker/matches', getJobSeekerMatches);
 app.get('/employer/matches', getEmployerMatches);
+
+export default (response, status, message, data = {}) => {
+    response.status(status).send(data);
+    console.log(message);
+};
