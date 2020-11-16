@@ -39,11 +39,11 @@ const post = (user, { job_title, location, description, employment_type, closing
                     }
                     if (matches > 0) {
                         db.run(`INSERT INTO PotentialJobs (email, id, has_swiped, matches) VALUES ('${jobSeeker.email}', '${job.id}', ${0}, ${matches})`);
-                        db.get(`SELECT count(j.id) FROM PotentialJobs AS j JOIN Posts AS p ON j.id = p.id WHERE p.email = '${user.email}' AND j.email = '${jobSeeker.email}'`, (_, count) => {
-                            if (count['count(j.id)'] > 1) {
-                                db.run(`UPDATE PotentialJobSeekers SET matches = ${count['count(j.id)']} WHERE employer_email = '${user.email}' AND job_seeker_email = '${jobSeeker.email}'`);
+                        db.get(`SELECT count(j.id) AS count FROM PotentialJobs AS j JOIN Posts AS p ON j.id = p.id WHERE p.email = '${user.email}' AND j.email = '${jobSeeker.email}'`, (_, { count }) => {
+                            if (count > 1) {
+                                db.run(`UPDATE PotentialJobSeekers SET matches = ${count} WHERE employer_email = '${user.email}' AND job_seeker_email = '${jobSeeker.email}'`);
                             } else {
-                                db.run(`INSERT INTO PotentialJobSeekers (employer_email, job_seeker_email, has_swiped, matches) VALUES ('${user.email}', '${jobSeeker.email}', ${0}, ${count['count(j.id)']})`);
+                                db.run(`INSERT INTO PotentialJobSeekers (employer_email, job_seeker_email, has_swiped, matches) VALUES ('${user.email}', '${jobSeeker.email}', ${0}, ${count})`);
                             }
                         });
                     }
