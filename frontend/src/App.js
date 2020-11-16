@@ -21,16 +21,17 @@ const Main = styled.main`
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(localStorage.getItem('token'));
+  const theme = React.useMemo(() => createMuiTheme({ palette: { type: 'dark' } }), []);
 
   const login = (token) => {
     localStorage.setItem('token', token);
     setIsLoggedIn(true);
   };
+
   const logout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
   };
-  const theme = React.useMemo(() => createMuiTheme({ palette: { type: 'dark' } }), []);
 
   return (
     <ThemeProvider theme={theme}>

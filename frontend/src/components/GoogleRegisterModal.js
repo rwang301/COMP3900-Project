@@ -23,7 +23,6 @@ const Button = styled.button`
   };
 `;
 
-
 export default function GoogleRegisterModal({closeModal, email, setEmail, name, setName, employer, updateEmployer, register}) {
   const [success, setSuccess] = React.useState();
   async function handleRegister() {

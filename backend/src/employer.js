@@ -38,12 +38,12 @@ const post = (user, { job_title, location, description, employment_type, closing
                         }
                     }
                     if (matches > 0) {
-                        db.run(`INSERT INTO PotentialJobs (email, id, has_swiped, matches) VALUES ('${jobSeeker.email}', '${job.id}', ${0}, ${matches})`);
+                        db.run(`INSERT OR REPLACE INTO PotentialJobs (email, id, has_swiped, matches) VALUES ('${jobSeeker.email}', '${job.id}', ${0}, ${matches})`);
                         db.get(`SELECT count(j.id) AS count FROM PotentialJobs AS j JOIN Posts AS p ON j.id = p.id WHERE p.email = '${user.email}' AND j.email = '${jobSeeker.email}'`, (_, { count }) => {
                             if (count > 1) {
                                 db.run(`UPDATE PotentialJobSeekers SET matches = ${count} WHERE employer_email = '${user.email}' AND job_seeker_email = '${jobSeeker.email}'`);
                             } else {
-                                db.run(`INSERT INTO PotentialJobSeekers (employer_email, job_seeker_email, has_swiped, matches) VALUES ('${user.email}', '${jobSeeker.email}', ${0}, ${count})`);
+                                db.run(`INSERT OR REPLACE INTO PotentialJobSeekers (employer_email, job_seeker_email, has_swiped, matches) VALUES ('${user.email}', '${jobSeeker.email}', ${0}, ${count})`);
                             }
                         });
                     }
@@ -88,8 +88,8 @@ const remove = (user, { id }) => {
 export const getEmployerProfile = (req, res) => {
     verifyToken(req.header('token')).then((user) => {
         const { email, name, password, location, profile } = user;
-        db.all(`SELECT j.id, job_title, location, description, employment_type, closing_date, skill1, skill2, skill3,
-                company FROM Employers As e
+        db.all(`SELECT j.id, job_title, location, description, employment_type, closing_date,
+                skill1, skill2, skill3, company FROM Employers As e
                 LEFT JOIN Posts AS p ON e.email = p.email
                 LEFT JOIN Jobs AS j ON p.id = j.id
                 LEFT JOIN Skills AS s ON j.id = s.job_id
@@ -137,8 +137,8 @@ export const getPotentialJobSeekers = (req, res) => {
             sendResponse(res, 200,
                 `All the job seekers that match with ${user.name}'s jobs: ${jobSeekers.map((jobSeeker) => jobSeeker.name).join(', ')}`,
                 jobSeekers.map((jobSeeker) => {
-                  const { profile, ...info } = jobSeeker;
-                  return { profile: profile === 'undefined' ? '' : profile, ...info };
+                    const { profile, ...info } = jobSeeker;
+                    return { profile: profile === 'undefined' ? '' : profile, ...info };
                 }),
             );
         });
@@ -154,7 +154,7 @@ export const employerSwipeRight = (req, res) => {
                 WHERE p.email = '${user.email}'`,
         [], (_, jobs) => {
             jobs.forEach((job) => {
-                if (job.has_swiped) db.run(`INSERT INTO Matches VALUES ('${email}', ${job.id})`);
+                if (job.has_swiped) db.run(`INSERT OR REPLACE INTO Matches VALUES ('${email}', ${job.id})`);
             });
         });
         sendResponse(res, 200, `${user.name} has swiped right on jobseeker ${email}`);
@@ -182,10 +182,10 @@ export const getEmployerMatches = (req, res) => {
         [], (_, matches) => {
             sendResponse(res, 200,
                 `All the job seekers that match with ${user.name}'s jobs: ${matches.map((match) => match.name).join(', ')}`,
-                matches.map((match => {
-                    const { skill1, skill2, skill3, ...info } = match;
-                    return { info, skills: [skill1, skill2, skill3] };
-                })),
+                matches.map((match) => {
+                    const { skill1, skill2, skill3, profile, ...info } = match;
+                    return { skills: [skill1, skill2, skill3], profile: profile === 'undefined' ? '' : profile, info };
+                }),
             );
         });
     }).catch(({status, message}) => sendResponse(res, status, message));

@@ -17,24 +17,6 @@ const ProfileContainer = styled.div`
   padding-top: 2vh;
 `;
 
-const Button = styled.button`
-  width: 13vmin;
-  height: 5vmin;
-  font-size: 1.5vmin;
-  border-radius: 5px;
-  background: whitesmoke;
-  color: black;
-  border: 3px solid darkcyan;
-  margin: 0.75vw;
-
-  &:hover {
-    font-weight: bold;
-    background: black;
-    color: whitesmoke;
-    border: 1px solid whitesmoke;
-  };
-`;
-
 const AvatarContainer = styled.div`
   display: flex;
   align-items: center;
@@ -78,11 +60,6 @@ const SubtitleText = styled.p`
   padding-bottom: 1.75vw;
   border-bottom: 0.1vw white solid;
 `;
-
-// const AboutTitle = styled(SubtitleText)`
-//   padding-bottom: 1.5vh;
-//   border-bottom: 1px white solid;
-// `;
 
 const AboutRowContainer = styled.div`
   display: flex;
