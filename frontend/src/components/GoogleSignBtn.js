@@ -27,9 +27,8 @@ const GoogleButton = styled(GoogleLogin)`
 
 export default function GoogleSignBtn(props) {
   const [openRegisterModal, setOpenRegisterModal] = React.useState(false);
-  const [name, setName] = React.useState();
-  const [email, setEmail] = React.useState();
-  const [password, setPassword] = React.useState('test');
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const { setAlert, employer, setEmployer } = React.useContext(StoreContext);
 
   async function register() {
@@ -38,7 +37,7 @@ export default function GoogleSignBtn(props) {
     } else if (!isEmailValid(email)) {
       setAlert({ open: true, severity: 'warning', message: 'Please enter a valid email' });
     } else {
-      const data = {name: name, email: email, password: password, employer: employer};
+      const data = { name, email, password: '', employer };
       const options = {
         method: 'POST',
         headers: {
@@ -65,16 +64,14 @@ export default function GoogleSignBtn(props) {
 	}
 
   const login = async (res) => {
-    console.log(res);
     setOpenRegisterModal(true);
-    setEmail(res.tt.$t);
-    setName(res.tt.Ad);
-    //needs to login if user already exists
-    //check if email is registered
+    setEmail(res.profileObj.email);
+    setName(res.profileObj.name);
   }
 
   const handleLoginFailure = (res) => {
-    console.log(res)
+    console.warn(res);
+    setAlert({ open: true, severity: 'warning', message: res });
   }
 
   return (

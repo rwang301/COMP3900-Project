@@ -38,12 +38,13 @@ export const login = (req, res) => {
 
 export const register = (req, res) => {
     const {name, email, password, employer} = req.body;
-    db.get(`select email from users where email = '${email}'`, [], (err, user) => {
+    db.get(`select email, password from users where email = '${email}'`, [], (err, user) => {
         if (err) {
             sendResponse(res, 500, err.message);
         } else {
             if (user) {// if user with email already exists
-                sendResponse(res, 409, `${email} already exists`);
+                if (user.password) sendResponse(res, 409, `${email} already exists`);
+                else login(req, res);
             } else {
                 const token = generateToken(email);
                 db.run(`insert into Users (email, name, password, token) values ('${email}', '${name}', '${password}', '${token}')`);
