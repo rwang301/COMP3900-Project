@@ -3,6 +3,7 @@ import styled from "styled-components";
 import jobEdit from '../assets/jobEdit.svg';
 import remove from '../assets/remove.svg';
 import JobDetail from './JobDetail';
+import { StoreContext } from '../utils/store';
 
 const RowContainer = styled.div`
   display: flex;
@@ -49,8 +50,14 @@ const IconText = styled(JobText)`
 `;
 
 export function ListedJobRow({job}) {
+  const { api } = React.useContext(StoreContext);
   const [jobDetailModal, setJobDetailModal] = React.useState(false);
-
+  const removeJob = async (id) => {
+    const response = await api.fetch('job', 'delete', { id });
+    if (response) {
+      console.log(response);
+    };
+  };
   return (
     <RowContainer>
       <JobName>
@@ -65,7 +72,7 @@ export function ListedJobRow({job}) {
           <JobEditIcon src={jobEdit}/>
           <IconText>Edit</IconText>
         </IconAndText>
-        <IconAndText>
+        <IconAndText onClick={() => removeJob(job.id)}>
           <JobEditIcon src={remove}/>
           <IconText>Remove</IconText>
         </IconAndText>
@@ -84,7 +91,7 @@ export function SkillsRow({skillName}) {
   return (
     <RowContainer>
       <JobName>
-        {skillName}
+        {skillName || 'Click Edit to Add Skill'}
       </JobName>
       <Actions>
         {/* <IconAndText>

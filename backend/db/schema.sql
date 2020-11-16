@@ -2,8 +2,9 @@ create table if not exists Users (
     email text,
     name text not null,
     password text not null,
-    token text,
     location text,
+    profile text,
+    token text,
     primary key (email)
 );
 
@@ -35,19 +36,6 @@ create table if not exists Posts (
     primary key(email, id)
 );
 
-create table if not exists PotentialJobs (
-    email text references JobSeekers(email),
-    id integer references Jobs(id),
-    has_swiped integer not null check (has_swiped in (1, 0)),
-    primary key(email, id)
-);
-
-create table if not exists PotentialJobSeekers (
-    employer_email text references Employers(email),
-    job_seeker_email text references JobSeekers(email),
-    has_swiped integer not null check (has_swiped in (1, 0)),
-    primary key(employer_email, job_seeker_email)
-);
 
 create table if not exists Skills (
     id integer primary key autoincrement,
@@ -58,11 +46,26 @@ create table if not exists Skills (
     skill3 text
 );
 
+create table if not exists PotentialJobs (
+    email text references JobSeekers(email),
+    id integer references Jobs(id),
+    has_swiped integer not null check (has_swiped in (1, 0)),
+    matches integer not null check (matches in (1, 2, 3)),
+    primary key(email, id)
+);
+
+create table if not exists PotentialJobSeekers (
+    employer_email text references Employers(email),
+    job_seeker_email text references JobSeekers(email),
+    has_swiped integer not null check (has_swiped in (1, 0)),
+    matches integer not null check (matches > 0),
+    primary key(employer_email, job_seeker_email)
+);
 
 create table if not exists Matches (
-    job_seeker_email integer references JobSeekers(email),
-    job_id integer references Jobs(id),
-    primary key (job_seeker_email, job_id)
+    email integer references JobSeekers(email),
+    id integer references Jobs(id),
+    primary key (email, id)
 );
 
 

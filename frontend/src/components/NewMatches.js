@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import MatchRow from './MatchRow'
+import EmployerMatchRow from './EmployerMatchRow'
 
 const MatchesContainer = styled.div`
   display: flex;
@@ -9,7 +9,7 @@ const MatchesContainer = styled.div`
   padding: 0 5vh 3vh 5vh;
   /* border: 5px solid white; */
   border-radius: 3px;
-  width: 75%;
+  width: 100%;
 `;
 
 const TitleText = styled.p`
@@ -27,7 +27,7 @@ export default function NewMatches() {
   return (
     <MatchesContainer>
       <TitleText>New Matches</TitleText>
-      {allData.map((match, index) => <MatchRow key={index} name={match.name} skills={match.skills} jobApplied={match.jobApplied}/>)}
+      {allData.map((match, index) => <EmployerMatchRow key={index} name={match.name} skills={match.skills} jobApplied={match.jobApplied}/>)}
     </MatchesContainer>
   )
 }

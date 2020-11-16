@@ -1,5 +1,5 @@
 import sqlite from 'sqlite3';
-const db = new sqlite.Database('./db/database.db', err => {
+const db = new sqlite.Database('./db/database.db', (err) => {
     if (err) {
         throw Error(err.message);
     } else {
@@ -9,8 +9,9 @@ const db = new sqlite.Database('./db/database.db', err => {
                 email text,
                 name text not null,
                 password text not null,
-                token text,
                 location text,
+                profile text,
+                token text,
                 primary key (email)
             );
         `);
@@ -67,6 +68,7 @@ const db = new sqlite.Database('./db/database.db', err => {
                 email text references JobSeekers(email),
                 id integer references Jobs(id),
                 has_swiped integer not null check (has_swiped in (1, 0)),
+                matches integer not null check (matches in (1, 2, 3)),
                 primary key(email, id)
             );
         `);
@@ -76,15 +78,16 @@ const db = new sqlite.Database('./db/database.db', err => {
                 employer_email text references Employers(email),
                 job_seeker_email text references JobSeekers(email),
                 has_swiped integer not null check (has_swiped in (1, 0)),
+                matches integer not null check (matches > 0),
                 primary key(employer_email, job_seeker_email)
             );
         `);
 
         db.run(`
             create table if not exists Matches (
-                job_seeker_email integer references JobSeekers(email),
-                job_id integer references Jobs(id),
-                primary key (job_seeker_email, job_id)
+                email integer references JobSeekers(email),
+                id integer references Jobs(id),
+                primary key (email, id)
             );
         `);
 
@@ -103,6 +106,39 @@ const db = new sqlite.Database('./db/database.db', err => {
                 primary key(employer_email, offer_id)
             );
         `);
+
+        db.serialize(() => {
+            db.run(`
+                create table if not exists SkillsList (
+                    skill text not null check (skill in ('Python', 'JavaScript', 'Java', 'C', 'C#', 'C++', 'Go', 
+                    'R', 'Swift', 'PHP', 'Dart', 'Kotlin', 'MATLAB', 'Perl', 'Ruby', 'Rust', 'Scala', 'Objective-C', 
+                    'TypeScript', 'VBA', 'Ada', 'Lua', 'Elm', 'Abap', 'Groovy', 'Julia', 'Cobol', 'Haskell', 'Delphi', 
+                    'SQL', 'HTML', 'CSS', 'Assembly', 'Git', 'Tableau', 'Excel', 'PowerPoint', 'Word', 
+                    'SAS', 'SPSS', 'Power BI', 'Hadoop', 'AutoCAD', 'Photoshop', 'Bash', 'AWS', 
+                    'ArcGIS', 'Frameworks', 'Google Analytics', 'Google Cloud', 'OOP', 'REST API',
+                    'Rhino 3D', 'Unity', 'Windows Server', 'WordPress', 'XML', 'Machine Learning', 'Agile', 'Dreamweaver',
+                    'Maven', 'Spark', 'SEO', 'Adobe Acrobat', 'Microsoft Azure', 'Microsoft Access',
+                    'Google Ads', 'Outlook', 'Power Automate', 'LaTeX', 'SharePoint', 'Visio',
+                    'QuickBooks', 'Xero', 'MYOB', 'Adobe Animate', 'Illustrator', 'Lightroom', 'Premier Pro', 'Adobe XD', 'After Effects',
+                    'Inventor', 'Maya', 'Media Composer', 'Final Cut Pro', 'iMovie', 'inDesign', 'Keynote', 'Logic Pro',
+                    'Pro Tools', 'Revit', 'SketchUp', 'SOLIDWORKS', 'Data Wrangling', 'QlikView', 'DevOps', 'Dafny', 'SOAP API', 'JSON', 'NoSQL')),
+                    primary key(skill)
+                );
+            `)
+                .run(`insert or replace into SkillsList values ('Python'), ('JavaScript'), ('Java'), ('C'), ('C#'), ('C++'), ('Go'), 
+                    ('R'), ('Swift'), ('PHP'), ('Dart'), ('Kotlin'), ('MATLAB'), ('Perl'), ('Ruby'), ('Rust'), ('Scala'), ('Objective-C'), 
+                    ('TypeScript'), ('VBA'), ('Ada'), ('Lua'), ('Elm'), ('Abap'), ('Groovy'), ('Julia'), ('Cobol'), ('Haskell'), ('Delphi'), 
+                    ('SQL'), ('HTML'), ('CSS'), ('Assembly'), ('Git'), ('Tableau'), ('Excel'), ('PowerPoint'), ('Word'), 
+                    ('SAS'), ('SPSS'), ('Power BI'), ('Hadoop'), ('AutoCAD'), ('Photoshop'), ('Bash'), ('AWS'), 
+                    ('ArcGIS'), ('Frameworks'), ('Google Analytics'), ('Google Cloud'), ('OOP'), ('REST API'),
+                    ('Rhino 3D'), ('Unity'), ('Windows Server'), ('WordPress'), ('XML'), ('Machine Learning'), ('Agile'), ('Dreamweaver'),
+                    ('Maven'), ('Spark'), ('SEO'), ('Adobe Acrobat'), ('Microsoft Azure'), ('Microsoft Access'),
+                    ('Google Ads'), ('Outlook'), ('Power Automate'), ('LaTeX'), ('SharePoint'), ('Visio'),
+                    ('QuickBooks'), ('Xero'), ('MYOB'), ('Adobe Animate'), ('Illustrator'), ('Lightroom'), ('Premier Pro'), ('Adobe XD'), ('After Effects'),
+                    ('Inventor'), ('Maya'), ('Media Composer'), ('Final Cut Pro'), ('iMovie'), ('inDesign'), ('Keynote'), ('Logic Pro'),
+                    ('Pro Tools'), ('Revit'), ('SketchUp'), ('SOLIDWORKS'), ('Data Wrangling'), ('QlikView'), ('DevOps'), ('Dafny'), ('SOAP API'), ('JSON'), ('NoSQL')
+                `);
+        });
     }
 });
 

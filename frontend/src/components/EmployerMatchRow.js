@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ApplicationDetail from './ApplicationDetail';
-
+import ApplicantDetail from './ApplicantDetail';
 
 const Avatar = styled(AccountCircleIcon)`
   flex: 1;
@@ -25,7 +24,6 @@ const AppliedContainer = styled.div`
 `
 
 const AppliedText = styled.p`
-  
 `;
 
 const AppliedJob = styled.p`
@@ -44,30 +42,28 @@ const MatchContainer = styled.div`
   cursor: pointer;
 `;
 
-
-export default function MatchRow({name, skills, jobApplied}) {
+export default function EmployerMatchRow({ info, skills }) {
   const [showDetails, setShowDetails] = React.useState(false);
-
   return (
     <MatchContainer onClick={() => setShowDetails(true)}>
       <Avatar fontSize="large"/>
       <PersonalDetails>
         <FullNameText>
-          {name}
+          {info.name}
         </FullNameText>
         <ExperienceText>
-          {skills.join(", ")}
+          {skills.filter((skill) => skill !== 'null').join(", ")}
         </ExperienceText>
       </PersonalDetails>
       <AppliedContainer>
         <AppliedText>
-          Applied to your listing: 
+          Applied to your listing:
         </AppliedText>
         <AppliedJob>
-          {jobApplied}
+          {info.job_title}
         </AppliedJob>
       </AppliedContainer>
-      <ApplicationDetail toShow={showDetails} setShow={setShowDetails}/>
+      {showDetails && <ApplicantDetail setShow={setShowDetails} info={info} skills={skills} />}
     </MatchContainer>
   )
 }

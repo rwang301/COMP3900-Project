@@ -5,6 +5,7 @@ import lock from '../assets/lock.svg';
 import profile from '../assets/profile.svg';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { StoreContext } from '../utils/store';
 
 const Div = styled.div`
   display: flex;
@@ -59,18 +60,18 @@ const DropdownMenu = styled.div`
   };
 `;
 
-  const DropdownLink = styled(Link)`
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+const DropdownLink = styled(Link)`
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    &:hover{
-      background-color: #c6f5f7;
-    };
-  `;
+  &:hover{
+    background-color: #c6f5f7;
+  };
+`;
 
 const Wrapper = styled.div`
   position: relative;
@@ -86,6 +87,7 @@ const OptionText = styled.p`
 `;
 
 export default function NavDropdown(props) {
+  const { employer } = React.useContext(StoreContext);
   return (
     <Wrapper>
         <Div login={props.login}>
@@ -94,8 +96,8 @@ export default function NavDropdown(props) {
           &nbsp;
           <DropdownArrow login={props.login}/>
         </Div>
-        {props.login ? (<DropdownMenu>
-          <DropdownLink href="" to='/employer-profile'>
+        {props.login && (<DropdownMenu>
+          <DropdownLink to={employer ? 'employer-profile' : 'jobseeker-profile'}>
             <OptionText>
               My Account
             </OptionText>
@@ -107,7 +109,7 @@ export default function NavDropdown(props) {
             </OptionText>
             <ExitToAppIcon/>
           </DropdownLink>
-        </DropdownMenu>) : null}        
+        </DropdownMenu>)}
     </Wrapper>
   )
 }

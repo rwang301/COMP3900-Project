@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from "styled-components";
-import kai_dp2 from '../assets/kai_dp2.jpg'
 import edit from '../assets/edit.svg'
-// import add from '../assets/add.svg'
 import AboutRow from '../components/AboutRow';
-import { SkillsRow } from '../components/Rows';
 import ApplicationModal from '../components/ApplicationModal';
-// import skillEdit from '../assets/jobEdit.svg';
+import { StoreContext } from '../utils/store';
+import { ProfilePic } from '../components/Form';
+import Divider from '@material-ui/core/Divider';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -20,16 +19,6 @@ const AvatarContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`;
-
-const ProfilePic = styled.img`
-  height: 10vw;
-  width: 10vw;
-  max-width: 20vw;
-`;
-
-const KaiPic = styled(ProfilePic)`
-  border-radius: 10vw;
 `;
 
 const NameText = styled.p`
@@ -48,14 +37,6 @@ const EditButton = styled(SideButton)`
   margin-top: 1.15vw;
 `;
 
-const AddButton = styled(SideButton)`
-  margin-top: 19.75vw;
-`;
-
-const SkillEditButton = styled(SideButton)`
-  margin-top: 19.75vw;
-`;
-
 const AboutContainer = styled.div`
   border: 3px solid white;
   border-radius: 1vw;
@@ -68,6 +49,13 @@ const AboutContainer = styled.div`
 const SubtitleText = styled.p`
   font-size: 1.5vw;
   font-weight: bold;
+  width: 100%;
+  text-align: center;
+`;
+
+const AboutTitle = styled(SubtitleText)`
+  padding-bottom: 1.5vh;
+  border-bottom: 1px white solid;
 `;
 
 const AboutRowContainer = styled.div`
@@ -75,94 +63,132 @@ const AboutRowContainer = styled.div`
   flex-direction: column;
 `;
 
+const SkillsTitle = styled(SubtitleText)`
+
+`;
+
+const SkillsRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+  border-top: 1px white solid;
+`;
+
+const Skill = styled.p`
+  font-size: 1.25vw;
+`;
+
 export default function JobseekerProfilePage() {
+  const { api, setAlert } = React.useContext(StoreContext);
   const [applicationModal, setApplicationModal] = React.useState(false);
-  const [email, setEmail] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [education, setEducation] = React.useState('');
+  const [email, setEmail] = React.useState();
+  const [name, setName] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [location, setLocation] = React.useState();
+  const [profile, setProfile] = React.useState();
+  const [education, setEducation] = React.useState();
   const [skills, setSkills] = React.useState([]);
+  const [response, setResponse] = React.useState();
+
+  const initial = (response) => {
+    const { email, name, password, location, profile, education, skills } = response;
+    setEmail(email);
+    setName(name);
+    setPassword(password);
+    setLocation(location);
+    setProfile(profile);
+    setEducation(education);
+    setSkills(skills);
+    setResponse(response);
+  };
 
   React.useEffect(() => {
-    const getSkills = async () => {
-      const options = {
-        headers: {
-          'token': localStorage.getItem('token')
-        },
-      };
-      const response = await fetch("http://localhost:8000/jobseeker/profile", options);
-      console.log(response, 'response');
-      const json = await response.json();
-      console.log(json);
-      const {email, name, password, location, education, skills} = json;
-      setEmail(email);
-      setName(name);
-      setPassword(password);
-      setLocation(location);
-      setEducation(education);
-      setSkills(skills);
+    const getProfile = async () => {
+      const response = await api.fetch('jobseeker/profile');
+      if (response) {
+        initial(response);
+      }
     };
-    getSkills();
+    getProfile();
   }, []);
 
   const updateProfile = async () => {
-    const data = {
-      name,
-      password,
-      education,
-      location,
-      skills,
-    };
-    const options = {
-      body: JSON.stringify(data),
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
-      },
-    };
-    console.log(options);
-    const response = await fetch("http://localhost:8000/profile/update", options);
-    console.log(response);
+    if (name && !/^([A-Z][a-z]{1,} ){1,}[A-Z][a-z]{1,}$/.test(name)) {
+      setAlert({ open: true, severity: 'warning', message: 'Please enter a valid name' });
+    } else {
+      setApplicationModal(false);
+      setName(name || response.name);
+      setPassword(password || response.password);
+      setLocation(location || response.location);
+      setEducation(education || response.education);
+      api.fetch('jobseeker/profile', 'put', {
+        name: name || response.name,
+        password: password || response.password,
+        location: location || response.location,
+        education: education || response.education,
+        profile,
+        skills,
+      });
+    }
+  };
+
+  const cancel = () => {
+    setApplicationModal(false);
+    initial(response);
   };
 
   return (
     <ProfileContainer >
       <AvatarContainer>
-        <KaiPic src={kai_dp2}/>
+        <ProfilePic src={profile || '/broken-image.jpg'} />
         <NameText>{name}</NameText>
       </AvatarContainer>
       <AboutContainer>
         <EditButton src={edit} onClick={() => setApplicationModal(true)}/>
-        <SubtitleText>
+        <AboutTitle>
           About
-        </SubtitleText>
+        </AboutTitle>
         <AboutRowContainer>
-          <AboutRow iconType={'email'} text={email}/>
-          <AboutRow iconType={'education'} text={education}/>
-          <AboutRow iconType={'location'} text={location}/>
+          <AboutRow iconType={'email'} text={email || 'Click edit to update Your Email'}/>
+          <AboutRow iconType={'education'} text={education || 'Click edit to update Your Education'}/>
+          <AboutRow iconType={'location'} text={location || 'Click edit to update Your Location'}/>
         </AboutRowContainer>
-        <SubtitleText>
+        <SkillsTitle>
           Skills
-        </SubtitleText>
-        {skills.map((skill, idx) => skill && <SkillsRow key={idx} skillName={skill}/>)}
+        </SkillsTitle>
+        <SkillsRow>
+          <Skill>
+            {skills[0]}
+          </Skill>
+          <Divider orientation="vertical" flexItem />
+          <Skill>
+            {skills[1]}
+          </Skill>
+          <Divider orientation="vertical" flexItem />
+          <Skill>
+            {skills[2]}
+          </Skill>
+        </SkillsRow>
       </AboutContainer>
-      <ApplicationModal
-        name={name}
-        setName={setName}
-        password={password}
-        setPassword={setPassword}
-        location={location}
-        setLocation={setLocation}
-        education={education}
-        setEducation={setEducation}
-        skills={skills}
-        setSkills={setSkills}
-        toShow={applicationModal}
-        setShow={setApplicationModal}
-        updateProfile={updateProfile}
-      />
+      {applicationModal &&
+        <ApplicationModal
+          name={name}
+          setName={setName}
+          password={password}
+          setPassword={setPassword}
+          location={location}
+          setLocation={setLocation}
+          profile={profile}
+          setProfile={setProfile}
+          education={education}
+          setEducation={setEducation}
+          skills={skills}
+          setSkills={setSkills}
+          cancel={cancel}
+          updateProfile={updateProfile}
+        />
+      }
     </ProfileContainer>
   )
 }

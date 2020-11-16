@@ -1,48 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
-import CloseIcon from '@material-ui/icons/Close';
-import { Header, Form } from './Form';
+import { Header, Form, ModalContainer, ModalContent, CloseButton, Skills } from './Form';
 import { ControlledInput, ControlledTextarea } from './Input';
 import JobRadios from './JobRadios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-
-const ModalContainer = styled.div`
-  cursor: auto;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  padding-top: 2vw;
-  background-color: rgba(0,0,0,0.2);
-`;
-
-const ModalContent = styled.div`
-  background-color: #d4fafa;
-  margin: auto;
-  padding: 1.5vw;
-  border: 1px solid #888;
-  border-radius: 2vw;
-  width: 50%;
-  color: black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const CloseButton = styled(CloseIcon)`
-  position: absolute;
-  margin-left: 48vw;
-  cursor: pointer;
-`;
+import { StoreContext } from '../utils/store';
 
 const DateText = styled.p`
   margin-top: 3vw;
@@ -90,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function JobDetail({setShow, job}) {
   const classes = useStyles();
+  const { api } = React.useContext(StoreContext);
   const [employmentType, setEmploymentType] = React.useState('part-time');
   const [jobTitle, setJobTitle] = React.useState('');
   const [skillOne, setSkillOne] = React.useState(null);
@@ -115,18 +81,6 @@ export default function JobDetail({setShow, job}) {
     setEmploymentType(event.target.value);
   }
 
-  const handleSkillOneChange = (event) => {
-    setSkillOne(event.target.value);
-  };
-
-  const handleSkillTwoChange = (event) => {
-    setSkillTwo(event.target.value);
-  };
-
-  const handleSkillThreeChange = (event) => {
-    setSkillThree(event.target.value);
-  };
-
   const save = async () => {
     const data = {
       id: job.id,
@@ -137,16 +91,7 @@ export default function JobDetail({setShow, job}) {
       employment_type: employmentType,
       closing_date: closingDate
     };
-    const options = {
-      body: JSON.stringify(data),
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
-      },
-    };
-    const response = await fetch("http://localhost:8000/job", options);
-    console.log(response);
+    api.fetch('job', 'put', data);
     setShow(false);
   }
 
@@ -164,52 +109,25 @@ export default function JobDetail({setShow, job}) {
           <ControlledTextarea type="text" id="Description" value={description} handleChange={handleDescriptionChange}/>
           <Label>Skills Required</Label>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Skill 1</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                defaultValue={job.skills[0]}
-                onChange={handleSkillOneChange}
-              >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
-              </Select>
+            <Skills
+              label="Skill 1"
+              value={skillOne}
+              onChange={(value) => setSkillOne(value)}
+            />
           </FormControl>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Skill 2</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                defaultValue={job.skills[1]}
-                onChange={handleSkillTwoChange}
-              >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
-              </Select>
+            <Skills
+              label="Skill 2"
+              value={skillTwo}
+              onChange={(value) => setSkillTwo(value)}
+           />
           </FormControl>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Skill 3</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                defaultValue={job.skills[2]}
-                onChange={handleSkillThreeChange}
-              >
-                <MenuItem value={'Reactjs'}>Reactjs</MenuItem>
-                <MenuItem value={'CSS'}>CSS</MenuItem>
-                <MenuItem value={'HTML'}>HTML</MenuItem>
-                <MenuItem value={'Operating Systems'}>Operating Systems</MenuItem>
-                <MenuItem value={'Assembly Language'}>Assembly Language</MenuItem>
-                <MenuItem value={'C Programming'}>C Programming</MenuItem>
-              </Select>
+            <Skills
+              label="Skill 3"
+              value={skillThree}
+              onChange={(value) => setSkillThree(value)}
+            />
           </FormControl>
           <DateText>Application Closing Date:</DateText>
           <DateContainer width={200} showTimeSelect timeFormat="HH:mm" dateFormat={"dd/MM/yyyy HH:mm:ss"} selected={Date.parse(job.closing_date)} onChange={date => {
