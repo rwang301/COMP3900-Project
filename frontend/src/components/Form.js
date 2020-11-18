@@ -54,7 +54,6 @@ const ModalContent = styled.div`
 `;
 
 const CloseButton = styled(CloseIcon)`
-  position: absolute;
   margin-left: 48vw;
   cursor: pointer;
 `;

@@ -91,8 +91,7 @@ export default function GoogleSignBtn(props) {
   }
 
   const handleLoginFailure = (res) => {
-    console.warn(res);
-    setAlert({ open: true, severity: 'warning', message: res });
+    setAlert({ open: true, severity: 'warning', message: res.error });
   }
 
   return (

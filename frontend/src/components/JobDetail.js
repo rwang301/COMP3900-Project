@@ -51,19 +51,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-//TO DO: Write a PUT Request to edit a job and delete postJob
-
 export default function JobDetail({setShow, job}) {
   const classes = useStyles();
   const { api } = React.useContext(StoreContext);
   const [employmentType, setEmploymentType] = React.useState('part-time');
   const [jobTitle, setJobTitle] = React.useState('');
-  const [skillOne, setSkillOne] = React.useState(null);
-  const [skillTwo, setSkillTwo] = React.useState(null);
-  const [skillThree, setSkillThree] = React.useState(null);
+  const [skillOne, setSkillOne] = React.useState('');
+  const [skillTwo, setSkillTwo] = React.useState('');
+  const [skillThree, setSkillThree] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [closingDate, setClosingDate] = React.useState(new Date());
+
+  React.useEffect(() => {
+    setEmploymentType(job.employment_type);
+    setClosingDate(job.closing_date);
+    setDescription(job.description);
+    setJobTitle(job.job_title);
+    setLocation(job.location);
+    const [skill1, skill2, skill3] = job.skills;
+    setSkillOne(skill1);
+    setSkillTwo(skill2);
+    setSkillThree(skill3);
+  }, []);
 
   const handleJobTitleChange = (event) => {
     setJobTitle(event.target.value);

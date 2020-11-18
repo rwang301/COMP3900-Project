@@ -65,7 +65,7 @@ export default function ApplicationModal({
               value={skills[0]}
               onChange={(value) => {
                 skills[0] = value;
-                setSkills(skills);
+                setSkills([...skills]);
               }}
             />
           </FormControl>
@@ -75,7 +75,7 @@ export default function ApplicationModal({
               value={skills[1]}
               onChange={(value) => {
                 skills[1] = value;
-                setSkills(skills);
+                setSkills([...skills]);
               }}
             />
           </FormControl>
@@ -85,7 +85,7 @@ export default function ApplicationModal({
               value={skills[2]}
               onChange={(value) => {
                 skills[2] = value;
-                setSkills(skills);
+                setSkills([...skills]);
               }}
             />
             </FormControl>

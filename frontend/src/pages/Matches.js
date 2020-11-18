@@ -22,11 +22,7 @@ const MatchesContainer = styled.div`
 `;
 
 const Search = styled(SearchBar)`
-  position: absolute;
-  margin-left: 45vw;
-  margin-top: 2vw;
-  width: 15vw;
-  height: 10vh;
+  width: 100%;
 `;
 
 const TitleText = styled.p`
